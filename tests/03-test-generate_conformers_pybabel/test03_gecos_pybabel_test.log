@@ -1,0 +1,144 @@
+
+	***************** START Gecos PyBabel TEST *****************
+		Starting: 	 12-07-2021 23:03:20
+
+	Test_01: Check PDB and MOL2 files from MS. Neutral and not resonance. Dimer polyisoprene
+		Energy (MMFF)  PDB  :     44.550 kcal/mol
+		Energy (UFF)   PDB  :    365.291 kcal/mol
+		Energy (GAFF)  PDB  :    183.268 kcal/mol
+
+		Energy (MMFF)  MOL2 :     44.566 kcal/mol
+		Energy (UFF)   MOL2 :    364.996 kcal/mol
+		Energy (GAFF)  MOL2 :    183.021 kcal/mol
+
+	Test_02: Generate conformers for dimer isoprene
+		Molecule = ../../data/IsoP.pdb
+		Number of rotatable bonds = 3
+		Force Field = MMFF94 force field.
+		Conformer Searching = ConFab
+
+		44 conformers are generated
+			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+
+		# Conformation E_initial E_final (in kcal/mol)
+		# ============================================
+
+		     0      44.550      24.616
+		     1      42.254      25.891
+		     2      42.805      25.413
+		     3      42.887      26.570
+		     4      44.080      27.193
+		     5      44.321      25.582
+		     6      44.869      27.058
+		     7      45.421      25.831
+		     8      45.525      26.235
+		     9      45.590      27.127
+		    10      45.734      25.571
+		    11      46.554      27.729
+		    12      46.718      26.938
+		    13      46.738      27.085
+		    14      47.326      27.607
+		    15      48.013      28.000
+		    16      48.149      25.722
+		    17      48.239      25.635
+		    18      48.324      28.055
+		    19      48.606      25.852
+		    20      48.747      28.536
+		    21      48.771      26.313
+		    22      48.987      25.668
+		    23      49.383      27.021
+		    24      50.516      28.138
+		    25      50.742      26.685
+		    26      51.608      30.663
+		    27      53.225      27.538
+		    28      53.564      26.454
+		    29      55.502      26.309
+		    30      55.836      26.682
+		    31      59.976      27.535
+		    32      62.685      29.270
+		    33      64.662      28.104
+		    34      65.319      26.667
+		    35      65.397      31.011
+		    36      67.897      26.923
+		    37      67.923      25.576
+		    38      68.988      32.318
+		    39      71.495      27.902
+		    40      71.701      29.538
+		    41      72.079      27.324
+		    42      73.111      30.244
+		    43      73.824      28.319
+	Test_03: Generate conformers for nitrobenzene
+		Molecule = ../../data/nitrobenzene.pdb
+		Number of rotatable bonds = 1
+		Force Field = MMFF94 force field.
+		Conformer Searching = ConFab
+
+		1 conformers are generated
+			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+
+		# Conformation E_initial E_final (in kcal/mol)
+		# ============================================
+
+		     0      50.327      49.474
+
+	ERROR: 12-07-2021 12 23:03:22: Something is wrong with Gaussian16 input files
+Gaussian input files are not written
+		Molecule = ../../data/nitrobenzene.pdb
+		Number of rotatable bonds = 1
+		Force Field = Universal Force Field.
+		Conformer Searching = ConFab
+
+		1 conformers are generated
+			Options: rmsd_cutoff = 0.1 A, conf_cutoff = 4000000
+			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+
+		# Conformation E_initial E_final (in kcal/mol)
+		# ============================================
+
+		     0     110.567      63.025
+	Test_04: Generate conformers for a dimer styrene
+		Molecule = ../../data/AtacPS.pdb
+		Number of rotatable bonds = 4
+		Force Field = MMFF94 force field.
+		Conformer Searching = ConFab
+
+		27 conformers are generated
+			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+
+		# Conformation E_initial E_final (in kcal/mol)
+		# ============================================
+
+		     0      52.708      43.573
+		     1      48.968      43.480
+		     2      50.351      45.897
+		     3      53.445      45.970
+		     4      53.946      47.582
+		     5      54.254      45.224
+		     6      56.177      45.242
+		     7      57.022      46.774
+		     8      58.483      50.049
+		     9      58.932      45.038
+		    10      59.246      47.492
+		    11      60.886      49.690
+		    12      60.926      46.196
+		    13      61.130      45.376
+		    14      61.409      47.055
+		    15      62.690      48.189
+		    16      63.041      43.998
+		    17      64.883      51.464
+		    18      65.193      53.816
+		    19      65.570      53.076
+		    20      82.838      47.703
+		    21      85.845      47.523
+		    22      88.827      46.471
+		    23      94.265      52.515
+		    24      94.592      48.991
+		    25      96.760      49.052
+		    26      97.664      47.550
+
+	***************** END Gecos PyBabel TEST *****************
+		Finishing: 	 12-07-2021 23:03:24
+

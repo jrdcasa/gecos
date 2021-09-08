@@ -1,0 +1,117 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : /home/jramos/PycharmProjects/GeCos/data/IsoP.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		**************** GENERATE CONFORMERS ***************
+		 1. Generating 500 conformers (06-07-2021 10:48:29)
+		 2. Minimizing 500 conformers. Max_iters = 3000, threshold = 2.0 A (06-07-2021 10:48:33)
+			 Using MMFF forcefield
+		 3. Cluster Conformers (06-07-2021 10:48:42)
+			500 conformers generated grouped in 11 clusters (rmsd_threshold= 2.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (06-07-2021 10:48:49)
+		 5. Write Conformers to PDB (06-07-2021 10:48:49)
+			Filename: IsoP_rdkit_03_conf_min_trj.pdb
+		 6. Write Conformers to Gaussian16 (06-07-2021 10:48:49)
+			Inputfiles in IsoP_rdkit_03_g16_conformers/ directory
+		**************** GENERATE CONFORMERS ***************
+
+
+		**************** CONFORMER MM ENERGIES ***************
+			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
+			--------------------------------------------------------------------
+			   1         79          23.24                0.00          
+			   2        271          23.24                0.00          
+			   3        433          23.29                0.05          
+			   4         78          23.29                0.05          
+			   5        263          23.76                0.52          
+			   6         76          23.49                0.24          
+			   7         9           23.49                0.24          
+			   8        341          23.29                0.05          
+			   9        408          23.96                0.72          
+			  10        371          23.49                0.24          
+			  11         38          24.63                1.39          
+		**************** CONFORMER MM ENERGIES ***************
+
+		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
+			1. Connected to trueno.csic.es (06-07-2021 10:48:49)
+			   Database IsoP_rdkit_03_01_sp.db created
+			2. Prepare SLURM script for each conformer (06-07-2021 10:48:49).
+			3. Send input files (com and sh) to server. (06-07-2021 10:48:49)
+			   Prepare and send full.sh script.
+			   Update database.
+			4. Send QM calculations to server. (06-07-2021 10:48:50)
+			5. Close connection
+		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
+
+		**************** SUMMARY ***************
+
+		Localdir                      : /home/jramos/PycharmProjects/GeCos/tests/05-test-server_slurm_03/
+		Database                      : IsoP_rdkit_03_01_sp.db
+		Trajectory file MM conformers : IsoP_rdkit_03_conf_min_trj.pdb
+		Directory with QM files       : IsoP_rdkit_03_g16_conformers/
+
+		#              Name_job               DeltaE_QM(kcal/mol) RMSD(A)  RMSD_incluster(A) Cluster_QM
+		# =============================================================================================
+		     IsoP_rdkit_03_408_gaussian              0.00          0.000         0.000           1     
+		     IsoP_rdkit_03_009_gaussian              0.47          1.469         0.000           3     
+		     IsoP_rdkit_03_076_gaussian              0.47          1.720         0.000           2     
+		     IsoP_rdkit_03_371_gaussian              0.47          1.365         0.984           2     
+		     IsoP_rdkit_03_079_gaussian              1.09          1.635         0.000           4     
+		     IsoP_rdkit_03_271_gaussian              1.09          1.182         0.000           5     
+		     IsoP_rdkit_03_078_gaussian              1.30          1.508         0.000           6     
+		     IsoP_rdkit_03_341_gaussian              1.30          1.491         0.000           7     
+		     IsoP_rdkit_03_433_gaussian              1.30          1.508         0.000           6     
+		     IsoP_rdkit_03_038_gaussian              1.53          1.661         0.000           8     
+		     IsoP_rdkit_03_263_gaussian              1.60          1.359         0.716           5     
+
+		## Optimized conformers:
+			IsoP_rdkit_03_408_gaussian_allign.mol2
+			IsoP_rdkit_03_009_gaussian_allign.mol2
+			IsoP_rdkit_03_076_gaussian_allign.mol2
+			IsoP_rdkit_03_079_gaussian_allign.mol2
+			IsoP_rdkit_03_271_gaussian_allign.mol2
+			IsoP_rdkit_03_078_gaussian_allign.mol2
+			IsoP_rdkit_03_341_gaussian_allign.mol2
+			IsoP_rdkit_03_038_gaussian_allign.mol2
+
+			-------- ATTENTION --------
+			You should remove the files in /home/cfmac/jramos/GECOS/test-05_03/
+			from the server trueno.csic.es
+			-------- ATTENTION --------
+
+		**************** SUMMARY ***************
+
+
+		 Job Finnished: 06-07-2021 14:00:33
+

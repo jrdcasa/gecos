@@ -1,0 +1,11 @@
+2643397 IsoP_rdkit_012_gaussian COMPLETED
+2643398 IsoP_rdkit_067_gaussian COMPLETED
+2643399 IsoP_rdkit_151_gaussian COMPLETED
+2643400 IsoP_rdkit_166_gaussian COMPLETED
+2643401 IsoP_rdkit_189_gaussian COMPLETED
+2643402 IsoP_rdkit_192_gaussian COMPLETED
+2643403 IsoP_rdkit_238_gaussian COMPLETED
+2643404 IsoP_rdkit_295_gaussian COMPLETED
+2643405 IsoP_rdkit_356_gaussian COMPLETED
+2643406 IsoP_rdkit_393_gaussian COMPLETED
+2643407 IsoP_rdkit_419_gaussian COMPLETED

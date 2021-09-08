@@ -1,0 +1,15 @@
+#Gecos
+GitPython>=3.1.1
+rdkit-pypi>=2021.3.2.3
+pandas
+paramiko
+pycryptodome
+passwd-encrypt
+#Jupyter
+jupyter
+nglview
+Pillow
+MDAnalysis
+# GUI
+PySimpleGUI
+matplotlib

@@ -1,0 +1,8 @@
+2641255 IsoP_rdkit_005_gaussian COMPLETED
+2641256 IsoP_rdkit_009_gaussian COMPLETED
+2641257 IsoP_rdkit_014_gaussian COMPLETED
+2641258 IsoP_rdkit_020_gaussian COMPLETED
+2641259 IsoP_rdkit_021_gaussian COMPLETED
+2641260 IsoP_rdkit_042_gaussian COMPLETED
+2641261 IsoP_rdkit_043_gaussian COMPLETED
+2641262 IsoP_rdkit_048_gaussian COMPLETED

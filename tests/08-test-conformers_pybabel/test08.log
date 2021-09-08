@@ -1,0 +1,133 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+		Conformers will be generated with openbabel library (https://openbabel.org/wiki/Python, https://openbabel.github.io/api/3.0/index.shtml)
+
+		Molecular file seed  : /home/jramos/PycharmProjects/GeCos/data/IsoP.pdb
+		Bond Perception: False
+
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+
+		**************** GENERATE CONFORMERS ***************
+		 1. Generating conformers with openbabel (100000)
+			Molecule = /home/jramos/PycharmProjects/GeCos/data/IsoP.pdb
+			Number of rotatable bonds = 3
+			Force Field = MMFF94 force field.
+			Conformer Searching = ConFab
+			Options: rmsd_cutoff = 0.5 A, nconfs = 100000
+			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+			 ** CONFAB has generated 44 conformers **
+		 2. Minimizing 44 conformers. Max_iters = 3000 (19-07-2021 20:20:41)
+			 Using MMFF forcefield
+		 3. Cluster Conformers (19-07-2021 20:20:43)
+			44 conformers generated grouped in 13 clusters (rmsd_threshold= 2.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (19-07-2021 20:20:44)
+		 5. Write Conformers to MOL2 (19-07-2021 20:20:44)
+			Filename: /home/jramos/PycharmProjects/GeCos/tests/08-test-conformers_pybabel/IsoP_pybabel_01_mincluster_conf_opt.mol2
+		**************** GENERATE CONFORMERS ***************
+
+
+		**************** CONFORMER MM ENERGIES ***************
+			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
+			--------------------------------------------------------------------
+			   1         0           24.91                0.00          
+			   2         2           25.19                0.28          
+			   3         7           25.22                0.31          
+			   4         5           25.43                0.52          
+			   5         36          25.90                0.99          
+			   6         8           26.05                1.13          
+			   7         28          26.19                1.27          
+			   8         12          26.41                1.50          
+			   9         41          26.84                1.93          
+			  10         13          27.09                2.18          
+			  11         30          27.34                2.43          
+			  12         24          27.98                3.07          
+			  13         15          28.54                3.62          
+		**************** CONFORMER MM ENERGIES ***************
+
+		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
+			1. Connected to trueno.csic.es (19-07-2021 20:20:44)
+			   Database /home/jramos/PycharmProjects/GeCos/tests/08-test-conformers_pybabel/IsoP_pybabel_01_sp.db created
+			2. Prepare SLURM script for each conformer (19-07-2021 20:20:44).
+			3. Send input files (com and sh) to server. (19-07-2021 20:20:44)
+			   Prepare and send full.sh script.
+			   Update database.
+			4. Send QM calculations to server. (19-07-2021 20:20:45)
+			5. Close connection
+		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
+
+			 :::: Checking start: 19-07-2021 20:21:44
+			 :::: Completed 0 of 13 jobs
+			 :::: Checking end: 19-07-2021 20:21:50
+
+
+		**************** SUMMARY ***************
+
+		Localdir                      : /home/jramos/PycharmProjects/GeCos/tests/08-test-conformers_pybabel/
+		Database                      : /home/jramos/PycharmProjects/GeCos/tests/08-test-conformers_pybabel/IsoP_pybabel_01_sp.db
+		Trajectory file MM conformers : IsoP_pybabel_01_conf_min_trj.pdb
+		Directory with QM files       : IsoP_pybabel_01_g16_conformers/
+
+		#              Name_job               DeltaE_QM(kcal/mol) RMSD(A)  RMSD_incluster(A) Cluster_QM
+		# =============================================================================================
+		    IsoP_pybabel_01_028_gaussian             0.00          0.000         0.000           1     
+		    IsoP_pybabel_01_036_gaussian             0.00          1.448         0.000           2     
+		    IsoP_pybabel_01_013_gaussian             0.62          1.068         0.000           3     
+		    IsoP_pybabel_01_041_gaussian             1.06          1.267         0.000           4     
+		    IsoP_pybabel_01_012_gaussian             1.11          1.248         0.000           5     
+		    IsoP_pybabel_01_008_gaussian             1.76          1.385         0.958           5     
+		    IsoP_pybabel_01_007_gaussian             1.11          1.412         0.000           6     
+		    IsoP_pybabel_01_024_gaussian             1.70          1.104         0.727           6     
+		    IsoP_pybabel_01_000_gaussian             1.20          1.567         0.000           7     
+		    IsoP_pybabel_01_015_gaussian             1.43          1.480         0.887           7     
+		    IsoP_pybabel_01_002_gaussian             1.31          1.391         0.000           8     
+		    IsoP_pybabel_01_005_gaussian             1.31          1.633         0.736           8     
+		    IsoP_pybabel_01_030_gaussian             2.13          1.827         0.000           9     
+
+		## Optimized conformers:
+			IsoP_pybabel_01_028_gaussian_allign.mol2
+			IsoP_pybabel_01_036_gaussian_allign.mol2
+			IsoP_pybabel_01_013_gaussian_allign.mol2
+			IsoP_pybabel_01_041_gaussian_allign.mol2
+			IsoP_pybabel_01_012_gaussian_allign.mol2
+			IsoP_pybabel_01_007_gaussian_allign.mol2
+			IsoP_pybabel_01_000_gaussian_allign.mol2
+			IsoP_pybabel_01_002_gaussian_allign.mol2
+			IsoP_pybabel_01_030_gaussian_allign.mol2
+		## Optimized conformers:
+
+			-------- ATTENTION --------
+			You should remove the files in /home/cfmac/jramos/GECOS/test-08/
+			from the server trueno.csic.es
+			-------- ATTENTION --------
+
+		**************** SUMMARY ***************
+
+
+		 Job Finnished: 20-07-2021 09:48:27
+

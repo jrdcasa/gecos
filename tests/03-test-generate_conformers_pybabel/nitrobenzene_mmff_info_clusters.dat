@@ -1,0 +1,3 @@
+#Cluster  seed  lowest_energy(kcal/mol) hightest_energy(kcal/mol) energy_threshold(kcal/mol) nelements
+#-----------------------------------------------------------------------------------------------------
+1  0  49.474  49.474  100048.5  1

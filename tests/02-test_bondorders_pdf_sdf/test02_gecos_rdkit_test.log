@@ -1,0 +1,643 @@
+
+	***************** START Gecos rdkit TEST *****************
+		Starting: 	 12-07-2021 23:03:09
+
+	Test_01: Check PDB and MOL2 files from MS. Neutral and not resonance. Dimer polyisoprene
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/IsoP.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/IsoP.mol2
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 44.550 kcal/mol
+		Energy (MMFF) MOL2 : 44.566 kcal/mol
+		Energy (UFF)  PDB  : 81.281 kcal/mol
+		Energy (UFF)  MOL2 : 81.211 kcal/mol
+
+	Test_02: Check PDB and MOL2 files from MS. Neutral and resonance. Nitrobenzene
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/nitrobenzene.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/nitrobenzene.mol2
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 50.327 kcal/mol
+		Energy (MMFF) MOL2 : 50.327 kcal/mol
+		Energy (UFF)  PDB  : 34.059 kcal/mol
+		Energy (UFF)  MOL2 : 37.147 kcal/mol
+
+	Test_03: Check PDB and MOL2 files from MS. Neutral and resonance. Dimer PS
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/AtacPS.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/AtacPS.mol2
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 52.708 kcal/mol
+		Energy (MMFF) MOL2 : 52.719 kcal/mol
+		Energy (UFF)  PDB  : 39.377 kcal/mol
+		Energy (UFF)  MOL2 : 39.389 kcal/mol
+
+	Test_04: Check PDB and MOL2 files from MS. Neutral and resonance. Dimer PET
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/PET_ms.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/PET_gview.mol2
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 354.293 kcal/mol
+		Energy (MMFF) MOL2 : 353.500 kcal/mol
+		Energy (UFF)  PDB  : 334.488 kcal/mol
+		Energy (UFF)  MOL2 : 274.340 kcal/mol
+
+	Test_05: PDB to PSF. Dimer polyisoprene
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/IsoP.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/IsoP_frompdb.sdf
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 44.550 kcal/mol
+		Energy (MMFF) SDF  : 44.550 kcal/mol
+		Energy (UFF)  PDB  : 81.281 kcal/mol
+		Energy (UFF)  SDF  : 81.281 kcal/mol
+
+	Test_06: PDB to PSF. Nitrobenzene
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/nitrobenzene.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/nitrobenzene_frompdb.sdf
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 50.327 kcal/mol
+		Energy (MMFF) SDF  : 50.327 kcal/mol
+		Energy (UFF)  PDB  : 34.059 kcal/mol
+		Energy (UFF)  SDF  : 37.147 kcal/mol
+
+	Test_07: PDB to PSF. Dimer PS
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/AtacPS.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/AtacPS_frompdb.sdf
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 52.708 kcal/mol
+		Energy (MMFF) MOL2 : 52.708 kcal/mol
+		Energy (UFF)  PDB  : 39.377 kcal/mol
+		Energy (UFF)  MOL2 : 39.377 kcal/mol
+
+	Test_08: PDB to PSF. Dimer PET
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/PET.pdb
+		Bond Perception: True
+
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/PET_frompdb.sdf
+		Bond Perception: False
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+		Energy (MMFF) PDB  : 354.108 kcal/mol
+		Energy (MMFF) MOL2 : 354.108 kcal/mol
+		Energy (UFF)  PDB  : 331.304 kcal/mol
+		Energy (UFF)  MOL2 : 274.653 kcal/mol
+
+	Test_09: MOL2 Dimer PET. Bond perception.
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
+
+		PDB file seed  : ../../data/PET_ob.mol2
+		Bond Perception: True
+		******** CREATION OF THE GECOS RDKIT OBJECT ********
+
+
+
+	***************** END Gecos rdkit TEST *****************
+		Finishing: 	 12-07-2021 23:03:10
+

@@ -1,0 +1,13 @@
+100 04-IsoP_000_gaussian 04-IsoP_000_gaussian.log
+101 04-IsoP_002_gaussian 04-IsoP_002_gaussian.log
+102 04-IsoP_005_gaussian 04-IsoP_005_gaussian.log
+103 04-IsoP_007_gaussian 04-IsoP_007_gaussian.log
+104 04-IsoP_008_gaussian 04-IsoP_008_gaussian.log
+105 04-IsoP_012_gaussian 04-IsoP_012_gaussian.log
+106 04-IsoP_013_gaussian 04-IsoP_013_gaussian.log
+107 04-IsoP_015_gaussian 04-IsoP_015_gaussian.log
+108 04-IsoP_024_gaussian 04-IsoP_024_gaussian.log
+109 04-IsoP_028_gaussian 04-IsoP_028_gaussian.log
+110 04-IsoP_030_gaussian 04-IsoP_030_gaussian.log
+111 04-IsoP_036_gaussian 04-IsoP_036_gaussian.log
+112 04-IsoP_041_gaussian 04-IsoP_041_gaussian.log
