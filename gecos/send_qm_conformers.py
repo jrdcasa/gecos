@@ -23,6 +23,7 @@ def send_qm_conformers(nameserver, databasename, username, keyfile,
             (example: IsoP_???_gaussian.com)
         localdir:
         remotedir:
+        g16exec:
         partition:
         partitionmaster:
         nodemaster:

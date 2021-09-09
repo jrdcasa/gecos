@@ -1,7 +1,7 @@
 import PySimpleGUI as Sg
 
 
-lizard_gif = r'/home/jramos/PycharmProjects/GeCos/gecos_gui/lizard_small.gif'
+lizard_gif = r'./lizard_small.gif'
 pad1 = ((28, 60), (28, 60))
 pad2 = (20, 30)
 pad3 = ((0, 0), (0, 0))

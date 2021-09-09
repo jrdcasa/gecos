@@ -378,6 +378,7 @@ def import_jsonfile_to_gui(window, filename):
         for item in keys_activate_mainguibuttons_labels:
             window[item].update(disabled=True)
 
+
 # =============================================================================
 def export_jsonfile_from_gui(window, filename, save=True):
     """
@@ -1103,6 +1104,12 @@ def check_parameteres_gui(window, values):
             popup_error(window, msg)
             return False
 
+    except AttributeError:
+        msg = "There is some problem with the key file ({})\n".format(key)
+        msg += "Server name {}\n".format(nameserver)
+        popup_error(window, msg)
+        return False
+
     # Check partition stuffs ==================================================
     for ipart in [partition, partitionmaster]:
         command = "sinfo -s | egrep {}".format(ipart)
@@ -1414,7 +1421,7 @@ def open_window_results(window):
     # Find names of the lowest energy conformers in each cluster
     icluster = 1
     listcluster = []
-    deltaElist = []
+    delta_elist = []
     clusterlist = []
     with open(fulllogpath) as flog:
         stringfile = flog.read()
@@ -1428,12 +1435,12 @@ def open_window_results(window):
                 listcluster.append("Cluster {0:03d}: {1:s}".format(icluster, item.replace("\t", "")))
                 pattern = item.replace('\t\t\t', '').replace('_allign.mol2', '')
                 clusterlist.append(icluster)
-                deltaElist.append(df.loc[df["name_job"] == pattern]['DeltaE'].values[0])
+                delta_elist.append(df.loc[df["name_job"] == pattern]['DeltaE'].values[0])
                 icluster += 1
 
     # Create plot with QM energies
     fig, ax = plt.subplots(figsize=(5.5, 4.5))
-    ax.bar(clusterlist, deltaElist)
+    ax.bar(clusterlist, delta_elist)
     ax.set_ylabel(r'$\Delta$E (kcal/mol)')
     ax.set_xlabel('# Cluster')
     ax.set_title('Relative energy (kcal/mol)')
@@ -1555,7 +1562,7 @@ def waiting_for_events(window, event, values):
             window['-SUGGEST_TEXT-'].update("Help: Run GeCos")
         except TypeError:
             pass
-        except:
+        except Exception:
             popup_error(window, "Python file cannot be exported")
 
     if event == "Clean Form":

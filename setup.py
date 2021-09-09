@@ -189,6 +189,16 @@ def install_openbabel():
         print("================= ERROR INSTALL ================")
         sys.exit()
 
+    # Check if swig is installed in the system. This is needed in order to build the python bindings
+    error = subprocess.call(["which", "swig"])
+    if error != 0:
+        print("================= ERROR INSTALL ================")
+        print("** GECOS: Cannot find Swig executable")
+        print("** GECOS: Try to install swig in your system (Ubuntu: apt-get install swig)")
+        print("** GECOS: The installation is aborted")
+        print("================= ERROR INSTALL ================")
+        sys.exit()
+
     if not os.path.isdir(fullpath_cmake+"/openbabel/build"):
 
         subprocess.call(["rm", "-rf", "thirdparty/openbabel/build"])
@@ -267,11 +277,13 @@ if __name__ == '__main__':
     for ipack in required:
         try:
             pkg, version = ipack.split(">=")[0:2]
-            if pkg[0] == "#": continue
+            if pkg[0] == "#":
+                continue
             install_with_pip(pkg, version)
         except ValueError:
             pkg = ipack
-            if pkg[0] == "#": continue
+            if pkg[0] == "#":
+                continue
             install_with_pip(pkg)
 
     import git
@@ -282,14 +294,5 @@ if __name__ == '__main__':
     install_openbabel()
     install_dockrmsd()
 
-    # Setup Chiripa ===========================================
-    setup(
-        name='Gecos',
-        version='0.1',
-        description='Python program to generate conformers of small molecules.',
-        author="Javier Ramos",
-        author_email="jrdcasa@gmail.com",
-        # This automatically detects the packages in the specified
-        # (or current directory if no directory is given).
-        packages=find_packages(exclude=['tests', 'docs', 'data']),
-    )
+    # Setup Gecos ===========================================
+    setup()

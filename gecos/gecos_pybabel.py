@@ -228,7 +228,6 @@ class GecosPyBabel:
 
         return True
 
-
     # =========================================================================
     def _write_min_cluster_conformers_to_mol2(self, filename,
                                               MMcluster, optimized_strings_mols):
