@@ -1,5 +1,7 @@
 thirdparty/*
 gecos_gui/__pycache__/*
+gecos/__pycache__/*
+utils/__pycache__/*
 build/
 dist/
 *egg*/
@@ -8,3 +10,4 @@ tests_pysimplegui/
 install.log
 .idea/*
 tests_pysimplegui/*
+
