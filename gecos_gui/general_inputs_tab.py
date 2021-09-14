@@ -1,6 +1,6 @@
 import PySimpleGUI as Sg
-from common_elements import  theme
-import webbrowser
+from gecos_gui.common_elements import theme
+
 
 Sg.ChangeLookAndFeel(theme)
 
@@ -129,14 +129,14 @@ conformers_col = Sg.Column([
                                   size=(40, 1), pad=pad1),
                          Sg.Text("URL", enable_events=True, key="-CONF_URL-", text_color='blue'),
                          Sg.Button('Advanced options', key='-BUTTONADVANCE-', disabled=False)],
-                        [Sg.Text('Number of Conformers:', size=(19, 1)),
+                        [Sg.Text('Number of Conformers:', size=(22, 1)),
                          Sg.Input(key='-NCONF-', size=(8, 1),
                                   tooltip='Initial number of conformers.', pad=pad1),
-                         Sg.Text('Cutoff RMSD Cluster QM (A):', size=(19, 1)),
-                         Sg.Input(key='-CUTOFF_RMSD_QM-', size=(8, 1),
+                         Sg.Text('Cutoff RMSD Cluster QM (A):', size=(24, 1)),
+                         Sg.Input(key='-CUTOFF_RMSD_QM-', size=(12, 1),
                                   tooltip='Cutoff to clusterize the conformers after QM calculations.', pad=pad1)
                          ],
-                        [Sg.Text('Minimize Iterations MM:', size=(19, 1)),
+                        [Sg.Text('Minimize Iterations MM:', size=(22, 1)),
                          Sg.Input(key='-MIN_ITER_MM-', size=(8, 1),
                                   tooltip='Number of iterations to minimize the conformers.', pad=pad1),
                          Sg.Checkbox('Bond Perception', key='-BOND_PERCEPTION-', size=(45, 2),
@@ -151,7 +151,7 @@ conformers_col = Sg.Column([
                    ],
                   [Sg.Text("DockRMSD program: ", size=(16, 1),
                            pad=pad1, text_color='red'),
-                   Sg.Text('https://zhanglab.ccmb.med.umich.edu/DockRMSD/', size=(40, 1),
+                   Sg.Text('https://zhanglab.ccmb.med.umich.edu/DockRMSD/', size=(46, 1),
                            enable_events=True, key="-DOCK_URL-", pad=pad1, text_color='blue')
                    ],
               ], title_color='blue', pad=((20, 20), (10, 10)))

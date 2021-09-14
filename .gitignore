@@ -3,3 +3,5 @@ gecos_gui/__pycache__/*
 build/
 dist/
 *egg*/
+tests_pysimplegui/
+*.swp

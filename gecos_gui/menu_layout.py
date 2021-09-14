@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from common_elements import theme
+from gecos_gui.common_elements import theme
 
 sg.ChangeLookAndFeel(theme)
 

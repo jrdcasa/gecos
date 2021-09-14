@@ -12,7 +12,7 @@
 	"databasename": "02-IsoP_trueno.db",
 	"filelog": "02-IsoP.log",
 	"g16_key": "#p opt pm3",
-	"exec_rmsddock": "/home/jramos/PycharmProjects/GeCos/thirdparty/dock_rmsd/dockrmsd.x",
+	"exec_rmsddock": "/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg/thirdparty/dockrmsd.x",
 	"exec_g16": "/opt/gaussian/g16_legacy/",
 	"conformer_program": "rdkit",
 	"g16_nproc": 1,

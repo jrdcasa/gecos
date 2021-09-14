@@ -1,4 +1,5 @@
 import PySimpleGUI as Sg
+import sys
 import webbrowser
 import json
 from socket import gaierror
@@ -1049,7 +1050,20 @@ def check_parameteres_gui(window, values):
     # Check files in the local directory ======================================
     for ikey in files_localpath_string:
         pathfile = window[ikey].get()
-        if not os.path.exists(pathfile):
+        if not os.path.exists(pathfile) and ikey == "-DOCKRMSDPACK-":
+            is_default_exe_found = False
+            for isyspath in sys.path:
+                path = os.path.join(isyspath, "thirdparty/dockrmsd.x")
+                if os.path.isfile(path):
+                    window[ikey].update(path)
+                    is_default_exe_found = True
+                    break
+            if not is_default_exe_found:
+                msg = "{}: {} does not exist\n".format(ikey, pathfile)
+                msg += "and default dockrmsd cannot find in sys.path"
+                popup_error(window, msg)
+                return False
+        elif not os.path.exists(pathfile):
             msg = "{}: {} does not exist".format(ikey, pathfile)
             popup_error(window, msg)
             return False

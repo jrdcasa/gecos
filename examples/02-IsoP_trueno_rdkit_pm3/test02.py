@@ -6,6 +6,7 @@ v_filename = '/home/jramos/PycharmProjects/GeCos/data/IsoP.pdb'
 v_nameserver = 'trueno.csic.es'
 v_username = 'jramos'
 v_keysshfile = '/home/jramos/.ssh/id_rsa_chiripa'
+v_encrypt_pass = 'None'
 v_slurm_part = 'simacro'
 v_list_nodes = ['trueno36', 'trueno37', 'trueno38', 'trueno59']
 v_slurm_part_master = 'simacro'
@@ -26,14 +27,14 @@ v_nconfs = 500
 v_min_iter_mm = 3000
 v_cutoff_rmsd_qm = 1.0
 v_bond_perception = True
-v_dockrmsdpack = '/home/jramos/PycharmProjects/GeCos/thirdparty/dock_rmsd/dockrmsd.x'
+v_dockrmsdpack = '/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg/thirdparty/dockrmsd.x'
 v_confpack = 'rdkit'
 v_rdkit_maxattempts = 1000
-v_rdkit_prunermsthresh = -0.010
+v_rdkit_prunermsthresh = -0.01
 v_rdkit_useexptorsionangleprefs = True
 v_rdkit_usebasicknowlwdge = True
 v_rdkit_enforcechirality = True
-v_rdkit_cluster_method = 'RMSD'
+v_rdkit_cluster_method = 'rmsd'
 v_rdkit_ffname = 'MMFF'
 v_rdkit_cluster_thres = 2.0
 
@@ -85,6 +86,7 @@ if not os.path.isfile(v_databasefullpath):
 			partitionmaster=v_slurm_part_master,
 			nodemaster=v_node_master,
 			mem=v_mem,
+			encrypted_pass=v_encrypt_pass,
 			logger=log)
 
 else:
@@ -107,6 +109,7 @@ else:
 			v_outdir,
 			v_pattern,
 			v_dockrmsdpack,
+			encrypted_pass=v_encrypt_pass,
 			cutoff_rmsd=v_cutoff_rmsd_qm,
 			logger=log)
 

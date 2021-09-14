@@ -1,0 +1,60 @@
+
+		 Starting installation!!!! at 14/09/2021 10:45:33
+
+
+		 SYS PATH
+/home/jramos/PycharmProjects/GeCos
+/home/jramos/PycharmProjects/GeCos
+/home/jramos/PycharmProjects/GeCos/gecos
+/home/jramos/PycharmProjects/GeCos/gecos_gui
+/home/jramos/PycharmProjects/TMP/third/pysimm
+/opt/pycharm-2020.1/plugins/python/helpers/pycharm_display
+/usr/lib/python38.zip
+/usr/lib/python3.8
+/usr/lib/python3.8/lib-dynload
+/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages
+/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg
+/opt/pycharm-2020.1/plugins/python/helpers/pycharm_matplotlib_backend
+
+		 INSTALLING PIP PACKAGES
+
+14/09/2021 10:45:33: ** GECOS: Installing GitPython==3.1.1
+14/09/2021 10:45:33: ** GECOS: Installing rdkit-pypi==2021.3.2.3
+14/09/2021 10:45:34: ** GECOS: Installing pandas
+14/09/2021 10:45:35: ** GECOS: Installing paramiko
+14/09/2021 10:45:36: ** GECOS: Installing pycryptodome
+14/09/2021 10:45:36: ** GECOS: Installing passwd-encrypt
+14/09/2021 10:45:37: ** GECOS: Installing jupyter
+14/09/2021 10:45:38: ** GECOS: Installing nglview
+14/09/2021 10:45:39: ** GECOS: Installing Pillow
+14/09/2021 10:45:40: ** GECOS: Installing MDAnalysis
+14/09/2021 10:45:41: ** GECOS: Installing PySimpleGUI
+14/09/2021 10:45:41: ** GECOS: Installing matplotlib
+
+		 COMPILING & INSTALLING INDIGO-BONDORDER PACKAGE
+
+14/09/2021 10:45:42: ** GECOS: indigo-bondorder is already installed in your system. https://github.com/allison-group/indigo-bondorder.git
+
+		 COMPILING & INSTALLING EIGEN PACKAGE
+
+
+14/09/2021 10:45:42: ** GECOS: eigen is already installed in your system. thirdparty/eigen/eigen_library/include
+
+		 COMPILING & INSTALLING OPENBABEL PACKAGE
+
+
+14/09/2021 10:45:42: ** GECOS: openbabel is already installed in your system. /home/jramos/PycharmProjects/GeCos/thirdparty/openbabel
+cp -rf /home/jramos/PycharmProjects/GeCos/thirdparty/openbabel/lib/python3.8/site-packages/openbabel /home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages
+
+		 COMPILING & INSTALLING DockRMSD PACKAGE
+
+14/09/2021 10:45:42: ** GECOS: DockRMSD is already installed in your system
+
+
+		 RUNNING SETUP FROM SETUPTOOLS 14/09/2021 10:45:42
+
+
+
+		 Installation Done!!!! at 14/09/2021 10:45:42
+
+
