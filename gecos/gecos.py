@@ -5,7 +5,7 @@ import glob
 
 
 # =============================================================================
-def parse_arguments(logger=None):
+def parse_arguments():
 
     desc = """ Generation of conformers (GeCos) """
 
@@ -264,7 +264,7 @@ def create_python_script(filename, keywords_dict, save=True):
     lines += "\n"
     lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_conformers')\n"
     lines += "\n"
-    lines += "\tgecos.check_qm_jobs(" \
+    lines += "    gecos.check_qm_jobs(" \
              "\n            v_nameserver," \
              "\n            v_databasefullpath," \
              "\n            v_username," \
@@ -295,12 +295,19 @@ def main_gui_app():
     opts = parse_arguments()
 
     # Read json and create a python script to run gecos
+    filename_python = ""
     if opts.jsonfile:
-        if opts.jsonfile.find("json") != -1:
+        if opts.jsonfile.find(".json") != -1:
             filename_python = read_json(opts.jsonfile)
-
+        else:
+            print("File {} seems to be in a format different to json.".format(opts.jsonfile))
+            exit()
     if opts.pythonfile:
-        filename_python = opts.pythonfile
+        if opts.pythonfile.find(".py") != -1:
+            filename_python = opts.pythonfile
+        else:
+            print("File {} seems to be not a python script.".format(opts.pythonfile))
+            exit()
 
     local_dir = os.getcwd()
     try:
