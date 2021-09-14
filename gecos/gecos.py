@@ -171,64 +171,64 @@ def create_python_script(filename, keywords_dict, save=True):
     # LOOP
     lines += "\n"
     lines += "if not os.path.isfile(v_databasefullpath):\n\n"
-    lines += "\tlog = utils.init_logger(\n" \
-             "\t\t\"Output2\",\n" \
-             "\t\tfileoutput=v_fileoutputfullpath,\n" \
-             "\t\tappend=False, inscreen=False)\n\n"
+    lines += "    log = utils.init_logger(\n" \
+             "        \"Output2\",\n" \
+             "        fileoutput=v_fileoutputfullpath,\n" \
+             "        append=False, inscreen=False)\n\n"
 
     if keywords_dict["conformer_program"].upper() == "RDKIT":
-        lines += "\tg1 = gecos.GecosRdkit(\n" \
-                 "\t\tfilename=v_filename,\n" \
-                 "\t\ttotal_charge=v_charge,\n" \
-                 "\t\tbond_perception=v_bond_perception,\n" \
-                 "\t\tlogger=log)\n"
+        lines += "    g1 = gecos.GecosRdkit(\n" \
+                 "        filename=v_filename,\n" \
+                 "        total_charge=v_charge,\n" \
+                 "        bond_perception=v_bond_perception,\n" \
+                 "        logger=log)\n"
         lines += "\n"
-        lines += "\tg1.generate_conformers(\n" \
-                 "\t\tv_localdir,\n" \
-                 "\t\tnconfs=v_nconfs,\n" \
-                 "\t\tminimize_iterations=v_min_iter_mm,\n" \
-                 "\t\tmaxattempts=v_rdkit_maxattempts,\n" \
-                 "\t\tprunermsthresh=v_rdkit_prunermsthresh,\n" \
-                 "\t\tuseexptorsionangleprefs=v_rdkit_useexptorsionangleprefs,\n" \
-                 "\t\tusebasicknowledge=v_rdkit_usebasicknowlwdge,\n" \
-                 "\t\tenforcechirality=v_rdkit_enforcechirality,\n" \
-                 "\t\tff_name=v_rdkit_ffname,\n" \
-                 "\t\tcluster_method=v_rdkit_cluster_method,\n" \
-                 "\t\tcluster_threshold=v_rdkit_cluster_thres,\n" \
-                 "\t\twrite_gaussian=v_write_gaussian,\n" \
-                 "\t\tpattern=v_pattern,\n" \
-                 "\t\tg16_key=v_g16_keywords,\n" \
-                 "\t\tg16_nproc=v_ncpus,\n" \
-                 "\t\tg16_mem=v_mem,\n" \
-                 "\t\tcharge=v_charge,\n" \
-                 "\t\tmultiplicity=v_multiplicity)\n"
+        lines += "    g1.generate_conformers(\n" \
+                 "        v_localdir,\n" \
+                 "        nconfs=v_nconfs,\n" \
+                 "        minimize_iterations=v_min_iter_mm,\n" \
+                 "        maxattempts=v_rdkit_maxattempts,\n" \
+                 "        prunermsthresh=v_rdkit_prunermsthresh,\n" \
+                 "        useexptorsionangleprefs=v_rdkit_useexptorsionangleprefs,\n" \
+                 "        usebasicknowledge=v_rdkit_usebasicknowlwdge,\n" \
+                 "        enforcechirality=v_rdkit_enforcechirality,\n" \
+                 "        ff_name=v_rdkit_ffname,\n" \
+                 "        cluster_method=v_rdkit_cluster_method,\n" \
+                 "        cluster_threshold=v_rdkit_cluster_thres,\n" \
+                 "        write_gaussian=v_write_gaussian,\n" \
+                 "        pattern=v_pattern,\n" \
+                 "        g16_key=v_g16_keywords,\n" \
+                 "        g16_nproc=v_ncpus,\n" \
+                 "        g16_mem=v_mem,\n" \
+                 "        charge=v_charge,\n" \
+                 "        multiplicity=v_multiplicity)\n"
     elif keywords_dict["conformer_program"].upper() == "OPENBABEL":
-        lines += "\tg1 = gecos.GecosPyBabel(\n" \
-                 "\t\tfilename=v_filename,\n" \
-                 "\t\texec_rmsddock=v_dockrmsdpack,\n" \
-                 "\t\ttotal_charge=v_charge,\n" \
-                 "\t\tbond_perception=v_bond_perception,\n" \
-                 "\t\tlogger=log)\n"
+        lines += "    g1 = gecos.GecosPyBabel(\n" \
+                 "        filename=v_filename,\n" \
+                 "        exec_rmsddock=v_dockrmsdpack,\n" \
+                 "        total_charge=v_charge,\n" \
+                 "        bond_perception=v_bond_perception,\n" \
+                 "        logger=log)\n"
         lines += "\n"
-        lines += "\tg1.generate_conformers(\n" \
-                 "\t\tv_localdir,\n" \
-                 "\t\tnconfs=v_nconfs,\n" \
-                 "\t\tminimize_iterations=v_min_iter_mm,\n" \
-                 "\t\trmsd_cutoff_confab=v_openbabel_rmsd_cutoff_confab,\n" \
-                 "\t\tenergy_cutoff_confab=v_openbabel_energy_cutoff_confab,\n" \
-                 "\t\tconfab_verbose_confab=v_openbabel_verbose,\n" \
-                 "\t\tcutoff_rmsddock_confab=v_openbabel_rmsddock_confab,\n" \
-                 "\t\tenergy_threshold_cluster=v_openbabel_cluster_energy_threshold,\n" \
-                 "\t\tmax_number_cluster=v_openbabel_cluster_max_number_cluster,\n" \
-                 "\t\tff_name=v_openbabel_ffname,\n" \
-                 "\t\tpattern=v_pattern,\n" \
-                 "\t\twrite_gaussian=v_write_gaussian,\n" \
-                 "\t\tg16_key=v_g16_keywords,\n" \
-                 "\t\tg16_nproc=v_ncpus,\n" \
-                 "\t\tg16_mem=v_mem,\n" \
-                 "\t\tcharge=v_charge,\n" \
-                 "\t\tmultiplicity=v_multiplicity\n" \
-                 "\t\t)\n"
+        lines += "    g1.generate_conformers(\n" \
+                 "        v_localdir,\n" \
+                 "        nconfs=v_nconfs,\n" \
+                 "        minimize_iterations=v_min_iter_mm,\n" \
+                 "        rmsd_cutoff_confab=v_openbabel_rmsd_cutoff_confab,\n" \
+                 "        energy_cutoff_confab=v_openbabel_energy_cutoff_confab,\n" \
+                 "        confab_verbose_confab=v_openbabel_verbose,\n" \
+                 "        cutoff_rmsddock_confab=v_openbabel_rmsddock_confab,\n" \
+                 "        energy_threshold_cluster=v_openbabel_cluster_energy_threshold,\n" \
+                 "        max_number_cluster=v_openbabel_cluster_max_number_cluster,\n" \
+                 "        ff_name=v_openbabel_ffname,\n" \
+                 "        pattern=v_pattern,\n" \
+                 "        write_gaussian=v_write_gaussian,\n" \
+                 "        g16_key=v_g16_keywords,\n" \
+                 "        g16_nproc=v_ncpus,\n" \
+                 "        g16_mem=v_mem,\n" \
+                 "        charge=v_charge,\n" \
+                 "        multiplicity=v_multiplicity\n" \
+                 "        )\n"
 
         lines += "\n"
     else:
@@ -236,47 +236,47 @@ def create_python_script(filename, keywords_dict, save=True):
         print(msg)
 
     lines += "\n"
-    lines += "\tgecos.send_qm_conformers(" \
-             "\n\t\t\tv_nameserver," \
-             "\n\t\t\tv_databasefullpath," \
-             "\n\t\t\tv_username," \
-             "\n\t\t\tv_keysshfile," \
-             "\n\t\t\tv_localdir," \
-             "\n\t\t\tv_remotedir," \
-             "\n\t\t\tv_g16path,"\
-             "\n\t\t\tregex='*g16*/*.com'," \
-             "\n\t\t\tpartition=v_slurm_part," \
-             "\n\t\t\texclude_nodes=v_list_nodes," \
-             "\n\t\t\tncpus=v_ncpus, " \
-             "\n\t\t\tpartitionmaster=v_slurm_part_master," \
-             "\n\t\t\tnodemaster=v_node_master," \
-             "\n\t\t\tmem=v_mem," \
-             "\n\t\t\tencrypted_pass=v_encrypt_pass,"\
-             "\n\t\t\tlogger=log)\n"
+    lines += "    gecos.send_qm_conformers(" \
+             "\n            v_nameserver," \
+             "\n            v_databasefullpath," \
+             "\n            v_username," \
+             "\n            v_keysshfile," \
+             "\n            v_localdir," \
+             "\n            v_remotedir," \
+             "\n            v_g16path,"\
+             "\n            regex='*g16*/*.com'," \
+             "\n            partition=v_slurm_part," \
+             "\n            exclude_nodes=v_list_nodes," \
+             "\n            ncpus=v_ncpus, " \
+             "\n            partitionmaster=v_slurm_part_master," \
+             "\n            nodemaster=v_node_master," \
+             "\n            mem=v_mem," \
+             "\n            encrypted_pass=v_encrypt_pass,"\
+             "\n            logger=log)\n"
     lines += "\n"
     lines += "else:\n"
     lines += "\n"
-    lines += "\tlog = utils.init_logger(" \
-             "\n\t\t\t\"Output2\"," \
-             "\n\t\t\tfileoutput=v_fileoutputfullpath," \
-             "\n\t\t\tappend=True," \
-             "\n\t\t\tinscreen=False)\n"
+    lines += "    log = utils.init_logger(" \
+             "\n            \"Output2\"," \
+             "\n            fileoutput=v_fileoutputfullpath," \
+             "\n            append=True," \
+             "\n            inscreen=False)\n"
     lines += "\n"
-    lines += "\tv_outdir = os.path.join(v_localdir, v_pattern + '_g16_conformers')\n"
+    lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_conformers')\n"
     lines += "\n"
     lines += "\tgecos.check_qm_jobs(" \
-             "\n\t\t\tv_nameserver," \
-             "\n\t\t\tv_databasefullpath," \
-             "\n\t\t\tv_username," \
-             "\n\t\t\tv_keysshfile," \
-             "\n\t\t\tv_localdir," \
-             "\n\t\t\tv_remotedir," \
-             "\n\t\t\tv_outdir," \
-             "\n\t\t\tv_pattern," \
-             "\n\t\t\tv_dockrmsdpack," \
-             "\n\t\t\tencrypted_pass=v_encrypt_pass," \
-             "\n\t\t\tcutoff_rmsd=v_cutoff_rmsd_qm," \
-             "\n\t\t\tlogger=log)\n"
+             "\n            v_nameserver," \
+             "\n            v_databasefullpath," \
+             "\n            v_username," \
+             "\n            v_keysshfile," \
+             "\n            v_localdir," \
+             "\n            v_remotedir," \
+             "\n            v_outdir," \
+             "\n            v_pattern," \
+             "\n            v_dockrmsdpack," \
+             "\n            encrypted_pass=v_encrypt_pass," \
+             "\n            cutoff_rmsd=v_cutoff_rmsd_qm," \
+             "\n            logger=log)\n"
 
     lines += "\nprint(\"Job Done!!!\")\n"
 
