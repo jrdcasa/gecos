@@ -303,7 +303,10 @@ def main_gui_app():
         filename_python = opts.pythonfile
 
     local_dir = os.getcwd()
-    database_name = glob.glob("*.db")[0]
+    try:
+        database_name = glob.glob("*.db")[0]
+    except IndexError:
+        database_name = "None"
     print("Local_dir    : {}".format(local_dir))
     print("Database Name: {}".format(database_name))
 

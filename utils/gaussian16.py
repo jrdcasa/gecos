@@ -12,7 +12,7 @@ def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=N
 
     Args:
         listfiles:
-        g16path: example: /opt/gaussian/g16_legacy
+        g16exec: example: /opt/gaussian/g16_legacy
         partition:
         exclude_nodes:
         ncpus:
