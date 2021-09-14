@@ -5,3 +5,6 @@ dist/
 *egg*/
 tests_pysimplegui/
 *.swp
+install.log
+.idea/*
+tests_pysimplegui/*
