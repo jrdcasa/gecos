@@ -15,10 +15,10 @@ if [[ -f "$input" ]]; then
         echo $p >>"summary.txt"
         if [[ ! -z `echo $p | egrep "COMPLETED"` ]]; then
             en=`egrep "E\("  $output | tail -1 |awk '{print $5}'`
-            enmp2=`egrep "UMP2" $output | awk '{{print $6}}'|tr 'D' 'E'`
+            enmp2=`egrep "UMP2" $output | tail -1 | awk '{{print $6}}'|tr 'D' 'E'`
             [[ -z "$enmp2" ]] && en=$en || tmp=$enmp2
             [[ ! -z "$tmp" ]] && en=$(printf "%.14f" $tmp)
-            time_s=`egrep 'Elapsed' $output  | awk '{print $3*86400+$5*3600+$7*60+$9}'`
+            time_s=`egrep 'Elapsed' $output  | awk '{print $3*86400+$5*3600+$7*60+$9}' | tail -1`
 
             if [ $index -eq 0 ]; then
                  e0=$en

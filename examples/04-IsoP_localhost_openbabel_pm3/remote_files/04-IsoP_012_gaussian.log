@@ -2,8 +2,8 @@
  Input=04-IsoP_012_gaussian.com
  Output=04-IsoP_012_gaussian.log
  Initial command:
- /opt/g16/l1.exe "/tmp/Gau-2765838.inp" -scrdir="/tmp/"
- Entering Link 1 = /opt/g16/l1.exe PID=   2765840.
+ /opt/g16/l1.exe "/tmp/Gau-170601.inp" -scrdir="/tmp/"
+ Entering Link 1 = /opt/g16/l1.exe PID=    170612.
   
  Copyright (c) 1988,1990,1992,1993,1995,1998,2003,2009,2016,
             Gaussian, Inc.  All Rights Reserved.
@@ -77,7 +77,7 @@
  
  ******************************************
  Gaussian 16:  ES64L-G16RevA.03 25-Dec-2016
-                27-Jul-2021 
+                17-Sep-2021 
  ******************************************
  %chk=04-IsoP_012_gaussian.chk
  %nproc=1
@@ -105,7 +105,7 @@
  2/9=110/2;
  6/7=2,8=2,9=2,10=2,19=2,28=1/1;
  99/9=1/99;
- Leave Link    1 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link    1 at Fri Sep 17 19:55:14 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l101.exe)
  -------------------------------------------------
  Conformer number 012. Energy MM = 26.413 kcal/mol
@@ -177,7 +177,7 @@
  NQMom=    0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000   0.0000000
  NMagM=    2.7928460   2.7928460   2.7928460   0.0000000   2.7928460   0.0000000   2.7928460   2.7928460
  AtZNuc=   1.0000000   1.0000000   1.0000000   6.0000000   1.0000000   6.0000000   1.0000000   1.0000000
- Leave Link  101 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.2 elap:               0.2
+ Leave Link  101 at Fri Sep 17 19:55:15 2021, MaxMem=   131072000 cpu:               0.3 elap:               0.5
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -322,7 +322,7 @@
  Number of steps in this run=    138 maximum allowed number of steps=    168.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:15 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -499,7 +499,7 @@
      28          1           0        1.238439   -2.238237    0.189965
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           1.8966297           0.6642364           0.5775580
- Leave Link  202 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:15 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -518,7 +518,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:16 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -526,14 +526,14 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:16 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:16 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Simple Huckel Guess.
  JPrj=0 DoOrth=F DoCkMO=F.
- Leave Link  401 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:16 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -689,7 +689,7 @@
  SCF Done:  E(RPM3) = -0.194517552553E-01 A.U. after   12 cycles
             NFock= 11  Conv=0.56D-08     -V/T= 0.9998
  KE=-7.901829358689D+01 PE=-5.027484751806D+02 EE= 2.715497306057D+02
- Leave Link  502 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:17 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l601.exe)
  Copying SCF densities to generalized density rwf, IOpCl= 0 IROHF=0.
 
@@ -912,14 +912,14 @@
  Dipole moment (field-independent basis, Debye):
     X=              0.0321    Y=              0.0226    Z=              0.1079  Tot=              0.1148
  N-N= 3.101975864065D+02 E-N=-5.027484753874D+02  KE=-7.901829358689D+01
- Leave Link  601 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  601 at Fri Sep 17 19:55:17 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:17 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:17 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -931,7 +931,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:17 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 1.26252943D-02 8.88782112D-03 4.24584472D-02
  ***** Axes restored to original set *****
@@ -969,7 +969,7 @@
      28        1          -0.008776054    0.001212221   -0.004396811
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.018634447 RMS     0.005710240
- Leave Link  716 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -1145,7 +1145,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -1323,7 +1323,7 @@
      28          1           0        1.250005   -2.167889    0.117959
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.0052850           0.6759263           0.5897575
- Leave Link  202 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -1342,7 +1342,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -1350,17 +1350,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000   -0.000000
          Rot=    0.999955   -0.009295    0.000324    0.001620 Ang=  -1.08 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:18 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.3
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -1503,14 +1503,14 @@
  SCF Done:  E(RPM3) = -0.232377989532E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.66D-08     -V/T= 0.9997
  KE=-7.912144279756D+01 PE=-5.078631400869D+02 EE= 2.740967765518D+02
- Leave Link  502 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -1522,7 +1522,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 1.82013250D-02-1.54911028D-02 3.00403247D-02
  ***** Axes restored to original set *****
@@ -1560,7 +1560,7 @@
      28        1          -0.002355862    0.001163214   -0.000681883
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.006481597 RMS     0.002078690
- Leave Link  716 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -1741,7 +1741,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -1919,7 +1919,7 @@
      28          1           0        1.261947   -2.073403    0.047196
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.1168326           0.6339876           0.5607471
- Leave Link  202 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -1938,7 +1938,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:19 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -1946,17 +1946,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    0.999893   -0.013934    0.003481   -0.002829 Ang=  -1.68 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -2113,14 +2113,14 @@
  SCF Done:  E(RPM3) = -0.246323934754E-01 A.U. after   12 cycles
             NFock= 11  Conv=0.29D-08     -V/T= 0.9997
  KE=-7.910959575181D+01 PE=-5.045160621123D+02 EE= 2.724452149194D+02
- Leave Link  502 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -2132,7 +2132,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.37580026D-02-4.39552114D-02 1.15778322D-02
  ***** Axes restored to original set *****
@@ -2170,7 +2170,7 @@
      28        1           0.001255860   -0.001715030    0.000994326
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.003938856 RMS     0.001197293
- Leave Link  716 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -2351,7 +2351,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -2529,7 +2529,7 @@
      28          1           0        1.234673   -2.037539   -0.012645
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.2092962           0.6059977           0.5431525
- Leave Link  202 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -2548,7 +2548,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:20 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -2556,17 +2556,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    0.999873   -0.014888    0.002753   -0.005024 Ang=  -1.83 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -2710,14 +2710,14 @@
  SCF Done:  E(RPM3) = -0.252864241214E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.94D-08     -V/T= 0.9997
  KE=-7.911032633939D+01 PE=-5.024747230326D+02 EE= 2.714403242665D+02
- Leave Link  502 at Tue Jul 27 12:13:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -2729,7 +2729,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.81707319D-02-5.36553752D-02-1.17724454D-02
  ***** Axes restored to original set *****
@@ -2767,7 +2767,7 @@
      28        1           0.004108523   -0.000614710    0.001194591
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.005023751 RMS     0.001812914
- Leave Link  716 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -2948,7 +2948,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -3126,7 +3126,7 @@
      28          1           0        1.214684   -2.036280    0.004033
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.2352796           0.5892275           0.5266254
- Leave Link  202 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:21 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -3145,7 +3145,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -3153,17 +3153,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000    0.000000
          Rot=    0.999977    0.006434   -0.001903    0.000317 Ang=   0.77 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -3293,14 +3293,14 @@
  SCF Done:  E(RPM3) = -0.258890329274E-01 A.U. after   10 cycles
             NFock=  9  Conv=0.89D-08     -V/T= 0.9997
  KE=-7.908710680468D+01 PE=-4.997874303526D+02 EE= 2.700879185123D+02
- Leave Link  502 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:22 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -3312,7 +3312,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 2.59763130D-02-4.84789060D-02 9.76577125D-03
  ***** Axes restored to original set *****
@@ -3350,7 +3350,7 @@
      28        1           0.001690681    0.000875160   -0.000060383
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.004768390 RMS     0.001089407
- Leave Link  716 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -3530,7 +3530,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -3708,7 +3708,7 @@
      28          1           0        1.228187   -2.006574    0.053743
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.2496035           0.5916846           0.5284837
- Leave Link  202 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -3727,7 +3727,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -3735,17 +3735,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000    0.000000   -0.000000
          Rot=    0.999992   -0.002299    0.001009   -0.003011 Ang=  -0.45 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -3888,14 +3888,14 @@
  SCF Done:  E(RPM3) = -0.262847933240E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.41D-08     -V/T= 0.9997
  KE=-7.911526215883D+01 PE=-5.007837987009D+02 EE= 2.705750516481D+02
- Leave Link  502 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:23 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -3907,7 +3907,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.42301074D-02-5.23477468D-02 5.67119718D-03
  ***** Axes restored to original set *****
@@ -3945,7 +3945,7 @@
      28        1          -0.000588060   -0.001261174   -0.000266679
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.003732792 RMS     0.000917290
- Leave Link  716 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -4126,7 +4126,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -4304,7 +4304,7 @@
      28          1           0        1.212555   -1.993353    0.060609
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.2980232           0.5811573           0.5181928
- Leave Link  202 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -4323,7 +4323,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -4331,17 +4331,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    0.999989   -0.004541   -0.000886   -0.001122 Ang=  -0.55 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:24 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -4484,14 +4484,14 @@
  SCF Done:  E(RPM3) = -0.266440186424E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.32D-08     -V/T= 0.9997
  KE=-7.911860737329D+01 PE=-4.997066248934D+02 EE= 2.700360814959D+02
- Leave Link  502 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -4503,7 +4503,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.15379273D-02-5.43568978D-02-1.15657402D-03
  ***** Axes restored to original set *****
@@ -4541,7 +4541,7 @@
      28        1          -0.001422254   -0.000412632   -0.000675129
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.002165173 RMS     0.000712701
- Leave Link  716 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -4722,7 +4722,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -4900,7 +4900,7 @@
      28          1           0        1.190142   -1.974809    0.107251
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3422607           0.5720989           0.5084061
- Leave Link  202 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -4919,7 +4919,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -4927,17 +4927,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  303 at Fri Sep 17 19:55:25 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000   -0.000000
          Rot=    0.999989   -0.003699    0.000033   -0.002764 Ang=  -0.53 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -5094,14 +5094,14 @@
  SCF Done:  E(RPM3) = -0.269000714190E-01 A.U. after   12 cycles
             NFock= 11  Conv=0.28D-08     -V/T= 0.9997
  KE=-7.911990252760D+01 PE=-4.987563742384D+02 EE= 2.695621495155D+02
- Leave Link  502 at Tue Jul 27 12:13:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
+ Leave Link  701 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.2
+ Leave Link  702 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -5113,7 +5113,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.39138233D-02-5.81643763D-02-1.68318683D-02
  ***** Axes restored to original set *****
@@ -5151,7 +5151,7 @@
      28        1          -0.001649407    0.000820025   -0.000738089
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.001649407 RMS     0.000467747
- Leave Link  716 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  716 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -5337,7 +5337,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -5515,7 +5515,7 @@
      28          1           0        1.189361   -1.948527    0.138299
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3800186           0.5667498           0.5027235
- Leave Link  202 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -5534,7 +5534,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -5542,17 +5542,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:26 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    0.999995   -0.003162    0.000115   -0.000682 Ang=  -0.37 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -5709,14 +5709,14 @@
  SCF Done:  E(RPM3) = -0.270947891632E-01 A.U. after   12 cycles
             NFock= 11  Conv=0.21D-08     -V/T= 0.9997
  KE=-7.912463187644D+01 PE=-4.983500983795D+02 EE= 2.693631785235D+02
- Leave Link  502 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -5728,7 +5728,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.34667625D-02-6.22316595D-02-2.90793791D-02
  ***** Axes restored to original set *****
@@ -5766,7 +5766,7 @@
      28        1           0.000263095    0.000181987   -0.000236244
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000766011 RMS     0.000315859
- Leave Link  716 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -5952,7 +5952,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -6130,7 +6130,7 @@
      28          1           0        1.189574   -1.937678    0.183068
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3833948           0.5645715           0.4998564
- Leave Link  202 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -6149,7 +6149,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:27 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -6157,17 +6157,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000    0.000000   -0.000000
          Rot=    0.999997   -0.002537    0.000196   -0.000510 Ang=  -0.30 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -6310,14 +6310,14 @@
  SCF Done:  E(RPM3) = -0.272369199005E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.85D-08     -V/T= 0.9997
  KE=-7.912213250924D+01 PE=-4.979373123606D+02 EE= 2.691565133333D+02
- Leave Link  502 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  702 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -6329,7 +6329,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:28 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.53885580D-02-6.45030979D-02-4.12467376D-02
  ***** Axes restored to original set *****
@@ -6367,7 +6367,7 @@
      28        1           0.000376302    0.000286373   -0.000142163
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000767138 RMS     0.000277369
- Leave Link  716 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -6553,7 +6553,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -6731,7 +6731,7 @@
      28          1           0        1.192246   -1.921142    0.286145
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3756688           0.5642294           0.4975985
- Leave Link  202 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -6750,7 +6750,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -6758,17 +6758,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.3
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000   -0.000000   -0.000000
          Rot=    0.999993   -0.003490    0.000550   -0.000774 Ang=  -0.41 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -6925,14 +6925,14 @@
  SCF Done:  E(RPM3) = -0.274310576423E-01 A.U. after   12 cycles
             NFock= 11  Conv=0.35D-08     -V/T= 0.9997
  KE=-7.912101364949D+01 PE=-4.976373221328D+02 EE= 2.690057350090D+02
- Leave Link  502 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:29 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -6944,7 +6944,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.41253004D-02-6.85824691D-02-5.91819069D-02
  ***** Axes restored to original set *****
@@ -6982,7 +6982,7 @@
      28        1           0.000364619    0.000610859    0.000102046
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000932182 RMS     0.000285759
- Leave Link  716 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -7167,7 +7167,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -7345,7 +7345,7 @@
      28          1           0        1.208990   -1.908457    0.323271
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3599380           0.5668519           0.4995502
- Leave Link  202 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -7364,7 +7364,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -7372,17 +7372,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  303 at Fri Sep 17 19:55:30 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000   -0.000000
          Rot=    0.999997   -0.002396    0.000456   -0.000101 Ang=  -0.28 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -7512,14 +7512,14 @@
  SCF Done:  E(RPM3) = -0.274952419438E-01 A.U. after   10 cycles
             NFock=  9  Conv=0.61D-08     -V/T= 0.9997
  KE=-7.912253848815D+01 PE=-4.978635919989D+02 EE= 2.691189929646D+02
- Leave Link  502 at Tue Jul 27 12:13:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -7531,7 +7531,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.42847556D-02-7.15093711D-02-6.02002833D-02
  ***** Axes restored to original set *****
@@ -7569,7 +7569,7 @@
      28        1           0.000854992   -0.000773693   -0.000020291
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000854992 RMS     0.000208520
- Leave Link  716 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -7756,7 +7756,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -7934,7 +7934,7 @@
      28          1           0        1.200809   -1.903051    0.402172
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3574451           0.5658299           0.4983409
- Leave Link  202 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -7953,7 +7953,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:31 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -7961,17 +7961,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    0.999999   -0.000007    0.000723   -0.000996 Ang=  -0.14 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -8114,14 +8114,14 @@
  SCF Done:  E(RPM3) = -0.275280588870E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.63D-08     -V/T= 0.9997
  KE=-7.912255081070D+01 PE=-4.976778614725D+02 EE= 2.690242324788D+02
- Leave Link  502 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -8133,7 +8133,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:32 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.18754226D-02-7.31362060D-02-7.25654565D-02
  ***** Axes restored to original set *****
@@ -8171,7 +8171,7 @@
      28        1          -0.000354785    0.000603408    0.000101495
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000654319 RMS     0.000148701
- Leave Link  716 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -8358,7 +8358,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -8536,7 +8536,7 @@
      28          1           0        1.207841   -1.903329    0.318088
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3768796           0.5638283           0.4980659
- Leave Link  202 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -8555,7 +8555,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -8563,17 +8563,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000   -0.000000   -0.000000
          Rot=    0.999997    0.002152   -0.000503    0.000495 Ang=   0.26 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.3
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -8717,14 +8717,14 @@
  SCF Done:  E(RPM3) = -0.274811614819E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.82D-08     -V/T= 0.9997
  KE=-7.912510296973D+01 PE=-4.977157649791D+02 EE= 2.690452277671D+02
- Leave Link  502 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:33 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -8736,7 +8736,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.40869829D-02-7.25242300D-02-5.57535932D-02
  ***** Axes restored to original set *****
@@ -8774,7 +8774,7 @@
      28        1           0.000722058   -0.001073427   -0.000151410
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.001103329 RMS     0.000221078
- Leave Link  716 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -8980,7 +8980,7 @@
  Predicted change in Energy=-6.223519D-05
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -9158,7 +9158,7 @@
      28          1           0        1.203340   -1.899352    0.376628
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3721122           0.5635470           0.4973498
- Leave Link  202 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -9177,7 +9177,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -9185,17 +9185,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000    0.000000    0.000000
          Rot=    0.999999   -0.000740    0.000495   -0.000633 Ang=  -0.13 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -9338,14 +9338,14 @@
  SCF Done:  E(RPM3) = -0.275527426147E-01 A.U. after   11 cycles
             NFock= 10  Conv=0.61D-08     -V/T= 0.9997
  KE=-7.912418514058D+01 PE=-4.975842615130D+02 EE= 2.689781442697D+02
- Leave Link  502 at Tue Jul 27 12:13:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:34 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -9357,7 +9357,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.27688417D-02-7.36476380D-02-6.54723222D-02
  ***** Axes restored to original set *****
@@ -9395,7 +9395,7 @@
      28        1          -0.000099636    0.000003303   -0.000045208
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000115871 RMS     0.000027829
- Leave Link  716 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -9586,7 +9586,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -9764,7 +9764,7 @@
      28          1           0        1.203800   -1.899593    0.368876
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3738031           0.5634017           0.4973353
- Leave Link  202 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -9783,7 +9783,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -9791,17 +9791,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000   -0.000000    0.000000
          Rot=    1.000000    0.000187   -0.000057    0.000040 Ang=   0.02 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -9917,14 +9917,14 @@
  SCF Done:  E(RPM3) = -0.275496573031E-01 A.U. after    9 cycles
             NFock=  8  Conv=0.76D-08     -V/T= 0.9997
  KE=-7.912451199503D+01 PE=-4.975917461504D+02 EE= 2.689820120065D+02
- Leave Link  502 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:35 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -9936,7 +9936,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.29741183D-02-7.35231521D-02-6.40471224D-02
  ***** Axes restored to original set *****
@@ -9974,7 +9974,7 @@
      28        1          -0.000053746   -0.000137961   -0.000082716
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000167408 RMS     0.000048121
- Leave Link  716 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -10210,7 +10210,7 @@
  Predicted change in Energy=-6.935868D-06
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -10388,7 +10388,7 @@
      28          1           0        1.203371   -1.894182    0.395768
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3759513           0.5624336           0.4967234
- Leave Link  202 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -10407,7 +10407,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -10415,17 +10415,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000   -0.000000
          Rot=    1.000000    0.000231    0.000365   -0.000370 Ang=   0.07 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:36 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -10555,14 +10555,14 @@
  SCF Done:  E(RPM3) = -0.275565632817E-01 A.U. after   10 cycles
             NFock=  9  Conv=0.51D-08     -V/T= 0.9997
  KE=-7.912454990656D+01 PE=-4.974943911853D+02 EE= 2.689331213870D+02
- Leave Link  502 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -10574,7 +10574,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.23226889D-02-7.48849127D-02-6.64936052D-02
  ***** Axes restored to original set *****
@@ -10612,7 +10612,7 @@
      28        1          -0.000162392    0.000064922   -0.000029678
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000162392 RMS     0.000049774
- Leave Link  716 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -10812,7 +10812,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -10990,7 +10990,7 @@
      28          1           0        1.204105   -1.894526    0.389583
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3763058           0.5625023           0.4968127
- Leave Link  202 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -11009,7 +11009,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -11017,17 +11017,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000   -0.000000
          Rot=    1.000000   -0.000043   -0.000033    0.000068 Ang=  -0.01 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:37 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -11143,14 +11143,14 @@
  SCF Done:  E(RPM3) = -0.275588856779E-01 A.U. after    9 cycles
             NFock=  8  Conv=0.59D-08     -V/T= 0.9997
  KE=-7.912446196656D+01 PE=-4.975085390576D+02 EE= 2.689403804730D+02
- Leave Link  502 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -11162,7 +11162,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.29038660D-02-7.46378426D-02-6.59454793D-02
  ***** Axes restored to original set *****
@@ -11200,7 +11200,7 @@
      28        1          -0.000016948   -0.000026237   -0.000031432
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000075237 RMS     0.000022615
- Leave Link  716 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -11400,7 +11400,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -11578,7 +11578,7 @@
      28          1           0        1.204633   -1.892959    0.391120
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3776200           0.5622703           0.4966772
- Leave Link  202 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -11597,7 +11597,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -11605,17 +11605,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000    0.000000    0.000000
          Rot=    1.000000    0.000264    0.000067   -0.000001 Ang=   0.03 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:38 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -11731,14 +11731,14 @@
  SCF Done:  E(RPM3) = -0.275617595480E-01 A.U. after    9 cycles
             NFock=  8  Conv=0.67D-08     -V/T= 0.9997
  KE=-7.912435603227D+01 PE=-4.974924052987D+02 EE= 2.689324759536D+02
- Leave Link  502 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -11750,7 +11750,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  703 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.30898866D-02-7.49367272D-02-6.54077784D-02
  ***** Axes restored to original set *****
@@ -11788,7 +11788,7 @@
      28        1           0.000120270   -0.000073966   -0.000011651
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000120270 RMS     0.000033988
- Leave Link  716 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  716 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -11984,7 +11984,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -12162,7 +12162,7 @@
      28          1           0        1.204529   -1.891840    0.399413
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3760108           0.5625088           0.4967297
- Leave Link  202 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -12181,7 +12181,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -12189,17 +12189,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.3
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:39 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000   -0.000000    0.000000
          Rot=    1.000000    0.000162    0.000072   -0.000006 Ang=   0.02 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -12315,14 +12315,14 @@
  SCF Done:  E(RPM3) = -0.275637081023E-01 A.U. after    9 cycles
             NFock=  8  Conv=0.95D-08     -V/T= 0.9997
  KE=-7.912431536046D+01 PE=-4.975011818836D+02 EE= 2.689367424911D+02
- Leave Link  502 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -12334,7 +12334,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.28076583D-02-7.51831754D-02-6.56827746D-02
  ***** Axes restored to original set *****
@@ -12372,7 +12372,7 @@
      28        1           0.000062439   -0.000005494    0.000006771
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000062439 RMS     0.000020712
- Leave Link  716 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -12570,7 +12570,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -12748,7 +12748,7 @@
      28          1           0        1.204454   -1.892232    0.399665
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3746308           0.5628344           0.4968742
- Leave Link  202 at Tue Jul 27 12:13:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -12767,7 +12767,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:40 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -12775,17 +12775,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000   -0.000000   -0.000000
          Rot=    1.000000    0.000031   -0.000022    0.000056 Ang=   0.01 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -12900,14 +12900,14 @@
  SCF Done:  E(RPM3) = -0.275640397138E-01 A.U. after    9 cycles
             NFock=  8  Conv=0.21D-08     -V/T= 0.9997
  KE=-7.912438202826D+01 PE=-4.975256409731D+02 EE= 2.689489289088D+02
- Leave Link  502 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -12919,7 +12919,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.26264913D-02-7.50893964D-02-6.53521988D-02
  ***** Axes restored to original set *****
@@ -12957,7 +12957,7 @@
      28        1           0.000025859   -0.000006356    0.000005756
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000025859 RMS     0.000007928
- Leave Link  716 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:41 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -13156,7 +13156,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -13334,7 +13334,7 @@
      28          1           0        1.204375   -1.892800    0.399372
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3734295           0.5630848           0.4969982
- Leave Link  202 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -13353,7 +13353,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  301 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -13361,17 +13361,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  303 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=     0.000000   -0.000000   -0.000000
          Rot=    1.000000   -0.000074   -0.000010    0.000037 Ang=  -0.01 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -13473,14 +13473,14 @@
  SCF Done:  E(RPM3) = -0.275641708135E-01 A.U. after    8 cycles
             NFock=  7  Conv=0.85D-08     -V/T= 0.9997
  KE=-7.912441673819D+01 PE=-4.975433478773D+02 EE= 2.689577361085D+02
- Leave Link  502 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  502 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:42 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -13492,7 +13492,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.25707550D-02-7.48962030D-02-6.51750460D-02
  ***** Axes restored to original set *****
@@ -13530,7 +13530,7 @@
      28        1          -0.000009167   -0.000001138   -0.000000349
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000018896 RMS     0.000004927
- Leave Link  716 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -13730,7 +13730,7 @@
  Lowest energy point so far.  Saving SCF results.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -13908,7 +13908,7 @@
      28          1           0        1.204350   -1.892871    0.399049
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3734666           0.5630823           0.4969981
- Leave Link  202 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l301.exe)
  Standard basis: VSTO-6G (5D, 7F)
  Ernie: Thresh=  0.10000D-02 Tol=  0.10000D-05 Strict=F.
@@ -13927,7 +13927,7 @@
  Integral buffers will be    131072 words long.
  Regular integral format.
  Two-electron integral symmetry is turned off.
- Leave Link  301 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  301 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l302.exe)
  Do NDO integrals.
  NPDir=0 NMtPBC=     1 NCelOv=     1 NCel=       1 NClECP=     1 NCelD=      1
@@ -13935,17 +13935,17 @@
  One-electron integrals computed using PRISM.
  NBasis=    58 RedAO= F EigKep=  0.00D+00  NBF=    58
  NBsUse=    58 1.00D-04 EigRej=  0.00D+00 NBFU=    58
- Leave Link  302 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  302 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.3
  (Enter /opt/g16/l303.exe)
  DipDrv:  MaxL=1.
- Leave Link  303 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
+ Leave Link  303 at Fri Sep 17 19:55:43 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l401.exe)
  Initial guess from the checkpoint file:  "04-IsoP_012_gaussian.chk"
  B after Tr=    -0.000000    0.000000    0.000000
          Rot=    1.000000   -0.000002    0.000001    0.000002 Ang=  -0.00 deg.
  Guess basis will be translated and rotated to current coordinates.
  JPrj=0 DoOrth=T DoCkMO=T.
- Leave Link  401 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  401 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.2
  (Enter /opt/g16/l502.exe)
  Keep J ints in memory in canonical form, NReq=866866.
  FoFCou: FMM=F IPFlag=           0 FMFlag=           0 FMFlg1=           0
@@ -14046,14 +14046,14 @@
  SCF Done:  E(RPM3) = -0.275641866687E-01 A.U. after    8 cycles
             NFock=  7  Conv=0.35D-08     -V/T= 0.9997
  KE=-7.912441027884D+01 PE=-4.975433366471D+02 EE= 2.689577338279D+02
- Leave Link  502 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  502 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l701.exe)
  ... and contract with generalized density number  0.
  Compute integral first derivatives.
- Leave Link  701 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
+ Leave Link  701 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l702.exe)
  L702 exits ... SP integral derivatives will be done elsewhere.
- Leave Link  702 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  702 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l703.exe)
  Integral derivatives from FoFJK, PRISM(SPDF).
  Compute integral first derivatives, UseDBF=F ICtDFT=           0.
@@ -14065,7 +14065,7 @@
          wScrn=  0.000000 ICntrl=      2127 IOpCl=  0 I1Cent=           0 NGrid=           0
          NMat0=    1 NMatS0=      1 NMatT0=    0 NMatD0=    1 NMtDS0=    0 NMtDT0=    0
  Symmetry not used in FoFCou.
- Leave Link  703 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  703 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.1
  (Enter /opt/g16/l716.exe)
  Dipole        = 3.25378073D-02-7.48810631D-02-6.50592760D-02
  ***** Axes restored to original set *****
@@ -14103,7 +14103,7 @@
      28        1          -0.000007842   -0.000002443   -0.000000521
  -------------------------------------------------------------------
  Cartesian Forces:  Max     0.000011786 RMS     0.000003777
- Leave Link  716 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.1 elap:               0.0
+ Leave Link  716 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l103.exe)
 
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
@@ -14441,7 +14441,7 @@
  Largest change from initial coordinates is atom   22       0.405 Angstoms.
  GradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGradGrad
 
- Leave Link  103 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  103 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l202.exe)
                           Input orientation:                          
  ---------------------------------------------------------------------
@@ -14619,7 +14619,7 @@
      28          1           0        1.204350   -1.892871    0.399049
  ---------------------------------------------------------------------
  Rotational constants (GHZ):           2.3734666           0.5630823           0.4969981
- Leave Link  202 at Tue Jul 27 12:13:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  202 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
  (Enter /opt/g16/l601.exe)
  Copying SCF densities to generalized density rwf, IOpCl= 0 IROHF=0.
 
@@ -14842,9 +14842,9 @@
  Dipole moment (field-independent basis, Debye):
     X=              0.0827    Y=             -0.1903    Z=             -0.1654  Tot=              0.2653
  N-N= 3.076824489113D+02 E-N=-4.975433366645D+02  KE=-7.912441027884D+01
- Leave Link  601 at Tue Jul 27 12:13:45 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.0
+ Leave Link  601 at Fri Sep 17 19:55:44 2021, MaxMem=   131072000 cpu:               0.0 elap:               0.1
  (Enter /opt/g16/l9999.exe)
- 1\1\GINC-TOTEM\FOpt\RPM3\ZDO\C10H18\JRAMOS\27-Jul-2021\0\\#p opt pm3\\
+ 1\1\GINC-TOTEM\FOpt\RPM3\ZDO\C10H18\JRAMOS\17-Sep-2021\0\\#p opt pm3\\
  Conformer number 012. Energy MM = 26.413 kcal/mol\\0,1\C,2.5117085497,
  1.3656131795,-9.2602082994\H,2.1365392432,0.3706077756,-9.5732610899\H
  ,2.5954862593,1.9639860782,-10.1889788999\C,3.8506908081,1.1805996943,
@@ -14867,10 +14867,18 @@
  -0.0403444,0.0690578\PG=C01 [X(C10H18)]\\@
 
 
- STEINBACH'S GUIDELINES FOR SYSTEMS PROGRAMMING:
- NEVER TEST FOR AN ERROR CONDITION YOU DON'T KNOW HOW
- TO HANDLE.
- Job cpu time:       0 days  0 hours  0 minutes 15.1 seconds.
- Elapsed time:       0 days  0 hours  0 minutes 14.3 seconds.
+ THESE ARE THE TIMES THAT TRY MENS SOULS.
+ THE SUMMER SOLDIER AND THE SUNSHINE PATRIOT WILL IN THIS CRISIS,
+ SHRINK FROM THE SERVICE OF HIS COUNTRY.  BUT HE THAT STANDS NOW,
+ DESERVES THE LOVE AND THANKS OF MAN AND WOMAN.
+ TYRANNY, LIKE HELL, IS NOT EASILY CONQUERED,
+ YET WE HAVE THIS CONSOLATION WITH US,
+ THAT THE HARDER THE CONFLICT, THE MORE GLORIOUS THE TRIUMPH.
+ WHAT WE OBTAIN TOO CHEAP, WE ESTEEM TOO LIGHTLY, 
+ 'TIS DEARNESS ONLY THAT GIVES EVERYTHING ITS VALUE.
+
+                                              -- TOM PAINE
+ Job cpu time:       0 days  0 hours  0 minutes 18.6 seconds.
+ Elapsed time:       0 days  0 hours  0 minutes 24.9 seconds.
  File lengths (MBytes):  RWF=      6 Int=      0 D2E=      0 Chk=      2 Scr=      1
- Normal termination of Gaussian 16 at Tue Jul 27 12:13:45 2021.
+ Normal termination of Gaussian 16 at Fri Sep 17 19:55:44 2021.

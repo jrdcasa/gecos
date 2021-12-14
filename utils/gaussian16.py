@@ -81,37 +81,37 @@ def generate_bashscript_send_slurm(localdir, maxjobsslurm=50):
         ll += '\n'
         ll += 'NJOBS=`squeue -h |wc -ll`\n'
         ll += '\n'
-        ll += 'while true; do\n'
-        ll += '    for ifile in `ls *.com`; do\n'
-        ll += '        base="${ifile%.*}"\n'
-        ll += '        echo $idir, $base, ${NJOBS}, ${JOBSEND}, ${TOTALJOBS}\n'
+        ll += 'COM=(`ls *.com`)\n'
+        ll += 'LENGTH=${#COM[@]}\n'
         ll += '\n'
-        ll += '        if [[ ! -e ./jobs.txt ]]; then\n'
-        ll += '            echo -n >./jobs.txt\n'
-        ll += '        fi\n'
+
+        ll += 'if [[ ! -e ./jobs.txt ]]; then\n'
+        ll += '    echo -n >./jobs.txt\n'
+        ll += 'fi\n'
         ll += '\n'
-        ll += '        if [[ $NJOBS -lt $MAXJOBSINSLURM  ]]; then\n'
-        ll += '            if [[  -z `egrep $ifile ./jobs.txt` ]]; then\n'
-        ll += '                sbatch ${base}.sh 1>tmp.txt;\n'
-        ll += '                jobid=`awk \'{print $NF}\' tmp.txt`\n'
-        ll += '                echo "${jobid} ${base} ${base}.log" >>./jobs.txt\n'
-        ll += '                rm tmp.txt\n'
-        ll += '            fi\n'
-        ll += '        fi\n'
+        ll += 'index=0\n'
+        ll += 'while [ ${index} -lt ${LENGTH} ]; do\n'
         ll += '\n'
-        ll += '        NJOBS=`squeue -h |wc -ll`\n'
-        ll += '        #echo $NJOBS\n'
-        ll += '        JOBSEND=`cat ./jobs.txt | wc -ll`\n'
-        ll += '        TOTALJOBS=`ls -ld ./*_[0-9]*com |wc -ll`\n'
-        ll += '        echo "JOBSEND: ${JOBSEND}, TOTALJOBS: ${TOTALJOBS}"\n'
+        ll += '    current=${COM[$index]}\n'
         ll += '\n'
-        ll += '    done\n'
-        ll += '    if [[ ${JOBSEND} -ge ${TOTALJOBS} ]]; then\n'
-        ll += '        break\n'
+        ll += '    if [[ $NJOBS -lt $MAXJOBSINSLURM ]]; then\n'
+        ll += '        base="${COM[$index]%.*}"\n'
+        ll += '        sbatch ${base}.sh  1 > tmp.txt\n'
+        ll += '        jobid=`awk \'{print $NF}\' tmp.txt`\n'
+        ll += '        echo "${jobid} ${base} ${base}.log" >>./jobs.txt\n'
+        ll += '        rm tmp.txt\n'
+        ll += '        index=`echo "$index+1" | bc -l`\n'
+        ll += '        echo "NEW `date` --> JOBSEND: ${index}, TOTALJOBS: ${TOTALJOBS}, ${base}"\n'
+        ll += '    else\n'
+        ll += '        # Each 60 seconds checks the jobs\n'
+        ll += '        sleep 60\n'
+        ll += '        echo  "WAIT `date` --> JOBSEND: ${JOBSEND}, TOTALJOBS: ${TOTALJOBS}"\n'
         ll += '    fi\n'
-        ll += '    # Each 15 seconds checks the jobs\n'
-        ll += '    sleep 15\n'
+        ll += '\n'
+        ll += '    NJOBS=`squeue -h |wc -ll`\n'
+        ll += '    TOTALJOBS=`ls -ld ./*_[0-9]*com |wc -ll`\n'
         ll += 'done\n'
+        ll += '\necho \'Jobs Done!!!!\'\n'
 
         txt = ll
 
@@ -134,7 +134,7 @@ def generate_bashscript_check_jobs(qm_engine, localdir, inputname="check_remote_
     extract_time = ""
     if qm_engine.lower() == "gaussian":
         extract_energy = r"E\("
-        extract_time = "`egrep 'Elapsed' $output  | awk '{print $3*86400+$5*3600+$7*60+$9}'`\n"
+        extract_time = "`egrep 'Elapsed' $output  | awk '{print $3*86400+$5*3600+$7*60+$9}' | tail -1`\n"
         # is_complete_calc = "Normal term"
     elif qm_engine.lower() == "nwchem":
         extract_energy = "Total DFT energy"
@@ -171,7 +171,7 @@ def generate_bashscript_check_jobs(qm_engine, localdir, inputname="check_remote_
             ll += '        en=`egrep "{}"  $output | awk \'{{print $4}}\'`\n'.format(extract_energy)
         else:
             ll += '            en=`egrep "{}"  $output | tail -1 |awk \'{{print $5}}\'`\n'.format(extract_energy)
-            ll += '            enmp2=`egrep "UMP2" $output | awk \'{{print $6}}\'|tr \'D\' \'E\'`\n'
+            ll += '            enmp2=`egrep "UMP2" $output | tail -1 | awk \'{{print $6}}\'|tr \'D\' \'E\'`\n'
             ll += '            [[ -z "$enmp2" ]] && en=$en || tmp=$enmp2\n'
             ll += '            [[ ! -z "$tmp" ]] && en=$(printf "%.14f" $tmp)\n'
         ll += '            time_s={}\n'.format(extract_time)
@@ -246,6 +246,7 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
     Args:
         edict:
         localdir:
+        exec_rmsddock:
         cutoff:
         energy_threshold:
         maximum_number_clusters:
@@ -271,7 +272,6 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
             ob1.ReadFile(mol1, ref_name_mol2)
             namefile = os.path.join(localdir, item+"_allign.mol2")
             ob1.WriteFile(mol1, namefile)
-            #rmsd_dict[item] = 0.0
             deltaE_dict[item] = 0.0
             emin = edict[item]
         else:
@@ -287,9 +287,6 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
             a.UpdateCoords(mol2)
             tmp_name_mol2 = os.path.join(localdir, item+"_allign.mol2")
             ob2.WriteFile(mol2, tmp_name_mol2)
-            # cmd = '{} {} {} -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
-            # rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
-            # rmsd_dict[item] = rmsd_dock
             deltaE_dict[item] = (edict[item] - emin)*hart2kcal
 
     # Clusterize
@@ -319,14 +316,17 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
             found = False
             for i in range(1, icluster + 1):
                 idx = cluster_dict[i]["seed"]
-                ref_name_mol2 = os.path.join(localdir,cluster_dict[i]["files"][0])
+                ref_name_mol2 = os.path.join(localdir, cluster_dict[i]["files"][0])
+                # Take into account Hs
                 # cmd = '{} {} {} -h -c -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
+                # Do not take into account Hs
                 cmd = '{} {} {} -c -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
                 # RMSD with the seed of the cluster[i]
                 rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
                 rmsd_dict_incluster[item] = rmsd_dock
                 # Calculate the rmsd with the seed of the cluster 0 (lowest energy)
                 min_name_mol2 = os.path.join(localdir, cluster_dict[1]["files"][0])
+                # Do not take into account Hs
                 cmd = '{} {} {} -c -s'.format(exec_rmsddock, min_name_mol2, tmp_name_mol2)
                 rmsd_dict[item] = float(subprocess.check_output(cmd, shell=True).decode())
                 if float(rmsd_dock) < cutoff:

@@ -7,7 +7,6 @@ from collections import defaultdict
 from passwd_encrypt.passwd_encrypt import pw_decrypt_msg
 
 
-
 """
 Some functions are inspired or directly copy from slurmqueen project
 
@@ -179,9 +178,9 @@ class ServerSlurmBasic(utils.ServerBasic):
                              "'NULL', 'NULL', 'NULL', 'NULL')".format(self._db_index, name_job,)
                 self._db_base.insert_data(sql_insert)
                 self._db_index += 1
+
             except FileNotFoundError:
                 base = os.path.splitext(ifile_path)[0]
-                inputfilename_com = base + ".com"
                 m = "\nEither file {} does not exist in localhost\n".format(fullpath_com)
                 m += "Or directory {} does not exist in the remote server\n".format(remotedir)
                 print(m) if self._logger is None else self._logger.info(m)
@@ -351,6 +350,11 @@ class ServerSlurmBasic(utils.ServerBasic):
 
             # Get energy from calculations
             e_dict = self.get_energy_from_calculations(outdir_local, remotedir)
+
+            # Get logs structure
+            completed = self.get_output_files_from_server(outdir_local, remotedir, pattern=".log")
+            # Get xyz file from gaussian log optimization
+            utils.get_optimized_coordinates(outdir_local)
 
             # Allign and clusterize mol2 molecules
             cluster_dict, deltaE_dict, rmsd_dict, rmsd_incluster = \

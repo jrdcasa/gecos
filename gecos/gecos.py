@@ -128,7 +128,7 @@ def create_python_script(filename, keywords_dict, save=True):
         try:
             lines += "v_rdkit_cluster_thres = {}\n".format(float(keywords_dict["rdkit_cluster_thres"]))
         except KeyError:
-            lines += "v_rdkit_cluster_thres = 2.0\n"
+            lines += "v_rdkit_cluster_thres = 1.0\n"
     # CONFAB PARAMETERS ===================
     elif keywords_dict["conformer_program"].upper() == "OPENBABEL":
         try:
@@ -332,6 +332,8 @@ def main_gui_app():
             print(msg)
 
     os.system("python " + filename_python)
+
+
 
 
 # =============================================================================

@@ -23,7 +23,7 @@ v_mem = 1000
 v_charge = 0
 v_multiplicity = 1
 v_write_gaussian = True
-v_nconfs = 500
+v_nconfs = 10
 v_min_iter_mm = 3000
 v_cutoff_rmsd_qm = 1.0
 v_bond_perception = True
@@ -34,9 +34,8 @@ v_rdkit_prunermsthresh = -0.010
 v_rdkit_useexptorsionangleprefs = True
 v_rdkit_usebasicknowlwdge = True
 v_rdkit_enforcechirality = True
-v_rdkit_cluster_method = 'RMSD'
 v_rdkit_ffname = 'MMFF'
-v_rdkit_cluster_thres = 2.0
+v_rdkit_cluster_thres = 1.0
 
 if not os.path.isfile(v_databasefullpath):
 
@@ -61,7 +60,6 @@ if not os.path.isfile(v_databasefullpath):
 		usebasicknowledge=v_rdkit_usebasicknowlwdge,
 		enforcechirality=v_rdkit_enforcechirality,
 		ff_name=v_rdkit_ffname,
-		cluster_method=v_rdkit_cluster_method,
 		cluster_threshold=v_rdkit_cluster_thres,
 		write_gaussian=v_write_gaussian,
 		pattern=v_pattern,

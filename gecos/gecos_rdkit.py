@@ -8,6 +8,8 @@ import rdkit.Chem.Draw
 import rdkit.ML.Cluster.Butina
 from rdkit import RDLogger
 from collections import defaultdict
+import pandas as pd
+import numpy as np
 
 
 class GecosRdkit:
@@ -40,6 +42,8 @@ class GecosRdkit:
         self._elements = None
         self._atom_formal_charges = []
         self._isheader_print = False
+
+        self._df_conformers = pd.DataFrame(columns=['Conformations', 'IniEnergy', 'OptEnergy', 'RMSD', 'Cluster'])
 
         if filename is not None and os.path.splitext(filename)[-1] == ".pdb":
             self.mol_rdkit = rdkit.Chem.rdmolfiles.MolFromPDBFile(filename, removeHs=False)
@@ -104,9 +108,17 @@ class GecosRdkit:
             m += "\t\t\t WARNING!!!! RdKit molecule seems to be empty (self.mol_rdkit is None).\n"
             m += "\t\t\t WARNING!!!! conformers cannot be generated.\n"
             m += "\t\t\t WARNING!!!! Revise both input parameters and/or {} inputfile .\n".format(filename)
-
+        m += "\t\tFormula          = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcMolFormula(self.mol_rdkit))
+        m += "\t\tNumber of atoms  = {}\n".format(self.mol_rdkit.GetNumAtoms())
+        m += "\t\tMolecular weight = {0:.2f} g/mol\n".format(
+            rdkit.Chem.rdMolDescriptors.CalcExactMolWt(self.mol_rdkit))
+        m += "\t\tRotable bonds    = {} (include CH3 groups)\n".\
+            format(rdkit.Chem.rdMolDescriptors.CalcNumRotatableBonds(self.mol_rdkit))
+        m += "\t\tNumber of rings  = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcNumRings(self.mol_rdkit))
         m += "\t\t******** CREATION OF THE GECOS RDKIT OBJECT ********\n\n"
         print(m) if self._logger is None else self._logger.info(m)
+
+        pass
 
     # =========================================================================
     def __align_conformers(self, clust_ids):
@@ -290,48 +302,176 @@ class GecosRdkit:
         for ibond in self.mol_rdkit.GetBonds():
             t = int(ibond.GetBondTypeAsDouble())
             ibond.SetIntProp('_MolFileBondType', t)
-        #     print(iatom.GetFormalCharge())
+        #     print(ibond.GetBondType())
         #     print(iatom.GetIsAromatic())
 
     # =========================================================================
-    def __cluster_conformers(self, mode="RMSD", threshold=2.0):
+    def __cluster_conformers(self, rms_threshold=1.0, energy_threshold=99999.0,
+                             maximum_number_clusters=100):
 
         """
         Clustering conformers.
 
         The value of `dmat` is the lower half matrix of RMSD. The conformers will be
         alligned to the first conformer (reference). The rmsd is calculated using all atoms.
-        The algorithm used in the clustering is published in Butina et al. [#]_
+        The algorithm used in the clustering is the Ramos algorithm (not published)
 
         Args:
-            mode (str): TFD (Torsion Fingerprints (Deviation) (TFD) [#]_
-                or RMSD (RMSD matrix of the conformers of a molecule).
-            threshold (float): Threshold for the clustering algorithm in angstroms.
+            conf_prop_dict (dict):
+            rms_threshold (float): Threshold for the clustering algorithm in angstroms.
+            energy_threshold (float):
 
         Returns:
             A tuple of tuples containing information about the cluster.
             Example -> rms_cluster = ( (0,1,2), (3) ) Two clusters, the first one contains the conformers 0, 1, 2.
 
-        .. [#] Butina D, "Unsupervised Data Base Clustering Based on Daylight's Fingerprint and Tanimoto
-            Similarity: A Fast and Automated Way To Cluster Small and Large Data Sets", J. Chem. Inf. Comput. Sci.
-            1999, 39, 4, 747–750, https://pubs.acs.org/doi/abs/10.1021/ci9803381.
-
-        .. [#] Schulz-Gasch et al. "TFD: Torsion Fingerprints As a New Measure To Compare Small Molecule Conformations"
-            J. Chem. Inf. Model. 2012, 52, 6, 1499–1512, https://pubs.acs.org/doi/abs/10.1021/ci2002318
-
         """
 
-        if mode == "TFD":
-            dmat = rdkit.Chem.TorsionFingerprints.GetTFDMatrix(self.mol_rdkit)
-        else:
-            dmat = rdkit.Chem.AllChem.GetConformerRMSMatrix(self.mol_rdkit, prealigned=False)
+        # Get heavy atoms indexes
+        list_indices_heavy_atoms = []
+        for iatom in self.mol_rdkit.GetAtoms():
+            if iatom.GetAtomicNum() != 1:
+                list_indices_heavy_atoms.append(iatom.GetIdx())
+
+        # Allign the conformers and returns the RMS matrix of the conformers of a molecule.
+        # As a side-effect, the
+        # conformers will be aligned to the first conformer (i.e. the reference) and will
+        # left in the aligned state
+        # dmat for 5 conformers [0, 1, 2, 3, 4]: (nrms= 4+3+2+1 = 10)
+        #   [a,               [0-1,
+        #   b, c               0-2, 1-2
+        #   d, e, f            0-3, 1-3, 2-3
+        #   g, h, i, j]        0-4, 1-4, 2-4, 3-4]
+        # This matrix can be used directly in the Butina clustering algorithm
+        # Recover the index for a given pair:
+        #   Pair(label1,label2) --> Take the max (label1,label2) = max
+        #   index = (sum(max-1 to 1)) + label2
+        #   Example:
+        #   Pair(2,3) --> index = (2 + 1) + 2 = 5  --> OK
+        #   Pair(1,0) --> index = (0) + 0     = 0  --> OK
+        #   Pair(3,4) --> index = (3+2+1) + 3 = 9  --> OK
+        # dmat = rdkit.Chem.AllChem.GetConformerRMSMatrix(self.mol_rdkit,
+        #                                                 atomIds=list_indices_heavy_atoms,
+        #                                                 prealigned=False)
 
         n_conformers = self.mol_rdkit.GetNumConformers()
 
-        # Implementation of the clustering algorithm published in: Butina JCICS 39 747-750 (1999)
-        rms_clusters = rdkit.ML.Cluster.Butina.ClusterData(dmat, n_conformers, threshold,
-                                                           isDistData=True, reordering=True)
-        return rms_clusters
+        # My clustering method (Ramos algorithm). The conformers are presorted
+        # by optimized MM energy in the self._df_conformers dataframe
+        cluster = defaultdict(dict)
+        icluster = 0
+
+        for index, row in self._df_conformers.iterrows():
+
+            energy = self._df_conformers.at[index, 'OptEnergy']
+            iconf = self._df_conformers.at[index, 'Conformations']
+
+            print("{0:d} {1:d} of {2:d} (# clusters {3:d})".format(int(index), int(iconf), n_conformers, icluster))
+
+            if icluster == 0:
+                threshold = energy + energy_threshold
+                icluster += 1
+                cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
+                                     "nelements": 0, "elements": [], "pairs": [], "files": []}
+                cluster[icluster]["pairs"].append([0.000, energy])
+                cluster[icluster]["files"].append("")
+                cluster[icluster]["nelements"] += 1
+                cluster[icluster]["elements"].append(index)
+                min_energy = energy
+                self._df_conformers.at[index, 'Cluster'] = icluster
+            elif energy < threshold:
+                found = False
+                for i in range(1, icluster + 1):
+                    iconf_ref = cluster[i]["seed"]
+                    iconf_target = index
+                    # ===== FOR DEBUG REASONS =====
+                    # # See formula for index above in the dmax comment
+                    # ma_dmat = max(iconf_ref, iconf_target)
+                    # mi_dmat = min(iconf_ref, iconf_target)
+                    # k_dmat = sum([i for i in range(0, ma_dmat)]) + mi_dmat
+                    # rmsd = dmat[k_dmat]
+                    # rmsd2 =    rdkit.Chem.AllChem.GetConformerRMS(self.mol_rdkit, iconf_ref, iconf_target,
+                    #                                    atomIds=list_indices_heavy_atoms, prealigned=True)
+                    # ===== FOR DEBUG REASONS =====
+                    rmsd_noh = self.getconformerrms(iconf_ref, iconf_target,
+                                                    atomids=list_indices_heavy_atoms, prealigned=True)
+                    if rmsd_noh < rms_threshold:
+                        cluster[i]["pairs"].append([rmsd_noh, energy])
+                        cluster[i]["files"].append("")
+                        cluster[i]["highest_energy"] = energy
+                        cluster[i]["nelements"] += 1
+                        cluster[i]["elements"].append(index)
+                        self._df_conformers.at[index, 'Cluster'] = i
+                        found = True
+                        break
+
+                if not found:
+                    if icluster < maximum_number_clusters:
+                        icluster += 1
+                        cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
+                                             "nelements": 0, "elements": [], "pairs": [], "files": []}
+                        cluster[icluster]["files"].append(index)
+                        cluster[icluster]["nelements"] += 1
+                        cluster[icluster]["elements"].append(index)
+                        cluster[icluster]["pairs"].append([rmsd_noh, energy])
+                        self._df_conformers.at[index, 'Cluster'] = icluster
+                    else:
+                        if cluster[maximum_number_clusters+1]:
+                            cluster[maximum_number_clusters+1]["pairs"].append([rmsd_noh, energy])
+                            cluster[maximum_number_clusters+1]["files"].append(index)
+                            cluster[maximum_number_clusters+1]["highest_energy"] = energy
+                            cluster[maximum_number_clusters+1]["nelements"] += 1
+                            cluster[maximum_number_clusters+1]["elements"].append(index)
+                            self._df_conformers.at[index, 'Cluster'] = icluster
+                        else:
+                            cluster[maximum_number_clusters+1] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
+                                                                  "elements": [], "nelements": 0, "pairs": [], "files": []}
+                            cluster[maximum_number_clusters+1]["files"].append(index)
+                            cluster[maximum_number_clusters+1]["nelements"] += 1
+                            cluster[maximum_number_clusters+1]["elements"].append(index)
+                            cluster[maximum_number_clusters+1]["pairs"].append([rmsd_noh, energy])
+                            self._df_conformers.at[index, 'Cluster'] = icluster
+            else:
+                pass
+
+        return cluster
+
+    # =========================================================================
+    def getconformerrms(self, iconf_ref, iconf_target, atomids=None, prealigned=False):
+
+        """
+        This extends the function rdkit.Chem.AllChem.GetConformerRMS. The original funciton cannot calculate the rmsd
+        taking only into account the heavy atoms (not hydrogens). This function calculates the RMS taking into account
+        the atoms in atomsIDs list. If this is None, then all atoms are considered and the value of RMS is the same
+        that the calculated with rdkit.Chem.AllChem.GetConformerRMS
+        :param iconf_ref:
+        :param iconf_target:
+        :param atomids:
+        :param prealigned:
+        :return:
+        """
+
+        # All atoms are taken into aacount for the calculation of the rms
+        if atomids is None:
+            atomids = [i for i in range(self.mol_rdkit.GetNumAtoms())]
+
+        # align the conformers if necessary
+        # Note: the reference conformer is always the first one
+        if not prealigned:
+            if atomids:
+                rdkit.Chem.AlignMolConformers(self.mol_rdkit, confIds=[iconf_ref, iconf_target], atomIds=atomids)
+            else:
+                rdkit.Chem.AlignMolConformers(self.mol_rdkit, confIds=[iconf_ref, iconf_target])
+
+        # calculate the RMS between the two conformations
+        conf1 = self.mol_rdkit.GetConformer(id=iconf_ref)
+        conf2 = self.mol_rdkit.GetConformer(id=iconf_target)
+        ssr = 0
+        for i in atomids:
+            d = conf1.GetAtomPosition(i).Distance(conf2.GetAtomPosition(i))
+            ssr += d * d
+        ssr /= len(atomids)
+        return np.sqrt(ssr)
 
     # =========================================================================
     def generate_conformers(self, localdir, nconfs=10, minimize_iterations=0,
@@ -340,7 +480,7 @@ class GecosRdkit:
                             ff_name="MMFF",
                             cluster_method="RMSD", cluster_threshold=2.0,
                             write_gaussian=True, g16_key="#p 6-31g* mp2", g16_mem=4000,
-                            g16_nproc=4, pattern="conformers", charge=0, multiplicity=1):
+                            g16_nproc=4, pattern="conformers", charge=0, multiplicity=1, debug_flag=False):
 
         """
         This function performs the following steps:
@@ -383,6 +523,7 @@ class GecosRdkit:
             useexptorsionangleprefs (bool): Impose experimental torsion angle preferences (rdkit, EmbedMultipleConfs)
             usebasicknowledge(bool): (rdkit, EmbedMultipleConfs)
             enforcechirality (bool):(rdkit, EmbedMultipleConfs)
+            debug_flag (bool):
 
         .. [#] Riniker S. et al. "Better Informed Distance Geometry: Using What We Know To Improve
             Conformation Generation", J. Chem. Inf. Model. 2015, 55, 2562−2574,
@@ -429,44 +570,35 @@ class GecosRdkit:
             # Calculate energy and minimize
             props = self.mm_calc_energy(conf_id, ff_name=ff_name, minimize_iterations=minimize_iterations)
             conformerPropsDict[conf_id] = props
+        self._df_conformers = self._df_conformers.sort_values('OptEnergy')
 
         # cluster the MM conformers
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        m = "\t\t 3. Cluster Conformers ({})".format(now)
+        m = "\t\t 3. Cluster Conformers ({}) using {} based method".format(now, cluster_method)
         print(m) if self._logger is None else self._logger.info(m)
-        rmsClusters = self.__cluster_conformers(cluster_method, cluster_threshold)
+        MMClusters = self.__cluster_conformers(cluster_threshold)
+
+        if debug_flag:
+            filepdb_name = os.path.join(localdir, "{}_allconf_rdkit_noopt_trj.pdb".format(pattern))
+            self.write_all_conformers_to_pdb(filepdb_name)
 
         m = "\t\t\t{} conformers generated grouped in {} clusters (rmsd_threshold= {} angstroms)".\
-            format(len(conformerIds), len(rmsClusters), cluster_threshold)
+            format(len(conformerIds), len(MMClusters), cluster_threshold)
         print(m) if self._logger is None else self._logger.info(m)
 
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        m = "\t\t 4. Get structure of minimum energy for each cluster ({})".format(now)
+        m = "\t\t 4. Get structure of minimum energy for each cluster ({})\n".format(now)
         print(m) if self._logger is None else self._logger.info(m)
 
-        clusterNumber = 0
-        minEnergy = 9999999999999
-        for cluster in rmsClusters:
-            clusterNumber = clusterNumber + 1
-            rmsWithinCluster = self.__align_conformers(cluster)
-            for conformerId in cluster:
-                props = conformerPropsDict[conformerId]
-                e = props["energy_abs"]
-                if e < minEnergy:
-                    minEnergy = e
-                props["cluster_no"] = clusterNumber
-                props["cluster_centroid"] = cluster[0] + 1
-                idx = cluster.index(conformerId)
-                if idx > 0:
-                    props["rms_to_centroid"] = rmsWithinCluster[idx - 1]
-                else:
-                    props["rms_to_centroid"] = 0.0
+        filepdb_name = os.path.join(localdir, "{}_cluster_rdkit_optMM_trj.pdb".format(pattern))
+        lowest_conf_id = self.write_min_cluster_conformers_to_pdb(filepdb_name, MMClusters)
+
+        # DEBUG write all clustered conformers ==========================
+        if debug_flag:
+            self.write_allstructures_clusters_to_pdb(MMClusters)
+        # DEBUG =========================================================
 
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-
-        filepdb_name = os.path.join(localdir, "{}_conf_min_trj.pdb".format(pattern))
-        lowest_conf_id = self.write_min_cluster_conformers_to_pdb(filepdb_name,
-                                                                  rmsClusters, conformerPropsDict)
         m = "\t\t 5. Write Conformers to PDB ({})\n".format(now)
         m += "\t\t\tFilename: {}".format(filepdb_name)
         print(m) if self._logger is None else self._logger.info(m)
@@ -483,17 +615,25 @@ class GecosRdkit:
         m = "\t\t**************** GENERATE CONFORMERS ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
 
-        m = "\n\t\t**************** CONFORMER MM ENERGIES ***************\n"
-        m += "\t\t\tCluster Conformer_ID  {}_energy(kcal/mol)  Relative_energy(kcal/mol)\n".format(ff_name)
-        m += "\t\t\t--------------------------------------------------------------------\n"
+        m = "\n\t\t**************** CONFORMER MM ENERGIES ***************"
+        print(m) if self._logger is None else self._logger.info(m)
+        m = "\t\tCluster Conformer_ID  {}_energy(kcal/mol)  Relative_energy(kcal/mol) " \
+            "Highest energy(kcal/mol) nelements\n".format(ff_name)
+        m += "\t\t"+len(m)*"-"+"\n"
         icluster = 1
-        for iconf in lowest_conf_id:
-            m += "\t\t\t {0:^5d}  {1:^12d}  {2:^12.2f}  {3:^24.2f}\n".\
-                format(icluster, iconf, conformerPropsDict[iconf]["energy_abs"],
-                       conformerPropsDict[iconf]["energy_abs"]-minEnergy)
-            icluster += 1
+        minEnergy = MMClusters[1]['lowest_energy']
+        for icluster, ival in MMClusters.items():
+
+            iconf = ival['seed']
+            energy_abs = ival['lowest_energy']
+            m += "\t\t {0:^5d}  {1:^12d}  {2:^20.2f}  {3:^30.2f}  {4:^16.2f}  {5:^8d}\n".\
+                 format(icluster, iconf, energy_abs,
+                        energy_abs-minEnergy, MMClusters[icluster]['highest_energy'],
+                        MMClusters[icluster]['nelements'])
         m += "\t\t**************** CONFORMER MM ENERGIES ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
+
+        return True
 
     # =========================================================================
     def get_type_atoms(self, ff_name="MMFF", fileimg=None):
@@ -618,9 +758,15 @@ class GecosRdkit:
         ff.Initialize()
         ff.CalcEnergy()
         results = {}
+        results['energy_ini'] = ff.CalcEnergy()
         if minimize_iterations > 0:
             results["converged"] = ff.Minimize(maxIts=minimize_iterations)
         results["energy_abs"] = ff.CalcEnergy()
+
+        self._df_conformers = self._df_conformers.append({'Conformations': conf_id,
+                                                          'IniEnergy': results['energy_ini'],
+                                                          'OptEnergy': results["energy_abs"],
+                                                          'Cluster': conf_id}, ignore_index=True)
 
         return results
 
@@ -774,7 +920,7 @@ class GecosRdkit:
                 f.writelines("\n")
 
     # =========================================================================
-    def write_min_cluster_conformers_to_pdb(self, filename, rms_cluster, conformer_props_dict):
+    def write_min_cluster_conformers_to_pdb(self, filename, cluster):
 
         """
         Write the conformer of minimum energy for each cluster in PDB trajectory
@@ -791,19 +937,43 @@ class GecosRdkit:
 
         conf_id_list = []
         w = rdkit.Chem.PDBWriter(filename, flavor=16)
-        idx_min_cluster = 9999999999999
-        for cluster in rms_cluster:
-            e_min_cluster = 9999999999999999
-            for conf_id in cluster:
-                conformerProps = conformer_props_dict[conf_id]
-                e = conformerProps["energy_abs"]
-                if e < e_min_cluster:
-                    e_min_cluster = e
-                    idx_min_cluster = conf_id
-            w.write(self.mol_rdkit, confId=idx_min_cluster)
-            conf_id_list.append(idx_min_cluster)
+        for icluster in cluster:
+            conf_id = cluster[icluster]["seed"]
+            w.write(self.mol_rdkit, confId=conf_id)
+            conf_id_list.append(conf_id)
 
         w.flush()
         w.close()
 
         return conf_id_list
+
+    # =========================================================================
+    def write_allstructures_clusters_to_pdb(self, cluster):
+
+        """
+        Write all conformers for each cluster in PDB trajectory
+
+        Args:
+            cluster (tuple): A tuple of tuples containing information about the cluster
+            conformer_props_dict (dict): Properties for each cluster
+
+        Returns:
+            A list containing the index of the lowest-energy conformer for each cluster
+
+        """
+
+        folder = "full_mm_rdkit_optMM_clusters"
+        try:
+            os.mkdir(folder)
+        except FileExistsError:
+            import shutil
+            shutil.rmtree(folder)
+            os.mkdir(folder)
+
+        for icluster in cluster:
+            fname = os.path.join(folder, "cluster_{0:05d}.pdb".format(icluster))
+            w = rdkit.Chem.PDBWriter(fname, flavor=16)
+            for conf_id in cluster[icluster]["elements"]:
+                w.write(self.mol_rdkit, confId=conf_id)
+            w.flush()
+            w.close()

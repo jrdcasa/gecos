@@ -648,10 +648,10 @@ def import_pythonfile_to_gui(window, filename):
                 # value = re.search("(?:'|\").*(?:'|\")", str2).group(0)
                 tmp = re.search("(?:['\"]).*(?:['\"])", str2)
                 if tmp is not None:
-                    tmp.group(0)
+                    value = tmp.group(0)
                     value = value.replace("'", "")
                     value = value.replace("\"", "")
-                    label = var_to_dict_str[ikey]
+                    label = var_to_encrypt[ikey]
                     window[label].update(value)
 
         for ikey in var_to_dict_combobox.keys():
@@ -1212,7 +1212,7 @@ def open_advance_window_rdkit(loc):
          Sg.Combo(['MMFF', 'UFF'], enable_events=True, disabled=False, key='-RDKIT_FFNAME-',
                   default_value=rdkit_dict_options['-RDKIT_FFNAME-'], size=(40, 1))],
         [Sg.Text('cluster method:', size=(15, 1)),
-         Sg.Combo(['RMSD', 'TFD'], enable_events=True, disabled=False, key='-RDKIT_CLUSTER_METHOD-',
+         Sg.Combo(['RMSD'], enable_events=True, disabled=False, key='-RDKIT_CLUSTER_METHOD-',
                   default_value=rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'], size=(40, 1))]
     ]
 

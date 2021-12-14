@@ -14,13 +14,9 @@ color Display Background white
 display depthcue off
 
 set listFiles {}
-lappend listFiles [list $dir/03-IsoP_151_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_166_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_295_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_356_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_419_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_189_gaussian_allign.mol2]
-lappend listFiles [list $dir/03-IsoP_238_gaussian_allign.mol2]
+lappend listFiles [list $dir/03-IsoP_001_gaussian_allign.mol2]
+lappend listFiles [list $dir/03-IsoP_004_gaussian_allign.mol2]
+lappend listFiles [list $dir/03-IsoP_008_gaussian_allign.mol2]
 
 
 foreach ifile $listFiles {

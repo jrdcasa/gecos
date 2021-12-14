@@ -61,7 +61,6 @@ if not os.path.isfile(v_databasefullpath):
 		usebasicknowledge=v_rdkit_usebasicknowlwdge,
 		enforcechirality=v_rdkit_enforcechirality,
 		ff_name=v_rdkit_ffname,
-		cluster_method=v_rdkit_cluster_method,
 		cluster_threshold=v_rdkit_cluster_thres,
 		write_gaussian=v_write_gaussian,
 		pattern=v_pattern,
