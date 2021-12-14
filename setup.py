@@ -31,6 +31,11 @@ class CustomFormatter(logging.Formatter):
 # Install packages from pip ==============================================================
 def install_with_pip(pack, vers=None, log=None):
 
+    # Update pip
+    p = subprocess.Popen([sys.executable, "-m", "pip", "install", "--upgrade", "pip"],
+                         stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p.communicate()
+
     # sys.executable gives the path of the python interpreter
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     if vers is None:
