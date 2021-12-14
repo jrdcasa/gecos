@@ -41,8 +41,8 @@ class GecosPyBabelTests(unittest.TestCase):
 
             # ============= GENERATE CONFORMERS =============
             ffname = "UFF"
-            res = g1_pdb_ms.generate_conformers(ff_name=ffname, pattern="AtacPS_uff", rmsd_cutoff_confab=0.5,
-                                                minimize_iterations=5000, out_format="mol2")
+            res = g1_pdb_ms.generate_conformers(localdir=".", ff_name=ffname, pattern="AtacPS_uff", rmsd_cutoff_confab=0.5,
+                                                minimize_iterations=5000)
             if res is None:
                 m = "Conformers for {} cannot be generated ({}). Revise Force Field\n".format(pdbfile, ffname)
                 m += "\t\tNo conformer is generated".format(pdbfile, ffname)
@@ -68,8 +68,8 @@ class GecosPyBabelTests(unittest.TestCase):
 
             # ============= GENERATE CONFORMERS =============
             ffname = "UFF"
-            res = g1_pdb_ms.generate_conformers(ff_name=ffname, pattern="PET_uff", rmsd_cutoff_confab=0.5,
-                                                minimize_iterations=5000, out_format="mol2")
+            res = g1_pdb_ms.generate_conformers(localdir=".", ff_name=ffname, pattern="PET_uff", rmsd_cutoff_confab=0.5,
+                                                minimize_iterations=5000)
             if res is None:
                 m = "Conformers for {} cannot be generated ({}). Revise Force Field\n".format(pdbfile, ffname)
                 m += "\t\tNo conformer is generated".format(pdbfile, ffname)
@@ -95,8 +95,8 @@ class GecosPyBabelTests(unittest.TestCase):
 
             # ============= GENERATE CONFORMERS =============
             ffname = "UFF"
-            res = g1_pdb_ms.generate_conformers(ff_name=ffname, pattern="IsoP_uff", rmsd_cutoff_confab=0.5,
-                                                minimize_iterations=5000, out_format="mol2")
+            res = g1_pdb_ms.generate_conformers(localdir=".", ff_name=ffname, pattern="IsoP_uff", rmsd_cutoff_confab=0.5,
+                                                minimize_iterations=5000)
             if res is None:
                 m = "Conformers for {} cannot be generated ({}). Revise Force Field\n".format(pdbfile, ffname)
                 m += "\t\tNo conformer is generated".format(pdbfile, ffname)

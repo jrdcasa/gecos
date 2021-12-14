@@ -1,295 +1,287 @@
 
 	***************** START Gecos PyBabel TEST *****************
-		Starting: 	 12-07-2021 23:05:31
+		Starting: 	 14-12-2021 17:02:24
 
 	Test_01: Generate optimized conformers in format MOL2 for a dimer styrene. Clustering
-		Molecule = ../../data/AtacPS.pdb
-		Number of rotatable bonds = 4
-		Force Field = Universal Force Field.
-		Conformer Searching = ConFab
 
-		8 conformers are generated
-			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+		Conformers will be generated with openbabel library (https://openbabel.org/wiki/Python, https://openbabel.github.io/api/3.0/index.shtml)
+
+		Molecular file seed  : ../../data/AtacPS.pdb
+		Bond Perception: False
+
+		Formula          = C16H18
+		Number of atoms  = 34
+		Molecular weight = 210.31 g/mol
+		Rotable bonds    = 4 (does not include CH3 groups)
+		Number of rings  = 2
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+
+		**************** GENERATE CONFORMERS ***************
+		 1. Generating conformers with openbabel (100000)
+			Molecule = ../../data/AtacPS.pdb
+			Number of rotatable bonds = 4
+			Force Field = Universal Force Field.
+			Conformer Searching = ConFab
+			Options: rmsd_cutoff = 0.5 A, nconfs = 100000
 			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+			 ** CONFAB has generated 8 conformers **
+		 2. Minimizing 8 conformers. Max_iters = 5000 (14-12-2021 17:02:24)
+			 Using UFF forcefield
+		 3. Cluster Conformers (14-12-2021 17:02:26)
+			8 conformers generated grouped in 5 clusters (rmsd_threshold= 2.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (14-12-2021 17:02:26)
+		 5. Write Conformers to MOL2 (14-12-2021 17:02:26)
+			Filename: ./AtacPS_uff_cluster_ob_optMM_trj.mol2
+		**************** GENERATE CONFORMERS ***************
 
-		# Conformation E_initial E_final (in kcal/mol)
-		# ============================================
 
-		     0     158.447     115.201
-		     1     158.934     115.340
-		     2     150.821     118.355
-		     3     175.293     124.487
-		     4     196.782     140.181
-		     5     197.450     142.163
-		     6     200.103     139.805
-		     7     208.440     144.802
+		**************** CONFORMER MM ENERGIES ***************
+
+		Cluster Conformer_ID  UFF_energy(kcal/mol)  Relative_energy(kcal/mol) Highest energy(kcal/mol) nelements
+		-----------------------------------------------------------------------------------------------------------
+		   1         0               115.20                      0.00                    115.34          2    
+		   2         2               118.35                      3.15                    118.35          1    
+		   3         3               124.49                      9.29                    144.80          2    
+		   4         6               139.81                     24.60                    140.18          2    
+		   5         5               142.16                     26.96                    142.16          1    
+		**************** CONFORMER MM ENERGIES ***************
+
 	Test_02: Generate optimized conformers in format MOL2 for a dimer PET. Clustering
-		Molecule = ../../data/PET.pdb
-		Number of rotatable bonds = 11
-		Force Field = Universal Force Field.
-		Conformer Searching = ConFab
 
-		226 conformers are generated
-			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+		Conformers will be generated with openbabel library (https://openbabel.org/wiki/Python, https://openbabel.github.io/api/3.0/index.shtml)
+
+		Molecular file seed  : ../../data/PET.pdb
+		Bond Perception: False
+
+		Formula          = C20H18O8
+		Number of atoms  = 46
+		Molecular weight = 386.35 g/mol
+		Rotable bonds    = 11 (does not include CH3 groups)
+		Number of rings  = 2
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+
+		**************** GENERATE CONFORMERS ***************
+		 1. Generating conformers with openbabel (100000)
+			Molecule = ../../data/PET.pdb
+			Number of rotatable bonds = 11
+			Force Field = Universal Force Field.
+			Conformer Searching = ConFab
+			Options: rmsd_cutoff = 0.5 A, nconfs = 100000
 			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+			 ** CONFAB has generated 194 conformers **
+		 2. Minimizing 194 conformers. Max_iters = 5000 (14-12-2021 17:02:29)
+			 Using UFF forcefield
+		 3. Cluster Conformers (14-12-2021 17:04:17)
+			194 conformers generated grouped in 68 clusters (rmsd_threshold= 2.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (14-12-2021 17:04:55)
+		 5. Write Conformers to MOL2 (14-12-2021 17:04:55)
+			Filename: ./PET_uff_cluster_ob_optMM_trj.mol2
+		**************** GENERATE CONFORMERS ***************
 
-		# Conformation E_initial E_final (in kcal/mol)
-		# ============================================
 
-		     0    1332.801     309.511
-		     1    1173.608     185.805
-		     2    1176.815     178.152
-		     3    1177.533     202.983
-		     4    1179.502     182.692
-		     5    1180.611     183.383
-		     6    1181.616     185.590
-		     7    1182.373     191.696
-		     8    1184.032     200.579
-		     9    1186.152     227.077
-		    10    1186.986     195.047
-		    11    1187.785     191.403
-		    12    1189.333     194.657
-		    13    1189.261     196.210
-		    14    1189.896     178.236
-		    15    1191.329     222.632
-		    16    1193.075     208.703
-		    17    1193.276     199.142
-		    18    1193.148     226.260
-		    19    1193.544     200.343
-		    20    1193.713     223.548
-		    21    1195.150     200.327
-		    22    1196.078     203.826
-		    23    1196.218     193.425
-		    24    1196.483     200.856
-		    25    1196.514     204.329
-		    26    1196.781     225.705
-		    27    1196.826     204.890
-		    28    1197.388     208.334
-		    29    1198.126     227.138
-		    30    1198.202     229.243
-		    31    1198.570     178.830
-		    32    1198.798     190.120
-		    33    1199.259     194.606
-		    34    1199.651     198.055
-		    35    1200.150     184.567
-		    36    1200.741     203.342
-		    37    1200.787     179.145
-		    38    1201.321     195.551
-		    39    1201.317     193.045
-		    40    1201.396     202.088
-		    41    1201.578     209.700
-		    42    1202.222     189.928
-		    43    1202.298     196.847
-		    44    1202.427     196.620
-		    45    1202.270     192.678
-		    46    1202.561     216.000
-		    47    1202.596     202.130
-		    48    1202.818     206.907
-		    49    1202.996     194.211
-		    50    1202.868     233.999
-		    51    1202.811     230.294
-		    52    1203.046     218.396
-		    53    1203.398     219.879
-		    54    1203.782     219.828
-		    55    1203.772     177.871
-		    56    1204.358     185.730
-		    57    1204.369     221.817
-		    58    1204.350     185.524
-		    59    1204.625     192.547
-		    60    1204.809     204.542
-		    61    1204.881     186.630
-		    62    1204.881     186.926
-		    63    1204.908     196.821
-		    64    1204.893     204.643
-		    65    1205.007     183.274
-		    66    1204.990     199.040
-		    67    1204.990     194.661
-		    68    1205.220     180.355
-		    69    1205.372     222.832
-		    70    1205.457     186.321
-		    71    1205.775     197.595
-		    72    1205.929     202.634
-		    73    1206.103     216.781
-		    74    1206.242     195.499
-		    75    1206.552     205.098
-		    76    1206.583     193.905
-		    77    1206.620     210.639
-		    78    1197.918     189.788
-		    79    1206.906     186.174
-		    80    1206.879     187.215
-		    81    1207.130     223.655
-		    82    1207.440     229.841
-		    83    1207.434     185.143
-		    84    1207.539     205.704
-		    85    1207.648     193.242
-		    86    1207.601     184.685
-		    87    1207.817     177.824
-		    88    1207.881     204.549
-		    89    1207.956     183.796
-		    90    1208.008     181.566
-		    91    1208.183     197.808
-		    92    1208.386     218.688
-		    93    1208.283     189.727
-		    94    1208.406     208.727
-		    95    1208.445     214.357
-		    96    1208.621     185.808
-		    97    1208.826     224.075
-		    98    1208.745     188.615
-		    99    1208.912     176.598
-		   100    1208.978     188.094
-		   101    1209.467     227.406
-		   102    1209.632     216.215
-		   103    1209.629     200.550
-		   104    1209.694     188.821
-		   105    1210.005     182.712
-		   106    1209.958     176.353
-		   107    1210.035     196.681
-		   108    1210.184     188.340
-		   109    1210.282     214.563
-		   110    1210.474     182.773
-		   111    1210.721     193.368
-		   112    1210.821     214.835
-		   113    1201.882     209.829
-		   114    1210.771     196.828
-		   115    1210.881     207.433
-		   116    1211.075     183.108
-		   117    1211.072     226.362
-		   118    1211.251     216.665
-		   119    1211.302     184.050
-		   120    1211.023     182.098
-		   121    1211.173     192.386
-		   122    1211.324     207.579
-		   123    1211.449     194.501
-		   124    1211.440     197.858
-		   125    1211.380     188.774
-		   126    1211.732     205.069
-		   127    1211.742     189.618
-		   128    1211.724     215.749
-		   129    1211.806     196.962
-		   130    1211.848     212.573
-		   131    1212.171     186.390
-		   132    1212.171     189.712
-		   133    1212.090     230.667
-		   134    1212.341     188.556
-		   135    1212.349     206.109
-		   136    1212.380     202.691
-		   137    1212.418     191.766
-		   138    1212.381     245.413
-		   139    1212.461     182.378
-		   140    1212.455     206.153
-		   141    1212.562     195.631
-		   142    1212.609     222.825
-		   143    1212.704     199.830
-		   144    1212.628     196.880
-		   145    1212.629     194.487
-		   146    1212.943     187.056
-		   147    1213.015     196.284
-		   148    1213.184     206.101
-		   149    1212.952     199.675
-		   150    1213.142     182.086
-		   151    1213.230     192.019
-		   152    1213.293     196.903
-		   153    1213.490     198.521
-		   154    1213.395     207.027
-		   155    1213.419     180.325
-		   156    1213.445     209.431
-		   157    1213.667     189.842
-		   158    1213.587     195.435
-		   159    1213.710     189.278
-		   160    1213.525     200.290
-		   161    1213.714     191.332
-		   162    1213.813     186.448
-		   163    1213.921     189.466
-		   164    1213.882     194.075
-		   165    1214.033     188.574
-		   166    1213.972     204.458
-		   167    1214.113     221.674
-		   168    1214.109     192.107
-		   169    1214.160     251.958
-		   170    1214.181     186.299
-		   171    1214.266     187.955
-		   172    1214.299     207.657
-		   173    1214.424     197.762
-		   174    1214.062     186.978
-		   175    1214.543     185.896
-		   176    1214.477     201.782
-		   177    1214.382     203.180
-		   178    1214.477     222.344
-		   179    1214.467     181.250
-		   180    1214.702     213.619
-		   181    1214.703     203.020
-		   182    1214.882     209.623
-		   183    1214.858     199.469
-		   184    1214.908     211.892
-		   185    1215.257     186.317
-		   186    1215.297     185.088
-		   187    1215.960     197.973
-		   188    1216.113     198.831
-		   189    1216.246     198.760
-		   190    1216.645     202.814
-		   191    1216.904     195.480
-		   192    1217.372     195.124
-		   193    1217.596     220.491
-		   194    1217.815     207.770
-		   195    1217.896     196.142
-		   196    1218.443     188.505
-		   197    1218.531     208.785
-		   198    1218.553     186.206
-		   199    1218.493     214.144
-		   200    1219.017     218.305
-		   201    1219.234     253.863
-		   202    1219.150     195.602
-		   203    1219.808     183.822
-		   204    1220.084     217.247
-		   205    1220.071     183.655
-		   206    1220.132     227.125
-		   207    1219.993     188.017
-		   208    1220.202     191.731
-		   209    1220.576     199.868
-		   210    1220.910     187.454
-		   211    1220.707     244.919
-		   212    1220.942     182.628
-		   213    1221.117     173.813
-		   214    1221.117     200.206
-		   215    1221.299     182.400
-		   216    1221.678     203.178
-		   217    1221.762     189.919
-		   218    1221.923     193.833
-		   219    1222.261     183.238
-		   220    1222.026     213.625
-		   221    1222.461     192.344
-		   222    1222.428     210.183
-		   223    1222.575     188.332
-		   224    1222.586     198.965
-		   225    1222.954     191.704
+		**************** CONFORMER MM ENERGIES ***************
+
+		Cluster Conformer_ID  UFF_energy(kcal/mol)  Relative_energy(kcal/mol) Highest energy(kcal/mol) nelements
+		-----------------------------------------------------------------------------------------------------------
+		   1        173              173.81                      0.00                    181.38          3    
+		   2        160              176.93                      3.12                    189.71          5    
+		   3         83              177.29                      3.48                    187.22          5    
+		   4         43              177.40                      3.58                    192.11          5    
+		   5         55              177.87                      4.06                    196.01          8    
+		   6         31              177.99                      4.18                    185.84          3    
+		   7         46              178.88                      5.07                    198.05          5    
+		   8        152              179.29                      5.48                    184.66          3    
+		   9         37              179.64                      5.83                    191.26          4    
+		  10        179              180.56                      6.75                    233.43          5    
+		  11        103              182.38                      8.57                    197.27          9    
+		  12         94              182.57                      8.75                    194.58          3    
+		  13         85              182.77                      8.96                    183.91          2    
+		  14         81              183.11                      9.29                    219.52          3    
+		  15        164              183.82                     10.01                    183.82          1    
+		  16        136              185.09                     11.28                    205.04          2    
+		  17         11              185.59                     11.78                    195.13          4    
+		  18        116              185.75                     11.94                    185.75          1    
+		  19        148              185.99                     12.18                    196.64          3    
+		  20        119              186.45                     12.64                    199.07          6    
+		  21        113              186.81                     13.00                    222.84          7    
+		  22         59              186.93                     13.11                    186.93          1    
+		  23        107              186.94                     13.13                    186.94          1    
+		  24         70              187.22                     13.40                    194.09          2    
+		  25        151              187.79                     13.98                    189.93          2    
+		  26         30              187.82                     14.01                    216.77          8    
+		  27        139              187.89                     14.08                    209.62          2    
+		  28         99              188.15                     14.34                    194.00          2    
+		  29        172              188.24                     14.43                    207.58          3    
+		  30         72              188.29                     14.48                    188.29          1    
+		  31        121              188.57                     14.76                    188.57          1    
+		  32         79              188.62                     14.80                    188.62          1    
+		  33         80              188.82                     15.01                    192.84          2    
+		  34        105              189.02                     15.21                    211.43          7    
+		  35        187              189.12                     15.31                    221.67          2    
+		  36        176              189.96                     16.15                    196.96          3    
+		  37        174              190.16                     16.35                    196.88          2    
+		  38         86              190.63                     16.81                    209.18          5    
+		  39        114              192.02                     18.21                    211.89          2    
+		  40        180              192.51                     18.69                    202.03          2    
+		  41         90              192.79                     18.98                    214.56          3    
+		  42        143              193.79                     19.98                    193.79          1    
+		  43        156              193.81                     20.00                    194.49          2    
+		  44         67              193.90                     20.09                    193.90          1    
+		  45         50              194.21                     20.40                    222.82          2    
+		  46        130              194.68                     20.87                    204.33          2    
+		  47        146              195.00                     21.19                    223.77          4    
+		  48         61              197.66                     23.84                    197.66          1    
+		  49        144              198.83                     25.02                    209.43          2    
+		  50        170              200.15                     26.34                    227.12          3    
+		  51         13              200.46                     26.65                    210.64          3    
+		  52        184              200.59                     26.77                    200.59          1    
+		  53        128              201.78                     27.97                    203.84          2    
+		  54         28              202.53                     28.72                    202.53          1    
+		  55        149              202.81                     29.00                    232.28          6    
+		  56         17              204.67                     30.85                    218.40          2    
+		  57         20              205.31                     31.50                    216.00          3    
+		  58        112              206.10                     32.29                    227.43          2    
+		  59        185              213.63                     39.81                    213.63          1    
+		  60        192              214.78                     40.97                    214.78          1    
+		  61         14              216.28                     42.47                    255.36          5    
+		  62         23              217.92                     44.11                    220.97          2    
+		  63         78              218.09                     44.28                    221.42          2    
+		  64        153              219.73                     45.91                    219.73          1    
+		  65        186              220.44                     46.63                    227.14          2    
+		  66        161              230.89                     57.07                    230.89          1    
+		  67        101              233.13                     59.32                    233.13          1    
+		  68         0               309.51                     135.70                   309.51          1    
+		**************** CONFORMER MM ENERGIES ***************
+
 	Test_02: Generate optimized conformers in format MOL2 for a dimer PET. Clustering
-		Molecule = ../../data/IsoP.pdb
-		Number of rotatable bonds = 3
-		Force Field = Universal Force Field.
-		Conformer Searching = ConFab
 
-		14 conformers are generated
-			Options: rmsd_cutoff = 0.5 A, conf_cutoff = 4000000
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+		Conformers will be generated with openbabel library (https://openbabel.org/wiki/Python, https://openbabel.github.io/api/3.0/index.shtml)
+
+		Molecular file seed  : ../../data/IsoP.pdb
+		Bond Perception: False
+
+		Formula          = C10H18
+		Number of atoms  = 28
+		Molecular weight = 138.25 g/mol
+		Rotable bonds    = 3 (does not include CH3 groups)
+		Number of rings  = 0
+		******** CREATION OF THE GECOS PYBABEL OBJECT ********
+
+
+		**************** GENERATE CONFORMERS ***************
+		 1. Generating conformers with openbabel (100000)
+			Molecule = ../../data/IsoP.pdb
+			Number of rotatable bonds = 3
+			Force Field = Universal Force Field.
+			Conformer Searching = ConFab
+			Options: rmsd_cutoff = 0.5 A, nconfs = 100000
 			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
+			 ** CONFAB has generated 14 conformers **
+		 2. Minimizing 14 conformers. Max_iters = 5000 (14-12-2021 17:04:55)
+			 Using UFF forcefield
+		 3. Cluster Conformers (14-12-2021 17:04:57)
+			14 conformers generated grouped in 8 clusters (rmsd_threshold= 2.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (14-12-2021 17:04:57)
+		 5. Write Conformers to MOL2 (14-12-2021 17:04:57)
+			Filename: ./IsoP_uff_cluster_ob_optMM_trj.mol2
+		**************** GENERATE CONFORMERS ***************
 
-		# Conformation E_initial E_final (in kcal/mol)
-		# ============================================
 
-		     0     365.291      57.571
-		     1     267.348      54.133
-		     2     270.905      54.474
-		     3     271.198      54.904
-		     4     274.314      53.425
-		     5     277.952      54.563
-		     6     301.202      70.726
-		     7     303.862      60.402
-		     8     304.091      71.075
-		     9     304.611      73.504
-		    10     306.617      73.926
-		    11     310.965      55.179
-		    12     308.223      53.626
-		    13     311.364      53.882
+		**************** CONFORMER MM ENERGIES ***************
+
+		Cluster Conformer_ID  UFF_energy(kcal/mol)  Relative_energy(kcal/mol) Highest energy(kcal/mol) nelements
+		-----------------------------------------------------------------------------------------------------------
+		   1         4               53.42                       0.00                    53.88           3    
+		   2         1               54.13                       0.71                    73.50           3    
+		   3         2               54.47                       1.05                    73.93           2    
+		   4         5               54.56                       1.14                    54.56           1    
+		   5         3               54.90                       1.48                    55.18           2    
+		   6         7               60.40                       6.98                    60.40           1    
+		   7         6               70.73                      17.30                    70.73           1    
+		   8         8               71.08                      17.65                    71.08           1    
+		**************** CONFORMER MM ENERGIES ***************
+
 
 	***************** END Gecos PyBabel TEST *****************
-		Finishing: 	 12-07-2021 23:10:24
+		Finishing: 	 14-12-2021 17:04:57
 

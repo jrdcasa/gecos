@@ -4,6 +4,8 @@ import os
 import site
 import glob
 import logging
+import urllib.request
+import tarfile
 from datetime import datetime
 from setuptools import setup
 
@@ -49,10 +51,11 @@ def install_with_pip(pack, vers=None, log=None):
 
 # Install indigox-bond software ======================================================================================
 def install_indigox_bond(log=None):
-
     """
     Installing the indigo-bond library if is not present in the python enviorement.
     """
+
+    import git
 
     giturl = 'https://github.com/allison-group/indigo-bondorder.git'
     install_dir = 'thirdparty/indigo-bondorder'
@@ -63,19 +66,19 @@ def install_indigox_bond(log=None):
 
     try:
         import indigox as ix
-        m += "{}: ** GECOS: indigo-bondorder is already installed in your system. {}".format(now, giturl)
+        m += "{}: ** TOPOLOGY: indigo-bondorder is already installed in your system. {}".format(now, giturl)
         print(m) if log is None else log.info(m)
     except ModuleNotFoundError:
-        m += "{}: ** GECOS: indigo-bondorder is not installed in your system\n".format(now)
-        m += "{}: ** GECOS: Installing from git... {}\n".format(now, giturl)
+        m += "{}: ** TOPOLOGY: indigo-bondorder is not installed in your system\n".format(now)
+        m += "{}: ** TOPOLOGY: Installing from git... {}\n".format(now, giturl)
         print(m) if log is None else log.info(m)
 
         try:
             subprocess.check_output(['cmake', '--version'])
         except OSError:
             m = "================= ERROR INSTALL ================"
-            m += "** GECOS: Cannot find CMake executable"
-            m += "** GECOS: The installation is aborted"
+            m += "** TOPOLOGY: Cannot find CMake executable"
+            m += "** TOPOLOGY: The installation is aborted"
             m += "================= ERROR INSTALL ================"
             print(m) if log is None else log.info(m)
             exit()
@@ -86,8 +89,16 @@ def install_indigox_bond(log=None):
         else:
             os.makedirs("thirdparty")
 
-        fullpath_cmake = os.path.abspath(install_dir)
+        # Share data in indigox
+        envdir = None
+        for ipath in site.getsitepackages():
+            g = glob.glob(os.path.join(ipath))
+            if g:
+                envdir = g[0]
+                break
 
+        fullpathlib_cmake = os.path.abspath(install_dir)
+        fullpathdata_cmake = os.path.abspath(envdir+"/indigox/share")
         # Check if exists a distribution of indigox in the thirdparty directory
         # git clone https://github.com/allison-group/indigo-bondorder.git
         if os.path.isdir("thirdparty/indigo-bondorder"):
@@ -98,11 +109,11 @@ def install_indigox_bond(log=None):
             except git.GitCommandError:
                 if not os.path.isdir(install_dir):
                     m = "================= ERROR INSTALL ================"
-                    m += "** GECOS: The github repository for indigo-bondorder is not valid or not exists.!!!"
-                    m += "** GECOS: giturl     : {}".format(giturl)
-                    m += "** GECOS: install_dir: {}".format(install_dir)
-                    m += "** GECOS: Indigo-bondorder cannot be installed"
-                    m += "** GECOS: The installation is aborted"
+                    m += "** TOPOLOGY: The github repository for indigo-bondorder is not valid or not exists.!!!\n"
+                    m += "** TOPOLOGY: giturl     : {}\n".format(giturl)
+                    m += "** TOPOLOGY: install_dir: {}\n".format(install_dir)
+                    m += "** TOPOLOGY: Indigo-bondorder cannot be installed\n"
+                    m += "** TOPOLOGY: The installation is aborted\n"
                     m += "================= ERROR INSTALL ================"
                     print(m) if log is None else log.info(m)
                     exit()
@@ -112,27 +123,23 @@ def install_indigox_bond(log=None):
             subprocess.call(["rm", "-rf", "thirdparty/indigo-bondorder/build"])
             subprocess.call(["mkdir", "thirdparty/indigo-bondorder/build"])
             os.chdir("thirdparty/indigo-bondorder/build")
-            cmake_arguments = ["-DCMAKE_INSTALL_PREFIX={}".format(fullpath_cmake)]
-            subprocess.check_call(["cmake", "{}".format(fullpath_cmake)]+cmake_arguments)
+            cmake_arguments = ["-DCMAKE_INSTALL_PREFIX={}".format(fullpathlib_cmake),
+                               "-DCMAKE_INSTALL_DATAROOTDIR={}".format(fullpathdata_cmake)]
+            subprocess.check_call(["cmake", "{}".format(fullpathlib_cmake)] + cmake_arguments)
             subprocess.call("make")
             subprocess.call(["make", "install"])
             os.chdir("../../")
             subprocess.call(["tar", "cvfz", "indigo-bondorder.tar.gz", "indigo-bondorder"])
-            subprocess.call(["rm", "-rf", "indigo-bondorder ./git"])
+            subprocess.call(["rm", "-rf", "./indigo-bondorder"])
             os.chdir("..")
 
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         m = "{}\n".format(now)
-        envdir = None
-        for ipath in site.getsitepackages():
-            g = glob.glob(os.path.join(ipath))
-            if g:
-                envdir = g
-                break
         m += "envdir={}\n".format(envdir)
         m += "The *.so library has been installed in: {envdir}/indigox/" \
-            "pyindigox.cpython-36m-x86_64-linux-gnu.so\n"
+             "pyindigox.cpython-36m-x86_64-linux-gnu.so\n"
         m += "                                        {envdir}/indigox/__init__.py\n"
+        m += "Share library for indigo in {}\n".format(envdir+"/indigox/share")
         print(m) if log is None else log.info(m)
 
 
@@ -145,32 +152,32 @@ def install_eigen(log=None):
 
     import git
 
-    giturl = 'https://gitlab.com/libeigen/eigen.git'
-    install_dir = 'thirdparty/eigen'
+    # Version eigen 3.4.0 might not work. Error obtained compiler too old.
+    # giturl = 'https://gitlab.com/libeigen/eigen.git'
+    giturl = 'https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz'
+    tar_download_file = os.path.basename(giturl)
+    install_dir = 'thirdparty/eigen-3.3.9'
 
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
     m = "\n\t\t COMPILING & INSTALLING EIGEN PACKAGE\n\n"
     print(m) if log is None else log.info(m)
 
-    if not os.path.isdir("thirdparty/eigen/eigen_library/include"):
-        m = "{}: ** GECOS: eigen is not installed in your system\n".format(now)
-        m += "\t\thttp://eigen.tuxfamily.org/index.php?title=Main_Page\n"
-        m += "\t\t** GECOS: Installing from git... {}\n".format(giturl)
-        print(m) if log is None else log.info(m)
-    else:
-        m = "{}: ** GECOS: eigen is already installed in your system. " \
-            "{}".format(now, "thirdparty/eigen/eigen_library/include")
+    if not os.path.isdir(install_dir+"/eigen_library/include"):
+        m = "*****************************************************\n"
+        m += "TOPOLOGY: eigen is not installed in your system\n"
+        m += "http://eigen.tuxfamily.org/index.php?title=Main_Page\n"
+        m += "TOPOLOGY: Installing version 3.3.9 from git... {}".format(giturl)
         print(m) if log is None else log.info(m)
 
     try:
         subprocess.check_output(['cmake', '--version'])
     except OSError:
         m = "================= ERROR INSTALL ================\n"
-        m += "** GECOS: Cannot find CMake executable\n"
-        m += "** GECOS: The installation is aborted\n"
-        m += "================= ERROR INSTALL ================\n"
+        m += "POLYANAGRO: Cannot find CMake executable\n"
+        m += "POLYANAGRO: The installation is aborted\n"
         print(m) if log is None else log.info(m)
-        exit()
+        sys.exit()
 
     # Look at thirdparty directory
     if os.path.isdir("thirdparty"):
@@ -181,19 +188,24 @@ def install_eigen(log=None):
     fullpath_cmake = os.path.abspath(install_dir)
 
     # Check if exists a distribution of indigox in the thirdparty directory
-    # git clone https://gitlab.com/libeigen/eigen.git
-    if os.path.isdir("thirdparty/eigen/eigen_library/include"):
+    if os.path.isdir(install_dir+"/eigen_library/include"):
         pass
     else:
+
+        # git clone https://gitlab.com/libeigen/eigen.git
         try:
-            git.Repo.clone_from(giturl, install_dir)
-        except git.GitCommandError:
+            # git.Repo.clone_from(giturl, install_dir)
+            urllib.request.urlretrieve(giturl, "thirdparty/"+tar_download_file)
+            tar = tarfile.open("thirdparty/"+tar_download_file)
+            tar.extractall(path="./thirdparty/")
+            tar.close()
+        except (urllib.error.HTTPError, FileNotFoundError):
             if not os.path.isdir(install_dir):
                 m = "================= ERROR INSTALL ================\n"
-                m += "** GECOS: The github repository for openbabel is not valid or not exists.!!!\n"
+                m += "** GECOS: The github repository for eigen is not valid or not exists.!!!\n"
                 m += "** GECOS: giturl     : {}\n".format(giturl)
                 m += "** GECOS: install_dir: {}\n".format(install_dir)
-                m += "** GECOS: openbabel cannot be installed\n"
+                m += "** GECOS: eigen cannot be installed\n"
                 m += "** GECOS: The installation is aborted\n"
                 m += "================= ERROR INSTALL ================"
                 print(m) if log is None else log.info(m)
@@ -201,16 +213,15 @@ def install_eigen(log=None):
             else:
                 pass
 
-        subprocess.call(["rm", "-rf", "thirdparty/eigen/build"])
-        subprocess.call(["mkdir", "thirdparty/eigen/build"])
-        subprocess.call(["mkdir", "thirdparty/eigen/eigen_library"])
-        os.chdir("thirdparty/eigen/build")
+        subprocess.call(["rm", "-rf", install_dir+"/build"])
+        subprocess.call(["mkdir",  install_dir+"/build"])
+        subprocess.call(["mkdir", install_dir+"/eigen_library"])
+        os.chdir(install_dir+"/build")
         cmake_arguments1 = ["-DCMAKE_INSTALL_PREFIX={}".format(fullpath_cmake+"/eigen_library")]
         subprocess.check_call(["cmake", "{}", "{}".format(fullpath_cmake)]+cmake_arguments1)
         subprocess.call("make")
         subprocess.call(["make", "install"])
         os.chdir("../../")
-        subprocess.call(["tar", "cvfz", "eigen.tar.gz", "eigen"])
         os.chdir("..")
 
         m = "The eigen library has been installed in: thirdparty/eigen/eigen_library\n"
@@ -237,7 +248,7 @@ def install_openbabel(log=None):
         os.makedirs("thirdparty")
 
     install_dir = 'thirdparty'
-    eigen_dir = 'thirdparty/eigen/eigen_library/include/eigen3'
+    eigen_dir = 'thirdparty/eigen-3.3.9/eigen_library/include/eigen3'
     fullpath_cmake = os.path.abspath(install_dir)
     fullpath_eigen = os.path.abspath(eigen_dir)
 

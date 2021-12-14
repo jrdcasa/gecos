@@ -334,8 +334,6 @@ def main_gui_app():
     os.system("python " + filename_python)
 
 
-
-
 # =============================================================================
 if __name__ == "__main__":
     main_gui_app()
