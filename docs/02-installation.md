@@ -8,9 +8,10 @@ Installation guide
 * [Indigox](https://github.com/allison-group/indigox) 
 * [Openbabel](http://openbabel.org/wiki/Main_Page)
 (...)
+
 The full list of dependencies can be followed from both **[requirements.txt](../requirements.txt)** and **[setup.py](../setup.py)** files.
 
-These dependencies are handled by the setup.py script and they shoud be installed automatically following these steps. Anyway, few software need to be installed manually (see Pre-installation section)
+These dependencies are handled by the **setup.py** script and they should be installed automatically following these steps. Anyway, few software need to be installed manually (see Pre-installation section)
 
 -------------------
 #### Pre-installation
@@ -57,7 +58,7 @@ Note that the python environment is activated, (sandbox_gecos) before the linux 
 -------------------
 #### Clone the github repository and install Gecos
 -------------------
-With the python virtual environment activated, clone and install needed python libraries
+With the python virtual environment activated, clone and install requested python libraries
 ```
 git clone https://github.com/jrdcasa/gecos.git
 cd gecos
@@ -93,5 +94,5 @@ Also, a GUI can be used to run GeCos:
 ```
 
 <p align="center">
-  <img src="./main_gui.png" alt="Atom numbers" height="450"/>  
+  <img src="./main_gui.png" alt="Atom numbers" height="650"/>  
 </p>
