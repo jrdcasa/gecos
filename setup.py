@@ -29,7 +29,7 @@ class CustomFormatter(logging.Formatter):
 
 
 # Install packages from pip ==============================================================
-def install_with_pip(pack, vers=None, log=None):
+def install_with_pip(pack, vers=None, log=None, namepkg=None):
 
     # Update pip
     p = subprocess.Popen([sys.executable, "-m", "pip", "install", "--upgrade", "pip"],
@@ -39,14 +39,14 @@ def install_with_pip(pack, vers=None, log=None):
     # sys.executable gives the path of the python interpreter
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
     if vers is None:
-        m = "{}: ** GECOS: Installing {}".format(now, pack)
+        m = "{}: ** {}: Installing {}".format(now, namepkg, pack)
         print(m) if log is None else log.info(m)
         # subprocess.call([sys.executable, "-m", "pip", "install", "{0}".format(pack)])
         p = subprocess.Popen([sys.executable, "-m", "pip", "install", "{0}".format(pack)],
                              stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.communicate()
     else:
-        m = "{}: ** GECOS: Installing {}=={}".format(now, pack, vers)
+        m = "{}: ** {}: Installing {}=={}".format(now, namepkg, pack, vers)
         print(m) if log is None else log.info(m)
         # subprocess.call([sys.executable, "-m", "pip", "install", "{0}=={1}".format(pack, vers), " &>install.log"])
         p = subprocess.Popen([sys.executable, "-m", "pip", "install", "{0}=={1}".format(pack, vers)],
@@ -55,7 +55,7 @@ def install_with_pip(pack, vers=None, log=None):
 
 
 # Install indigox-bond software ======================================================================================
-def install_indigox_bond(log=None):
+def install_indigox_bond(log=None, namepkg=None):
     """
     Installing the indigo-bond library if is not present in the python enviorement.
     """
@@ -67,23 +67,25 @@ def install_indigox_bond(log=None):
 
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    m = "\n\t\t COMPILING & INSTALLING INDIGO-BONDORDER PACKAGE\n\n"
+    m = "\n\t\t ============== COMPILING & INSTALLING INDIGO-BONDORDER PACKAGE ==============\n\n"
 
     try:
         import indigox as ix
-        m += "{}: ** TOPOLOGY: indigo-bondorder is already installed in your system. {}".format(now, giturl)
+        m += "{}: ** {}: indigo-bondorder is already installed in your system. {}".format(now, namepkg, giturl)
         print(m) if log is None else log.info(m)
     except ModuleNotFoundError:
-        m += "{}: ** TOPOLOGY: indigo-bondorder is not installed in your system\n".format(now)
-        m += "{}: ** TOPOLOGY: Installing from git... {}\n".format(now, giturl)
+        m += "{}: ** {}: indigo-bondorder is not installed in your system\n".format(now, namepkg)
+        m += "{}: ** {}: Installing from git... {}\n".format(now, namepkg, giturl)
         print(m) if log is None else log.info(m)
 
         try:
             subprocess.check_output(['cmake', '--version'])
         except OSError:
-            m = "================= ERROR INSTALL ================"
-            m += "** TOPOLOGY: Cannot find CMake executable"
-            m += "** TOPOLOGY: The installation is aborted"
+            m = "================= ERROR INSTALL ================\n"
+            m += "** {}: Cannot find CMake executable needed \n".format(namepkg)
+            m += "** {}: for indigo-bondorder compilation.\n".format(namepkg)
+            m += "** {}: Instal CMake in your Linux\n".format(namepkg)
+            m += "** {}: The installation is aborted\n".format(namepkg)
             m += "================= ERROR INSTALL ================"
             print(m) if log is None else log.info(m)
             exit()
@@ -114,11 +116,11 @@ def install_indigox_bond(log=None):
             except git.GitCommandError:
                 if not os.path.isdir(install_dir):
                     m = "================= ERROR INSTALL ================"
-                    m += "** TOPOLOGY: The github repository for indigo-bondorder is not valid or not exists.!!!\n"
-                    m += "** TOPOLOGY: giturl     : {}\n".format(giturl)
-                    m += "** TOPOLOGY: install_dir: {}\n".format(install_dir)
-                    m += "** TOPOLOGY: Indigo-bondorder cannot be installed\n"
-                    m += "** TOPOLOGY: The installation is aborted\n"
+                    m += "** {}: The github repository for indigo-bondorder is not valid or not exists.!!!\n".format(namepkg)
+                    m += "** {}: giturl     : {}\n".format(namepkg, giturl)
+                    m += "** {}: install_dir: {}\n".format(namepkg, install_dir)
+                    m += "** {}: Indigo-bondorder cannot be installed\n".format(namepkg)
+                    m += "** {}: The installation is aborted\n".format(namepkg)
                     m += "================= ERROR INSTALL ================"
                     print(m) if log is None else log.info(m)
                     exit()
@@ -139,17 +141,30 @@ def install_indigox_bond(log=None):
             os.chdir("..")
 
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        m = "{}\n".format(now)
-        m += "envdir={}\n".format(envdir)
-        m += "The *.so library has been installed in: {envdir}/indigox/" \
-             "pyindigox.cpython-36m-x86_64-linux-gnu.so\n"
+        m = "** {}: {}\n".format(namepkg, now)
+        m += "** {}: envdir={}\n".format(namepkg, envdir)
+        m += "** {}: The *.so library has been installed in: {}/indigox/" \
+             "pyindigox.cpython-36m-x86_64-linux-gnu.so\n".format(namepkg, envdir)
         m += "                                        {envdir}/indigox/__init__.py\n"
-        m += "Share library for indigo in {}\n".format(envdir+"/indigox/share")
+        m += "** {}: Share library for indigo in {}\n".format(namepkg, envdir+"/indigox/share")
         print(m) if log is None else log.info(m)
+
+    try:
+        import indigox as ix
+        m = "\n{}: ** {}: indigo-bondorder is correctly imported. {}".format(now, namepkg, giturl)
+        print(m) if log is None else log.info(m)
+    except (ModuleNotFoundError, ImportError):
+        m = "================= ERROR INSTALL ================\n"
+        m += "{}: ** {}: indigo-bondorder libray cannot be imported as:\n".format(now, namepkg)
+        m += "{}: ** {}: \timport indigox as ix\n".format(now, namepkg)
+        m += "{}: ** {}: Something wrong during compilation.\n".format(now, namepkg)
+        m += "================= ERROR INSTALL ================"
+        print(m) if log is None else log.info(m)
+        exit()
 
 
 # Install eigen library software ======================================================================================
-def install_eigen(log=None):
+def install_eigen(log=None, namepkg=None):
 
     """
     Installing the eigen library which is needed in openbabel.
@@ -165,22 +180,22 @@ def install_eigen(log=None):
 
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    m = "\n\t\t COMPILING & INSTALLING EIGEN PACKAGE\n\n"
+    m = "\n\t\t ============== COMPILING & INSTALLING EIGEN PACKAGE ==============\n\n"
     print(m) if log is None else log.info(m)
 
     if not os.path.isdir(install_dir+"/eigen_library/include"):
-        m = "*****************************************************\n"
-        m += "TOPOLOGY: eigen is not installed in your system\n"
+        m = "{}: ** {}: eigen is not installed in your system\n".format(now, namepkg)
         m += "http://eigen.tuxfamily.org/index.php?title=Main_Page\n"
-        m += "TOPOLOGY: Installing version 3.3.9 from git... {}".format(giturl)
+        m += "** {}: Installing version 3.3.9 from git... {}".format(namepkg, giturl)
         print(m) if log is None else log.info(m)
 
     try:
         subprocess.check_output(['cmake', '--version'])
     except OSError:
         m = "================= ERROR INSTALL ================\n"
-        m += "POLYANAGRO: Cannot find CMake executable\n"
-        m += "POLYANAGRO: The installation is aborted\n"
+        m += "** {}: Cannot find CMake executable\n".format(namepkg)
+        m += "** {}: The installation is aborted\n".format(namepkg)
+        m += "================= ERROR INSTALL ================\n"
         print(m) if log is None else log.info(m)
         sys.exit()
 
@@ -194,9 +209,10 @@ def install_eigen(log=None):
 
     # Check if exists a distribution of indigox in the thirdparty directory
     if os.path.isdir(install_dir+"/eigen_library/include"):
-        pass
+        m = "{}: ** {}: eigen_library seems to be already compiled in your system. " \
+            "{}".format(now, namepkg, install_dir+"/eigen_library/include")
+        print(m) if log is None else log.info(m)
     else:
-
         # git clone https://gitlab.com/libeigen/eigen.git
         try:
             # git.Repo.clone_from(giturl, install_dir)
@@ -204,20 +220,23 @@ def install_eigen(log=None):
             tar = tarfile.open("thirdparty/"+tar_download_file)
             tar.extractall(path="./thirdparty/")
             tar.close()
-        except (urllib.error.HTTPError, FileNotFoundError):
+        except (urllib.error.HTTPError, FileNotFoundError) as e:
             if not os.path.isdir(install_dir):
                 m = "================= ERROR INSTALL ================\n"
-                m += "** GECOS: The github repository for eigen is not valid or not exists.!!!\n"
-                m += "** GECOS: giturl     : {}\n".format(giturl)
-                m += "** GECOS: install_dir: {}\n".format(install_dir)
-                m += "** GECOS: eigen cannot be installed\n"
-                m += "** GECOS: The installation is aborted\n"
+                m += "** {}: The github repository for eigen is not valid or not exists.!!!\n".format(namepkg)
+                m += "** {}: giturl     : {}\n".format(namepkg, giturl)
+                m += "** {}: install_dir: {}\n".format(namepkg, install_dir)
+                m += "** {}: eigen cannot be installed\n".format(namepkg)
+                m += "** {}: The installation is aborted\n".format(namepkg)
                 m += "================= ERROR INSTALL ================"
                 print(m) if log is None else log.info(m)
                 exit()
             else:
                 pass
 
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "{}: ** {}: Compiling eigen\n".format(now, namepkg)
+        print(m) if log is None else log.info(m)
         subprocess.call(["rm", "-rf", install_dir+"/build"])
         subprocess.call(["mkdir",  install_dir+"/build"])
         subprocess.call(["mkdir", install_dir+"/eigen_library"])
@@ -229,12 +248,13 @@ def install_eigen(log=None):
         os.chdir("../../")
         os.chdir("..")
 
-        m = "The eigen library has been installed in: thirdparty/eigen/eigen_library\n"
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "{}: ** {}: The eigen library has been installed in: thirdparty/eigen/eigen_library\n".format(now, namepkg)
         print(m) if log is None else log.info(m)
 
 
 # Install indigox-bond software ======================================================================================
-def install_openbabel(log=None):
+def install_openbabel(log=None, namepkg=None):
 
     """
     Installing the openbabel library if is not present in the python enviorement.
@@ -245,7 +265,7 @@ def install_openbabel(log=None):
     giturl = 'https://github.com/openbabel/openbabel.git'
 
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    m = "\n\t\t COMPILING & INSTALLING OPENBABEL PACKAGE\n\n"
+    m = "\n\t\t ============== COMPILING & INSTALLING OPENBABEL PACKAGE ==============\n\n"
     print(m) if log is None else log.info(m)
 
     # Look at thirdparty directory
@@ -257,21 +277,24 @@ def install_openbabel(log=None):
     fullpath_cmake = os.path.abspath(install_dir)
     fullpath_eigen = os.path.abspath(eigen_dir)
 
-    if not os.path.isdir(fullpath_cmake+"/openbabel"):
+    try:
+        from openbabel import openbabel as ob
+        m = "{}: ** {}: openbabel is already installed in your system. " \
+            "{}".format(now, namepkg, fullpath_cmake + "/openbabel")
+        print(m) if log is None else log.info(m)
+    except (ModuleNotFoundError, ImportError) as e:
+        if os.path.isdir(os.path.join(fullpath_cmake, "openbabel")):
+            subprocess.call(["rm", "-rf", os.path.join(fullpath_cmake, "openbabel")])
         m = "{}: Downloading: ... openbabel-3-1-1(Wait for one minute)\n".format(now)
         print(m) if log is None else log.info(m)
-        git.Repo.clone_from(giturl, fullpath_cmake+"/openbabel")
-    else:
-        m = "{}: ** GECOS: openbabel is already installed in your system. " \
-            "{}".format(now, fullpath_cmake+"/openbabel")
-        print(m) if log is None else log.info(m)
+        git.Repo.clone_from(giturl, fullpath_cmake + "/openbabel")
 
     try:
         subprocess.check_output(['cmake', '--version'])
     except OSError:
         m = "================= ERROR INSTALL ================\n"
-        m += "** GECOS: Cannot find CMake executable\n"
-        m += "** GECOS: The installation is aborted\n"
+        m += "** {}: Cannot find CMake executable\n".format(namepkg)
+        m += "** {}: The installation is aborted\n".format(namepkg)
         m += "================= ERROR INSTALL ================\n"
         print(m) if log is None else log.info(m)
         exit()
@@ -280,15 +303,17 @@ def install_openbabel(log=None):
     error = subprocess.call(["which", "swig"])
     if error != 0:
         m = "================= ERROR INSTALL ================\n"
-        m += "** GECOS: Cannot find Swig executable\n"
-        m += "** GECOS: Try to install swig in your system (Ubuntu: apt-get install swig)\n"
-        m += "** GECOS: The installation is aborted\n"
+        m += "** {}: Cannot find Swig executable\n".format(namepkg)
+        m += "** {}: Try to install swig in your system (Ubuntu: apt-get install swig)\n".format(namepkg)
+        m += "** {}: The installation is aborted\n".format(namepkg)
         m += "================= ERROR INSTALL ================\n"
         print(m) if log is None else log.info(m)
         exit()
 
     if not os.path.isdir(fullpath_cmake+"/openbabel/build"):
-
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "{}: ** {}: Compiling openbabel\n".format(now, namepkg)
+        print(m) if log is None else log.info(m)
         subprocess.call(["rm", "-rf", "thirdparty/openbabel/build"])
         subprocess.call(["mkdir", "thirdparty/openbabel/build"])
         os.chdir("thirdparty/openbabel/build")
@@ -303,17 +328,34 @@ def install_openbabel(log=None):
         os.chdir("../../")
         os.chdir("..")
 
-    # Copy the library to the root site-engines of the python distribution
-    dir_env_python = site.getsitepackages()[0]
-    dir_openbabel_installed = fullpath_cmake+"/openbabel/lib/python3.8/site-packages/openbabel"
-    cmd = 'cp -rf {} {}'.format(dir_openbabel_installed, dir_env_python)
-    m = cmd
-    print(m) if log is None else log.info(m)
-    os.system(cmd)
+        # Copy the library to the root site-engines of the python distribution
+        dir_env_python = site.getsitepackages()[0]
+        dir_openbabel_installed = fullpath_cmake+"/openbabel/lib/python3.8/site-packages/openbabel"
+        subprocess.call(["rm", "-rf", "{}".format(os.path.join(dir_env_python, "openbabel"))])
+        subprocess.call(["mv", "-f", "{}".format(dir_openbabel_installed), "{}".format(dir_env_python)])
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "{}: ** {}: Open babel move from {} to {}\n".format(now, namepkg,
+                                                                os.path.join(dir_env_python, "openbabel"), dir_env_python)
+        print(m) if log is None else log.info(m)
+
+    try:
+        from openbabel import openbabel as ob
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "\n{}: ** {}: openbabel is correctly imported. {}".format(now, namepkg, giturl)
+        print(m) if log is None else log.info(m)
+    except (ModuleNotFoundError, ImportError) as e:
+        m = "================= ERROR INSTALL ================\n"
+        m += "{}: ** {}: openbabel libray cannot be imported as:\n".format(now, namepkg)
+        m += "{}: ** {}: \tfrom openbabel import openbabel as ob\n".format(now, namepkg)
+        m += "{}: ** {}: Something wrong during compilation.\n".format(now, namepkg)
+        m += "Error: {}\n".format(e)
+        m += "================= ERROR INSTALL ================"
+        print(m) if log is None else log.info(m)
+        exit()
 
 
 # Install Dock RMSD software =========================================================================================
-def install_dockrmsd(log=None):
+def install_dockrmsd(log=None, namepkg=None):
 
     """
     Downloading, compiling and installing the DockRMSD software
@@ -329,15 +371,16 @@ def install_dockrmsd(log=None):
     install_dir = 'thirdparty/dock_rmsd'
 
     now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    m = "\n\t\t COMPILING & INSTALLING DockRMSD PACKAGE\n\n"
+    m = "\n\t\t ============== COMPILING & INSTALLING DockRMSD PACKAGE ==============\n\n"
 
     if not os.path.isfile("thirdparty/dock_rmsd/dockrmsd.x"):
-        m += "{}: ** GECOS: DockRMSD is not installed in your system\n".format(now)
+        m += "{}: ** {}: DockRMSD is not installed in your system\n".format(now, namepkg)
         m += "\t\thttps://zhanglab.ccmb.med.umich.edu/DockRMSD/\n"
-        m += "\t\t** GECOS: Installing from web... {}".format("https://zhanglab.ccmb.med.umich.edu/DockRMSD/\n")
+        m += "\t\t** {}: Installing from web... {}".format(namepkg, "https://zhanglab.ccmb.med.umich.edu/DockRMSD/\n")
+
         print(m) if log is None else log.info(m)
     else:
-        m += "{}: ** GECOS: DockRMSD is already installed in your system\n".format(now)
+        m += "{}: ** {}: DockRMSD is already installed in your system\n".format(now, namepkg)
         print(m) if log is None else log.info(m)
         return True
 
@@ -378,11 +421,26 @@ if __name__ == '__main__':
     m1 = "\n\t\t Starting installation!!!! at {}\n\n".format(nowm)
     print(m1) if logger is None else logger.info(m1)
 
+    # Wheel can be needed for install
+    try:
+        import wheel
+    except ModuleNotFoundError:
+        nowm = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        m = "Install wheel in your system\n"
+        m = "================= ERROR INSTALL ================\n"
+        m += "{}: ** {}: wheel libray cannot be imported as:\n".format(nowm, "GECOS")
+        m += "{}: ** {}: \timport wheel\n".format(nowm, "GECOS")
+        m += "{}: ** {}: Install wheel in your system:\n".format(nowm, "GECOS")
+        m += "{}: ** {}: \tpython -m pip install wheel\n".format(nowm, "GECOS")
+        m += "================= ERROR INSTALL ================"
+        print(m) if logger is None else logger.info(m)
+        exit()
+
     # Print sys path ===================================
-    m1 = "\t\t SYS PATH\n"
+    m1 = "\t\t ============== SYS PATH ==============\n"
     for item in sys.path:
         m1 += item + "\n"
-    m1 += "\n\t\t INSTALLING PIP PACKAGES\n"
+    m1 += "\n\t\t ============== INSTALLING PIP PACKAGES ==============\n"
     print(m1) if logger is None else logger.info(m1)
 
     # Install requirements ===================================
@@ -393,24 +451,23 @@ if __name__ == '__main__':
             pkg, version = ipack.split(">=")[0:2]
             if pkg[0] == "#":
                 continue
-            install_with_pip(pkg, vers=version, log=logger)
+            install_with_pip(pkg, vers=version, log=logger, namepkg="GECOS")
         except ValueError:
             pkg = ipack
             if pkg[0] == "#":
                 continue
-            install_with_pip(pkg, log=logger)
-
-    import git
+            install_with_pip(pkg, log=logger, namepkg="GECOS")
 
     # Install third-party software ===========================
-    install_indigox_bond(log=logger)
-    install_eigen(log=logger)
-    install_openbabel(log=logger)
-    install_dockrmsd(log=logger)
+    import git
+    install_indigox_bond(log=logger, namepkg="GECOS")
+    install_eigen(log=logger, namepkg="GECOS")
+    install_openbabel(log=logger, namepkg="GECOS")
+    install_dockrmsd(log=logger, namepkg="GECOS")
 
     # Setup Gecos ===========================================
     nowm = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-    m1 = "\n\t\t RUNNING SETUP FROM SETUPTOOLS {}\n\n".format(nowm)
+    m1 = "\n\t\t ============== RUNNING SETUP FROM SETUPTOOLS {} ==============\n\n".format(nowm)
     print(m1) if logger is None else logger.info(m1)
     setup()
 

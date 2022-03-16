@@ -52,7 +52,7 @@ def create_python_script(filename, keywords_dict, save=True):
     try:
         lines += "v_encrypt_pass = '{}'\n".format(keywords_dict["encrypted_passwd"])
     except KeyError:
-        lines += "v_encrypt_pass = 'None'\n"
+        lines += "v_encrypt_pass = None\n"
     lines += "v_slurm_part = '{}'\n".format(keywords_dict["partition"])
     lines += "v_list_nodes = {}\n".format(keywords_dict["exclude_nodes"])
     lines += "v_slurm_part_master = '{}'\n".format(keywords_dict["partitionmaster"])

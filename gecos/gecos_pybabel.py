@@ -43,7 +43,8 @@ class GecosPyBabel:
         self._confs_to_write = 0
         self._exec_rmsddock = exec_rmsddock
 
-        self._df_conformers = pd.DataFrame(columns=['Conformations', 'IniEnergy', 'OptEnergy', 'RMSD', 'Cluster'])
+        #self._df_conformers = pd.DataFrame(columns=['Conformations', 'IniEnergy', 'OptEnergy', 'RMSD', 'Cluster'])
+        self._df_conformers = None
 
         file_format = filename.strip().split('.')[-1]
 
@@ -343,10 +344,23 @@ class GecosPyBabel:
             e2 = ff.Energy()
             optimized_strings_mols.append(obconversion.WriteString(iobmol))
             m = "\t\t{0:>6d}  {1:>10.3f}  {2:>10.3f}".format(iconf, e1, e2)
-            self._df_conformers = self._df_conformers.append({'Conformations': iconf,
-                                                              'IniEnergy': e1,
-                                                              'OptEnergy': e2,
-                                                              'Cluster': iconf}, ignore_index=True)
+            # Deprecated pandas
+            # self._df_conformers = self._df_conformers.append({'Conformations': iconf,
+            #                                                   'IniEnergy': e1,
+            #                                                   'OptEnergy': e2,
+            #                                                   'Cluster': iconf}, ignore_index=True)
+            if self._df_conformers is None:
+                self._df_conformers = pd.DataFrame({'Conformations': [iconf],
+                                                    'IniEnergy': [e1],
+                                                    'OptEnergy': [e2],
+                                                    'Cluster': [iconf]})
+            else:
+                new_row = pd.DataFrame({'Conformations': [iconf],
+                                        'IniEnergy': [e1],
+                                        'OptEnergy': [e2],
+                                        'Cluster': [iconf]})
+                self._df_conformers = pd.concat([self._df_conformers, new_row], ignore_index=True)
+
             iconf += 1
 
         self._df_conformers = self._df_conformers.sort_values('OptEnergy')
@@ -386,10 +400,10 @@ class GecosPyBabel:
         cluster = defaultdict(dict)
         icluster = 0
 
-        for index, row in self._df_conformers.iterrows():
+        for index in self._df_conformers.index:
 
-            energy = self._df_conformers.at[index, 'OptEnergy']
-            iconf = self._df_conformers.at[index, 'Conformations']
+            energy = self._df_conformers['OptEnergy'][index]
+            iconf = self._df_conformers['Conformations'][index]
 
             if icluster == 0:
                 threshold = energy + energy_threshold

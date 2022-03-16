@@ -43,7 +43,8 @@ class GecosRdkit:
         self._atom_formal_charges = []
         self._isheader_print = False
 
-        self._df_conformers = pd.DataFrame(columns=['Conformations', 'IniEnergy', 'OptEnergy', 'RMSD', 'Cluster'])
+        #self._df_conformers = pd.DataFrame(columns=['Conformations', 'IniEnergy', 'OptEnergy', 'RMSD', 'Cluster'])
+        self._df_conformers = None
 
         if filename is not None and os.path.splitext(filename)[-1] == ".pdb":
             self.mol_rdkit = rdkit.Chem.rdmolfiles.MolFromPDBFile(filename, removeHs=False)
@@ -361,10 +362,10 @@ class GecosRdkit:
         cluster = defaultdict(dict)
         icluster = 0
 
-        for index, row in self._df_conformers.iterrows():
+        for index in self._df_conformers.index:
 
-            energy = self._df_conformers.at[index, 'OptEnergy']
-            iconf = self._df_conformers.at[index, 'Conformations']
+            energy = self._df_conformers['OptEnergy'][index]
+            iconf = self._df_conformers['Conformations'][index]
 
             print("{0:d} {1:d} of {2:d} (# clusters {3:d})".format(int(index), int(iconf), n_conformers, icluster))
 
@@ -567,6 +568,7 @@ class GecosRdkit:
         print(m) if self._logger is None else self._logger.info(m)
 
         for conf_id in utils.progressbar(conformerIds, "\t\tMinimizing", 40):
+
             # Calculate energy and minimize
             props = self.mm_calc_energy(conf_id, ff_name=ff_name, minimize_iterations=minimize_iterations)
             conformerPropsDict[conf_id] = props
@@ -763,10 +765,23 @@ class GecosRdkit:
             results["converged"] = ff.Minimize(maxIts=minimize_iterations)
         results["energy_abs"] = ff.CalcEnergy()
 
-        self._df_conformers = self._df_conformers.append({'Conformations': conf_id,
-                                                          'IniEnergy': results['energy_ini'],
-                                                          'OptEnergy': results["energy_abs"],
-                                                          'Cluster': conf_id}, ignore_index=True)
+        # Deprecated pandas
+        #self._df_conformers = self._df_conformers.append({'Conformations': conf_id,
+        #                                                  'IniEnergy': results['energy_ini'],
+        #                                                  'OptEnergy': results["energy_abs"],
+        #                                                  'Cluster': conf_id}, ignore_index=True)
+
+        if self._df_conformers is None:
+            self._df_conformers = pd.DataFrame({'Conformations': [conf_id],
+                                                'IniEnergy': [results['energy_ini']],
+                                                'OptEnergy': [results["energy_abs"]],
+                                                'Cluster': [conf_id]})
+        else:
+            new_row = pd.DataFrame({'Conformations': [conf_id],
+                                    'IniEnergy': [results['energy_ini']],
+                                    'OptEnergy': [results["energy_abs"]],
+                                    'Cluster': [conf_id]})
+            self._df_conformers = pd.concat([self._df_conformers, new_row], ignore_index=True)
 
         return results
 
