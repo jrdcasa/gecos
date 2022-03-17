@@ -30,7 +30,8 @@ Previous to install the program  some software need to be installed in your syst
 It is highly recommended to create a virtual environment. This is a Python environment such that the Python interpreter, libraries and scripts installed into it are isolated from those installed in other virtual environments, and (by default) any libraries installed in a “system” Python.
 
 First, we create an isolated Python environment to install the required packages (see dependencies below). Then, activate the virtual environment.
-```
+
+```bash
 $ python3 -m venv <name_of_env>
 $ source <name_of_env>/bin/activate
 $ pip list
@@ -40,7 +41,8 @@ $ pip install --upgrade pip
 **``WARNING:``** This virtual environment **must** be activate in order to use the program.
 
 Example:
-```
+
+```bash
 ubuntu@ubuntu2004:~$ python3 -m venv sandbox_gecos
 ubuntu@ubuntu2004:~$ source sandbox_gecos/bin/activate
 (sandbox_gecos) ubuntu@ubuntu2004:~$ pip list
@@ -59,7 +61,7 @@ Note that the python environment is activated, (sandbox_gecos) before the linux 
 #### Clone the github repository and install Gecos
 -------------------
 With the python virtual environment activated, clone and install requested python libraries
-```
+```bash
 git clone https://github.com/jrdcasa/gecos.git
 cd gecos
 python -m pip install wheel

@@ -2,32 +2,32 @@ import os
 import utils
 import gecos
 
-v_filename = '/home/jramos/PycharmProjects/GeCos/data/IsoP.pdb'
-v_nameserver = 'trueno.csic.es'
+v_filename = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C01_EVOH_CCCOCCC/pdbs/Model01_EVOH.pdb'
+v_nameserver = '161.111.25.96'
 v_username = 'jramos'
-v_keysshfile = '/home/jramos/.ssh/id_rsa_chiripa'
+v_keysshfile = '/home/jramos/.ssh/id_rsa_aoki_passwd'
 v_encrypt_pass = None
-v_slurm_part = 'simacro'
-v_list_nodes = ['trueno36', 'trueno37', 'trueno38', 'trueno59']
-v_slurm_part_master = 'simacro'
-v_node_master = 'trueno36'
-v_localdir = '/home/jramos/PycharmProjects/GeCos/examples/01-IsoP_trueno_rdkit_mp2'
-v_remotedir = '/home/cfmac/jramos/GECOS/test-01_IsoP'
-v_pattern = '01-IsoP'
-v_databasefullpath = '/home/jramos/PycharmProjects/GeCos/examples/01-IsoP_trueno_rdkit_mp2/01-IsoP_trueno.db'
-v_fileoutputfullpath = '/home/jramos/PycharmProjects/GeCos/examples/01-IsoP_trueno_rdkit_mp2/01-IsoP.log'
-v_g16path = '/opt/gaussian/g16_legacy/'
-v_g16_keywords = '#p opt mp2/6-31g(d,p)'
-v_ncpus = 1
-v_mem = 4000
+v_slurm_part = 'cpu'
+v_list_nodes = ['']
+v_slurm_part_master = 'cpu'
+v_node_master = None
+v_localdir = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C01_EVOH_CCCOCCC/'
+v_remotedir = '/opt/GECOS'
+v_pattern = 'Model01'
+v_databasefullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C01_EVOH_CCCOCCC/Model01.db'
+v_fileoutputfullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C01_EVOH_CCCOCCC/Model01.log'
+v_g16path = '/opt/gaussian/g16_legacy/g16'
+v_g16_keywords = '#p m062x/6-31G* opt'
+v_ncpus = 4
+v_mem = 2000
 v_charge = 0
 v_multiplicity = 1
 v_write_gaussian = True
 v_nconfs = 1000
-v_min_iter_mm = 3000
-v_cutoff_rmsd_qm = 1.0
+v_min_iter_mm = 1000
+v_cutoff_rmsd_qm = 0.5
 v_bond_perception = True
-v_dockrmsdpack = '/home/jramos/PycharmProjects/GeCos/thirdparty/dock_rmsd/dockrmsd.x'
+v_dockrmsdpack = '/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg/thirdparty/dockrmsd.x'
 v_confpack = 'rdkit'
 v_rdkit_maxattempts = 1000
 v_rdkit_prunermsthresh = -0.010
@@ -36,7 +36,7 @@ v_rdkit_usebasicknowlwdge = True
 v_rdkit_enforcechirality = True
 v_rdkit_cluster_method = 'RMSD'
 v_rdkit_ffname = 'MMFF'
-v_rdkit_cluster_thres = 2.0
+v_rdkit_cluster_thres = 1.0
 
 if not os.path.isfile(v_databasefullpath):
 

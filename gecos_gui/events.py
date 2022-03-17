@@ -2,7 +2,7 @@ import PySimpleGUI as Sg
 import sys
 import webbrowser
 import json
-from socket import gaierror
+from socket import gaierror, error
 import os
 import re
 import site
@@ -28,7 +28,8 @@ for ipath in site.getsitepackages():
 keys_input_str_labels = {'-MOLECULE_INPUT-', '-NAME_SERVER-', '-USER_NAME-', '-SLURM_PART-',
                          '-NODE_MASTER-', '-SLURM_PART_MASTER-', '-LOCAL_DIR-', '-REMOTE_DIR-',
                          '-PATTERN-', '-DATABASE_NAME-', '-FILENAME_LOG-', '-G16_KEYWORDS-',
-                         '-DOCKRMSDPACK-', '-KEY_SSH_FILE-', '-ENCRYPT_PASS_FILE-', '-GAUSSIAN16PACK-'}
+                         '-DOCKRMSDPACK-', '-KEY_SSH_FILE-', '-ENCRYPT_PASS_FILE-', '-GAUSSIAN16PACK-',
+                         '-PATTERN-', '-DATABASE_NAME-', '-FILENAME_LOG-'}
 keys_input_list_labels = {'-EXCLUDE_NODES-'}
 keys_input_int_labels = {'-G16_NPROC-', '-G16_MEM-', '-NCONF-', '-MIN_ITER_MM-'}
 keys_input_float_labels = {'-CUTOFF_RMSD_QM-'}
@@ -260,31 +261,40 @@ def import_jsonfile_to_gui(window, filename):
                     popup_error(window, "Json error: \"g16_nproc:\" must be an integer.")
                     return False
                 else:
-                    window['-G16_NPROC-'].update(data[item])
+                    if data[item] != 0:
+                        window['-G16_NPROC-'].update(data[item])
             elif item.upper() == "G16_MEM":
                 if not isinstance(data[item], int):
                     popup_error(window, "Json error: \"g16_mem:\" must be an integer.")
                     return False
                 else:
-                    window['-G16_MEM-'].update(data[item])
+                    if data[item] != 0:
+                        window['-G16_MEM-'].update(data[item])
             elif item.upper() == "NCONFS":
                 if not isinstance(data[item], int):
                     popup_error(window, "Json error: \"nconfs:\" must be an integer.")
                     return False
                 else:
-                    window['-NCONF-'].update(data[item])
+                    if data[item] != 0:
+                        window['-NCONF-'].update(data[item])
             elif item.upper() == "MINIMIZE_ITERATIONS":
                 if not isinstance(data[item], int):
                     popup_error(window, "Json error: \"minimize_iterations:\" must be an integer.")
                     return False
                 else:
-                    window['-MIN_ITER_MM-'].update(data[item])
+                    if data[item] != 0:
+                        window['-MIN_ITER_MM-'].update(data[item])
             elif item.upper() == "CUTOFF_RMSD_QM":
                 if not isinstance(data[item], float):
-                    popup_error(window, "Json error: \"cutoff_rmsd_QM:\" must be a float.")
-                    return False
+                    try:
+                        if float(data[item]) > 0.01:
+                            window['-CUTOFF_RMSD_QM-'].update(float(data[item]))
+                    except:
+                        popup_error(window, "Json error: \"cutoff_rmsd_QM:\" must be a float.")
+                        return False
                 else:
-                    window['-CUTOFF_RMSD_QM-'].update(data[item])
+                    if data[item] > 0.01:
+                        window['-CUTOFF_RMSD_QM-'].update(data[item])
             elif item.upper() == "EXEC_RMSDDOCK":
                 if not isinstance(data[item], str):
                     popup_error(window, "Json error: \"exec_rmsddock:\" must be a string.")
@@ -457,6 +467,9 @@ def export_jsonfile_from_gui(window, filename, save=True):
 
     for key, value in keywords_to_write_nostr.items():
         data = window[value].get()
+        # For empty string assign zero value
+        if not data:
+            data = "0"
         lines += "\t\"{}\": {},\n".format(key, data)
 
     for key, value in keywords_to_write_list.items():
@@ -1034,6 +1047,7 @@ def check_parameteres_gui(window, values):
     global pass_encryped_file
 
     files_localpath_string = ['-MOLECULE_INPUT-', '-LOCAL_DIR-', '-DOCKRMSDPACK-']
+    str_databases_outputs = ['-PATTERN-', '-DATABASE_NAME-', '-FILENAME_LOG-']
 
     v = values['-CONFPACK-']
     a = window['-CONFPACK-'].Values
@@ -1050,23 +1064,6 @@ def check_parameteres_gui(window, values):
     nodemaster = window['-NODE_MASTER-'].get()
     remotedir = window['-REMOTE_DIR-'].get()
     g16path = window['-GAUSSIAN16PACK-'].get()
-
-    # Check for integers and floats =======================================================
-    for ilabel in keys_input_int_labels:
-        try:
-            int(window[ilabel].get())
-        except ValueError:
-            msg = "{}: {} must be an integer.\n  ".format(ilabel, window[ilabel].get())
-            popup_error(window, msg)
-            return False
-
-    for ilabel in keys_input_float_labels:
-        try:
-            float(window[ilabel].get())
-        except ValueError:
-            msg = "{}: {} must be a float.\n  ".format(ilabel, window[ilabel].get())
-            popup_error(window, msg)
-            return False
 
     # Check files in the local directory ======================================
     for ikey in files_localpath_string:
@@ -1098,15 +1095,15 @@ def check_parameteres_gui(window, values):
     except paramiko.ssh_exception.SSHException:
         msg_key = "Not a valid RSA private key file:\nkeyfile {}\n  ".format(keyfile)
         key = ""
-        pass
+        return False
     except FileNotFoundError:
         msg_key = "Key file is not found"
         key = ""
-        pass
+        return False
 
     try:
-        server.connect(nameserver, username=username, pkey=key)
-    except gaierror:
+        server.connect(nameserver, username=username, pkey=key, timeout=30)
+    except (gaierror, paramiko.ssh_exception.NoValidConnectionsError):
         msg = "Unable to connect to {} ".format(nameserver)
         popup_error(window, msg)
         return False
@@ -1126,16 +1123,23 @@ def check_parameteres_gui(window, values):
                 pw_encrypt_msg(public_key, password, fout_name=pass_encryped_file)
                 popup_msg(window, "Encripted password is stored in {}".format(pass_encryped_file))
                 window['-ENCRYPT_PASS_FILE-'].update(pass_encryped_file)
-            except (TypeError, AttributeError):
+            except (TypeError, AttributeError, FileNotFoundError):
+                msg = "Something wrong with authentication. Check key path and/or username"
+                popup_error(window, msg)
                 return False
         else:
             pass_encryped_file = window['-ENCRYPT_PASS_FILE-'].get()
             password = pw_decrypt_msg(keyfile, pass_encryped_file)
 
         try:
-            server.connect(nameserver, username=username, password=password)
+            server.connect(nameserver, username=username, password=password, timeout=30)
         except paramiko.ssh_exception.AuthenticationException:
             msg = "Authentication problem with password:\nusername {}\n Try again".format(username)
+            popup_error(window, msg)
+            return False
+        except error:
+            msg = "Timeout to connect (30 seconds)\n"
+            msg += "Server name {}\n".format(nameserver)
             popup_error(window, msg)
             return False
 
@@ -1145,10 +1149,23 @@ def check_parameteres_gui(window, values):
         popup_error(window, msg)
         return False
 
+    except error:
+        msg = "Timeout to connect (30 seconds)\n"
+        msg += "Server name {}\n".format(nameserver)
+        popup_error(window, msg)
+        return False
+
     # Check partition stuffs ==================================================
     for ipart in [partition, partitionmaster]:
-        command = "sinfo -s | egrep {}".format(ipart)
-        stdin, stdout, stderr = server.exec_command(command, timeout=10)  # Non-blocking call
+        try:
+            command = "sinfo -s | egrep {}".format(ipart)
+            stdin, stdout, stderr = server.exec_command(command, timeout=30)  # Non-blocking call
+        except paramiko.ssh_exception.SSHException:
+            msg = "SLURM Partition {} cannot be checked\n  ".format(ipart)
+            msg+= "Try again!!!!"
+            popup_error(window, msg)
+            return False
+
         out_txt = stdout.read().decode('utf8')
         if len(out_txt) < 1:
             msg = "Partition {} does not exist\n  ".format(ipart)
@@ -1169,8 +1186,23 @@ def check_parameteres_gui(window, values):
     command = "ls -d {}".format(remotedir)
     stdin, stdout, stderr = server.exec_command(command, timeout=10)  # Non-blocking call
     err_txt = stderr.read().decode('utf8')
-    if len(err_txt) > 1:
+    if len(err_txt) > 1 or len(remotedir) == 0:
         msg = "Remotedir {} does not exist\n in server {}\n  ".format(remotedir, nameserver)
+        popup_error(window, msg)
+        return False
+
+    # Check pattern, database_name and log
+    for ikey in str_databases_outputs:
+        string = window[ikey].get()
+        if not string:
+            msg = "Field {} cannot be empty\n  ".format(ikey)
+            popup_error(window, msg)
+            return False
+
+    # Check gaussian keywords
+    keywords = window['-G16_KEYWORDS-'].get()
+    if len(keywords) < 5:
+        msg = "G16 keywords seems to be incorrect\n  "
         popup_error(window, msg)
         return False
 
@@ -1178,10 +1210,27 @@ def check_parameteres_gui(window, values):
     command = "ls -d {}".format(g16path)
     stdin, stdout, stderr = server.exec_command(command, timeout=10)  # Non-blocking call
     err_txt = stderr.read().decode('utf8')
-    if len(err_txt) > 1:
+    if len(err_txt) > 1 or len(g16path) == 0:
         msg = "G16 path {} does not exist\n in server {}\n  ".format(g16path, nameserver)
         popup_error(window, msg)
         return False
+
+    # Check for integers and floats =======================================================
+    for ilabel in keys_input_int_labels:
+        try:
+            int(window[ilabel].get())
+        except ValueError:
+            msg = "{}: {} must be an integer.\n  ".format(ilabel, window[ilabel].get())
+            popup_error(window, msg)
+            return False
+
+    for ilabel in keys_input_float_labels:
+        try:
+            float(window[ilabel].get())
+        except ValueError:
+            msg = "{}: {} must be a float.\n  ".format(ilabel, window[ilabel].get())
+            popup_error(window, msg)
+            return False
 
     return True
 
@@ -1475,6 +1524,7 @@ def open_window_results(window):
 
     # Create plot with QM energies
     fig, ax = plt.subplots(figsize=(5.5, 4.5))
+    #fig, ax = plt.subplots()
     ax.bar(clusterlist, delta_elist)
     ax.set_ylabel(r'$\Delta$E (kcal/mol)')
     ax.set_xlabel('# Cluster')
@@ -1482,13 +1532,13 @@ def open_window_results(window):
 
     pad1 = ((5, 5), (5, 5))
     pad2 = (70, 0)
-    pad3 = ((70, 0), (10, 0))
+    pad3 = ((50, 0), (10, 0))
     pad4 = ((10, 0), (10, 0))
     layout = [[Sg.Text('Database results (file: {})'.format(window['-DATABASE_NAME-'].get()), size=(1000, 1),
                        background_color='white', pad=pad1, justification='center', text_color='blue', )],
               [Sg.Table(newdata, headings=headings, justification='center',
                         key='-DBTABLE-', vertical_scroll_only=False, num_rows=12, pad=pad2)],
-              [Sg.Canvas(key='-CANVAS-', pad=pad3),
+              [Sg.Canvas(key='-CANVAS-', pad=pad3, size=(480, 450)),
                Sg.Column([[Sg.Text("Lowest energy conformer of each cluster.", text_color='blue',
                                    background_color='white', justification='center', size=(51, 1))],
                           [Sg.Listbox(listcluster, size=(50, 10), background_color='white')],
@@ -1499,7 +1549,7 @@ def open_window_results(window):
                           [Sg.Button("BROWSE to VMD exe", key='-BUTTONBROWSEVMD-', enable_events=True),
                            Sg.Button("Run VMD", key='-BUTTONRUNVMD-', enable_events=True)]
                           ],
-               background_color='white', size=(480, 450), pad=pad4),
+                         background_color='white', size=(480, 450), pad=pad4),
                ],
               ]
 
@@ -1538,6 +1588,14 @@ def waiting_for_events(window, event, values):
     """
     All events in the GUI
     """
+
+    # =========== Find path to dockrmsd ===========
+    is_default_exe_found = False
+    for isyspath in sys.path:
+        path = os.path.join(isyspath, "thirdparty/dockrmsd.x")
+        if os.path.isfile(path):
+            window["-DOCKRMSDPACK-"].update(path)
+            is_default_exe_found = True
 
     # ============= Menu Events =============
     if event == "Import Json..." or event == '-BUTTONIMPORTJSON-':
