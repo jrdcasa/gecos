@@ -1093,12 +1093,14 @@ def check_parameteres_gui(window, values):
         msg_key = "Key found, but password authentication is needed."
         key = paramiko.RSAKey.from_private_key_file(keyfile)
     except paramiko.ssh_exception.SSHException:
-        msg_key = "Not a valid RSA private key file:\nkeyfile {}\n  ".format(keyfile)
+        msg = "Not a valid RSA private key file:\nkeyfile {}\n  ".format(keyfile)
         key = ""
+        popup_error(window, msg)
         return False
     except FileNotFoundError:
-        msg_key = "Key file is not found"
+        msg = "Key file is not found"
         key = ""
+        popup_error(window, msg)
         return False
 
     try:
