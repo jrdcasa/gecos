@@ -234,7 +234,7 @@ class GecosPyBabel:
 
         m = "\n\t\t**************** CONFORMER MM ENERGIES ***************\n"
         m += "\n\t\tEnergies in kcal/mol, RMSD in angstroms."
-        m += "\n\t\tRMSD threshold = {0:5.3f} angstroms.".format(cluster_threshold)
+        m += "\n\t\tRMSD threshold = {0:5.3f} angstroms.".format(rmsd_cutoff_confab)
         m += "\n\t\tNumber of clusters = {0:4d}".format(len(MMClusters))
         print(m) if self._logger is None else self._logger.info(m)
         m = "\t\tCluster Conformer_ID  {}_energy  Relative_energy " \
