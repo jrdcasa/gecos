@@ -235,7 +235,7 @@ class GecosPyBabel:
         m = "\n\t\t**************** CONFORMER MM ENERGIES ***************\n"
         m += "\n\t\tEnergies in kcal/mol, RMSD in angstroms."
         m += "\n\t\tRMSD threshold = {0:5.3f} angstroms.".format(rmsd_cutoff_confab)
-        m += "\n\t\tNumber of clusters = {0:4d}".format(len(MMClusters))
+        m += "\n\t\tNumber of clusters = {0:4d}".format(len(MMclusters))
         print(m) if self._logger is None else self._logger.info(m)
         m = "\t\tCluster Conformer_ID  {}_energy  Relative_energy " \
             "Highest_energy    RMSD   nelements\n".format(ff_name)
@@ -249,9 +249,9 @@ class GecosPyBabel:
             energy_abs = ival['lowest_energy']
             m += "\t\t {0:^5d}  {1:^12d}  {2:^12.2f}  {3:^12.2f}  {4:^14.2f}  {5:^10.3f}  {6:^6d}\n". \
                 format(icluster, iconf, energy_abs,
-                       energy_abs - minEnergy, MMClusters[icluster]['highest_energy'],
-                       MMClusters[icluster]['pairs'][0][0],
-                       MMClusters[icluster]['nelements'])
+                       energy_abs - minEnergy, MMclusters[icluster]['highest_energy'],
+                       MMclusters[icluster]['pairs'][0][0],
+                       MMclusters[icluster]['nelements'])
         m += separator
         m += "\t\t**************** CONFORMER MM ENERGIES ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
