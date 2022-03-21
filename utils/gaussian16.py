@@ -165,7 +165,7 @@ def generate_bashscript_check_jobs(qm_engine, localdir, inputname="check_remote_
         ll += '        idir=`echo "$line" | awk \'{print $2}\'`\n'
         ll += '        output=`echo "$line" | awk \'{print $3}\'`\n'
         ll += '        p=`sacct -j $pid --format=JobID,JobName%60,State| egrep -v "batch|----|JobID" | head -1`\n'
-        ll += '        echo $p >>"summary.txt"\n'
+        ll += '        [[ ! -z `echo $p` ]] && echo $p >>summary.txt\n'
         ll += '        if [[ ! -z `echo $p | egrep "COMPLETED"` ]]; then\n'
         if qm_engine.lower() == "gamess":
             ll += '        en=`egrep "{}"  $output | awk \'{{print $4}}\'`\n'.format(extract_energy)
@@ -179,7 +179,7 @@ def generate_bashscript_check_jobs(qm_engine, localdir, inputname="check_remote_
         ll += '                 e0=$en\n'
         ll += '            fi\n'
         ll += '            index=`echo $index+1| bc -l`\n'
-        ll += '            erel=`printf "%.3f" $(echo "scale=3; (($en)-($e0))*627.5095"|bc) `\n'
+        ll += '            erel=`echo $e0 $en | awk \'{printf "%.3f", ($2-$1)*627.5095}\'`\n'
         ll += '            echo "$idir $pid $en $erel $time_s" >>summary_energy.txt\n'
         ll += '         #echo "$idir $pid $en $erel"\n'
         ll += '        fi\n'

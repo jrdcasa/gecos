@@ -31,8 +31,11 @@ keys_input_str_labels = {'-MOLECULE_INPUT-', '-NAME_SERVER-', '-USER_NAME-', '-S
                          '-DOCKRMSDPACK-', '-KEY_SSH_FILE-', '-ENCRYPT_PASS_FILE-', '-GAUSSIAN16PACK-',
                          '-PATTERN-', '-DATABASE_NAME-', '-FILENAME_LOG-'}
 keys_input_list_labels = {'-EXCLUDE_NODES-'}
-keys_input_int_labels = {'-G16_NPROC-', '-G16_MEM-', '-NCONF-', '-MIN_ITER_MM-'}
+keys_input_int_labels = {'-G16_NPROC-', '-G16_MEM-', '-NCONF-', '-MIN_ITER_MM-', '-CHARGE-', '-MULTIPLICITY-'}
 keys_input_float_labels = {'-CUTOFF_RMSD_QM-'}
+
+keys_input_conformer_keywords = {"-CONFORMER_PROGRAM-", "-NCONFS-", "-MIN_ITER_MM-",
+                                 "-CUTOFF_RMSD_QM-", "-BOND_PERCEPTION-"}
 
 keys_checkbox_labels = {"-BOND_PERCEPTION-": True}
 
@@ -49,19 +52,21 @@ rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'] = True
 rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'] = True
 rdkit_dict_options['-RDKIT_FFNAME-'] = "MMFF"
 rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'] = "RMSD"
-rdkit_dict_options['-RDKIT_CLUSTER_THRES-'] = 2.0
+rdkit_dict_options['-RDKIT_CLUSTER_THRES-'] = 0.5
 
 openbabel_dict_options = defaultdict()
 openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'] = 0.5   # Angstroms
 openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'] = 50.0  # kcal/mol
 openbabel_dict_options['-CONFAB_VERBOSE-'] = False     # Verbose
-openbabel_dict_options['-CONFAB_RMSD_CUTOFF_RMSDDOCK-'] = 2.0   # Angstroms
+openbabel_dict_options['-CONFAB_RMSD_CUTOFF_RMSDDOCK-'] = 1.0   # Angstroms
 openbabel_dict_options['-CONFAB_FFNAME-'] = "MMFF"
 openbabel_dict_options['-CONFAB_ENERGY_THRESHOLD-'] = 99999.0
 openbabel_dict_options['-CONFAB_MAX_ENERGY_CLUSTERS-'] = 100
 
 vmd_path = "/opt/vmd-1.9.4a42/bin/vmd"
 pass_encryped_file = ""
+filename_json = ""
+filename_py = ""
 
 
 # =============================================================================
@@ -71,7 +76,7 @@ def popup_error(window, msg):
     newloc = (loc[0] + x / 2., loc[1] + y / 2.)
     window.disappear()
     Sg.popup(msg, title='ERROR', grab_anywhere=True, location=newloc,
-             background_color='red', text_color='white', )
+             background_color='red', text_color='white')
     window.reappear()
 
 
@@ -1591,6 +1596,9 @@ def waiting_for_events(window, event, values):
     All events in the GUI
     """
 
+    global filename_json
+    global filename_py
+
     # =========== Find path to dockrmsd ===========
     is_default_exe_found = False
     for isyspath in sys.path:
@@ -1603,36 +1611,39 @@ def waiting_for_events(window, event, values):
     if event == "Import Json..." or event == '-BUTTONIMPORTJSON-':
         clean_form(window)
         loc = window.current_location()
-        filename = Sg.popup_get_file('Import Json file to GUI', no_window=False,
-                                     location=loc, initial_folder="../tests", file_types=(("JSON Files", "*.json"),))
+        filename_json = Sg.popup_get_file('Import Json file to GUI', no_window=False,
+                                          location=loc, initial_folder="../tests",
+                                          file_types=(("JSON Files", "*.json"),))
 
-        import_jsonfile_to_gui(window, filename)
+        import_jsonfile_to_gui(window, filename_json)
         window['-BUTTONCHECK-'].update(disabled=False)
         window['-BUTTONVISRESULTS-'].update(disabled=True)
         window['-BUTTONVIEWLOG-'].update(disabled=True)
         window['-STATUS_TEXT-'].update("Status: Json loaded")
-        window['-SUGGEST_TEXT-'].update("Help: Try to check keywords")
+        window['-INFORUN_TEXT-'].update("Advice: Check keywords")
         window['-HIDEPYTHONSCRIPT-'].update("")
 
     if event == "Export Json...":
         loc = window.current_location()
-        filename = Sg.popup_get_file('Export Json from GUI', no_window=False,
-                                     location=loc, initial_folder="../tests", save_as=True,
-                                     file_types=(("JSON Files", "*.json"),))
-        export_jsonfile_from_gui(window, save=True, filename=filename)
+        filename_json = Sg.popup_get_file('Export Json from GUI', no_window=False,
+                                          location=loc, initial_folder="../tests", save_as=True,
+                                          file_types=(("JSON Files", "*.json"),))
+        export_jsonfile_from_gui(window, save=True, filename=filename_json)
 
     if event == 'Import Pyhton Script...':
         clean_form(window)
         loc = window.current_location()
-        filename = Sg.popup_get_file('Import Python file to GUI', no_window=False,
-                                     location=loc, initial_folder="../tests", file_types=(("Python Files", "*.py"),))
-        import_pythonfile_to_gui(window, filename)
-        window['-BUTTONRUN-'].update(disabled=False)
+        filename_py = Sg.popup_get_file('Import Python file to GUI', no_window=False,
+                                        location=loc, initial_folder="../tests",
+                                        file_types=(("Python Files", "*.py"),))
+        import_pythonfile_to_gui(window, filename_py)
+        window['-BUTTONRUN-'].update(disabled=True)
+        window['-BUTTONCHECK-'].update(disabled=False)
         try:
-            value = os.path.join(window['-LOCAL_DIR-'].get(), filename)
+            value = os.path.join(window['-LOCAL_DIR-'].get(), filename_py)
             window['-HIDEPYTHONSCRIPT-'].update(value)
             window['-STATUS_TEXT-'].update("Status: Python script loaded. ({})".format(value))
-            window['-SUGGEST_TEXT-'].update("Help: Run GeCos")
+            window['-INFORUN_TEXT-'].update("Advice: Check inputs or Run/Check Gecos")
             fulldbpath = os.path.join(window['-LOCAL_DIR-'].get(), window['-DATABASE_NAME-'].get())
             if os.path.isfile(fulldbpath):
                 window['-BUTTONVISRESULTS-'].update(disabled=False)
@@ -1654,7 +1665,7 @@ def waiting_for_events(window, event, values):
             value = os.path.join(window['-LOCAL_DIR-'].get(), filename+".py")
             window['-HIDEPYTHONSCRIPT-'].update(value)
             window['-STATUS_TEXT-'].update("Status: Python script created. ({})".format(value))
-            window['-SUGGEST_TEXT-'].update("Help: Run GeCos")
+            window['-INFORUN_TEXT-'].update("Advice: Check inputs.")
         except TypeError:
             pass
         except Exception:
@@ -1663,7 +1674,7 @@ def waiting_for_events(window, event, values):
     if event == "Clean Form":
         clean_form(window)
         window['-STATUS_TEXT-'].update("Status: No data loaded")
-        window['-SUGGEST_TEXT-'].update("Help: Import data from Json file or fill the forms")
+        window['-INFORUN_TEXT-'].update("Advice: Import data from Json file or fill the forms")
         window['-HIDEPYTHONSCRIPT-'].update("")
         window['-BUTTONVIEWLOG-'].update(disabled=True)
         window['-BUTTONVISRESULTS-'].update(disabled=True)
@@ -1682,7 +1693,6 @@ def waiting_for_events(window, event, values):
     # ============= BUTTON EVENTS =============
     if event == '-BUTTONCHECK-':
 
-        window['-INFORUN_TEXT-'].update("Checking input for Gecos...")
         for item in keys_all_mainguibuttons_labels:
             window[item].update(disabled=True)
         window.refresh()
@@ -1691,22 +1701,25 @@ def waiting_for_events(window, event, values):
         loc = window.current_location()
         x, y = window.size
         newloc = (loc[0] + (x / 2.)*0.5, loc[1] + (y / 2.)*0.5)
-        print(os.getcwd())
         if res:
             Sg.popup('Keywords seem to be correct!!!',
                      title='Check Inputs',
                      grab_anywhere=True, location=newloc, image=lizard_gif)
-            window['-BUTTONCREATESCRIPT-'].update(disabled=False)
-            window['-STATUS_TEXT-'].update("Status: Keywords seem to be correct")
-            window['-SUGGEST_TEXT-'].update("Help: Write python script to run conformer search")
+            window['-BUTTONCREATESCRIPT-'].update(disabled=True)
+            window['-BUTTONRUN-'].update(disabled=False)
+            window['-BUTTONIMPORTJSON-'].update(disabled=False)
+            window['-STATUS_TEXT-'].update("Status: Keywords seem to be correct. Python script has been written.")
+            window['-INFORUN_TEXT-'].update("Advice: Run Gecos.")
+            filename =  os.path.splitext(filename_json)[0]+".py"
+            write_python_script_from_gui(window, filename, save=True)
+            window['-HIDEPYTHONSCRIPT-'].update(filename)
+
         else:
             window['-STATUS_TEXT-'].update("Status: Keywords are not correct")
-            window['-SUGGEST_TEXT-'].update("Help: Try to change incorrect parameters")
-
-        window['-INFORUN_TEXT-'].update("Ready to submit GeCos.")
-        keys_activate_mainguibuttons_labels = ['-BUTTONIMPORTJSON-', '-BUTTONCHECK-', '-BUTTONCREATESCRIPT-']
-        for item in keys_activate_mainguibuttons_labels:
-            window[item].update(disabled=False)
+            window['-INFORUN_TEXT-'].update("Advice: Try to change incorrect parameters")
+            window['-BUTTONCREATESCRIPT-'].update(disabled=True)
+            window['-BUTTONIMPORTJSON-'].update(disabled=False)
+            window['-BUTTONCHECK-'].update(disabled=False)
 
     if event == '-BUTTONADVANCE-':
         loc = window.current_location()
@@ -1719,7 +1732,6 @@ def waiting_for_events(window, event, values):
 
     if event == '-BUTTONRUN-':
 
-        window['-INFORUN_TEXT-'].update("Running Gecos...")
         for item in keys_all_mainguibuttons_labels:
             window[item].update(disabled=True)
         window.refresh()
@@ -1730,19 +1742,28 @@ def waiting_for_events(window, event, values):
             msg = "GeCos calculation seems to be finished."
             popup_msg(window, msg)
             window['-STATUS_TEXT-'].update("Status: Conformers calculated")
-            window['-SUGGEST_TEXT-'].update("Help: Visualize Results")
+            window['-INFORUN_TEXT-'].update("Advice: Visualize Results")
+            window['-BUTTONVIEWLOG-'].update(disabled=False)
+            window['-BUTTONVISRESULTS-'].update(disabled=False)
+            window['-BUTTONRUN-'].update(disabled=False)
         else:
             if not os.path.isfile(fulldbpath):
                 msg = "Database is not available. GeCos will run conformer search."
                 popup_msg(window, msg)
                 window['-STATUS_TEXT-'].update("Status: Starting QM calculations.")
-                window['-SUGGEST_TEXT-'].update("Help: Run GeCos to update results.")
+                window['-INFORUN_TEXT-'].update("Advice: Run GeCos to update results.")
+                window['-BUTTONVIEWLOG-'].update(disabled=True)
+                window['-BUTTONVISRESULTS-'].update(disabled=True)
+                window['-BUTTONCREATESCRIPT-'].update(disabled=True)
+                window['-BUTTONRUN-'].update(disabled=False)
             else:
                 msg = "Database exists. GeCos will check the calculations."
                 popup_msg(window, msg)
                 window['-STATUS_TEXT-'].update("Status: Running QM calculations.")
-                window['-SUGGEST_TEXT-'].update("Help: Run GeCos to check results.")
-
+                window['-INFORUN_TEXT-'].update("Advice: Run GeCos to check results.")
+                window['-BUTTONVIEWLOG-'].update(disabled=False)
+                window['-BUTTONVISRESULTS-'].update(disabled=False)
+                window['-BUTTONRUN-'].update(disabled=False)
             if window['-HIDEPYTHONSCRIPT-'].get() == "":
                 loc = window.current_location()
                 filename = Sg.popup_get_file('Load python script to run GeCos', no_window=False,
@@ -1753,13 +1774,11 @@ def waiting_for_events(window, event, values):
 
             import_pythonfile_to_gui(window, filename)
 
-            os.system("python "+filename)
+            if filename is not None:
+                os.system("python "+filename)
 
-        window['-BUTTONVIEWLOG-'].update(disabled=False)
-        window['-BUTTONVISRESULTS-'].update(disabled=False)
-        window['-INFORUN_TEXT-'].update("Ready to submit GeCos.")
-        for item in keys_all_mainguibuttons_labels:
-            window[item].update(disabled=False)
+        # for item in keys_all_mainguibuttons_labels:
+        #     window[item].update(disabled=False)
 
     if event == '-BUTTONVISRESULTS-':
         open_window_results(window)
@@ -1768,10 +1787,30 @@ def waiting_for_events(window, event, values):
         loc = window.current_location()
         open_window_log(window, loc)
 
+    # ============= UPDATE EVENTS =============
     if event in keys_input_str_labels:
         window['-BUTTONCHECK-'].update(disabled=False)
+        window['-BUTTONRUN-'].update(disabled=True)
         window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
-        window['-SUGGEST_TEXT-'].update("Help: Try to check keywords")
+        window['-INFORUN_TEXT-'].update("Advice: Check keywords")
+
+    if event in keys_input_int_labels:
+        window['-BUTTONCHECK-'].update(disabled=False)
+        window['-BUTTONRUN-'].update(disabled=True)
+        window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
+        window['-INFORUN_TEXT-'].update("Advice: Check keywords")
+
+    if event in ["-WRITE_GAUSSIAN-"]:
+        window['-BUTTONCHECK-'].update(disabled=False)
+        window['-BUTTONRUN-'].update(disabled=True)
+        window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
+        window['-INFORUN_TEXT-'].update("Advice: Check keywords")
+
+    if event in keys_input_conformer_keywords:
+        window['-BUTTONCHECK-'].update(disabled=False)
+        window['-BUTTONRUN-'].update(disabled=True)
+        window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
+        window['-INFORUN_TEXT-'].update("Advice: Check keywords")
 
     # ============= URL Events =============
     if event == "-DOCK_URL-":

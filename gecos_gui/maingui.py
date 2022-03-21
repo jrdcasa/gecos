@@ -4,15 +4,15 @@ from gecos_gui.main_tabgroup import tabgroup_layout_col
 from gecos_gui.menu_layout import menu_layout
 from gecos_gui.main_figure_layout import image_layout, lizard_gif
 from gecos_gui.events import waiting_for_events
-from gecos_gui.common_elements import row_buttons, theme, status_label, suggest_label, python_script, inforun_label
+from gecos_gui.common_elements import row_buttons, theme, status_label, python_script, inforun_label
 
 def main_gui_app():
     # # MAIN WINDOW LOOP
     Sg.ChangeLookAndFeel(theme)
     layout = [[menu_layout], [image_layout, tabgroup_layout_col], [row_buttons],
-              [status_label], [suggest_label, inforun_label], [python_script]]
+              [status_label], [inforun_label], [python_script]]
 
-    window = Sg.Window('GeCos GUI', layout, size=(1650, 900), location=(100, 60),
+    window = Sg.Window('GeCos GUI', layout, size=(1650, 870), location=(100, 60),
                        finalize=True, return_keyboard_events=True, force_toplevel=False)
 
     window['-DOCK_URL-'].bind('<Enter>', '+MOUSE OVER+')

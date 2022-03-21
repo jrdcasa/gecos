@@ -67,7 +67,7 @@ SlurmUser=slurm
 StateSaveLocation=/var/lib/slurm-llnl/slurmctld
 SwitchType=switch/none
 #TaskEpilog=
-TaskPlugin=task/none
+TaskPlugin=task/affinity
 #TaskProlog=
 #TopologyPlugin=topology/tree
 #TmpFS=/tmp
@@ -126,7 +126,7 @@ SelectTypeParameters=CR_Core
 #AccountingStorageHost=
 #AccountingStoragePass=
 #AccountingStoragePort=
-AccountingStorageType=accounting_storage/none
+AccountingStorageType=accounting_storage/filetxt
 #AccountingStorageUser=
 #AccountingStoreFlags=
 #JobCompHost=
@@ -137,7 +137,7 @@ JobCompType=jobcomp/none
 #JobCompUser=
 #JobContainerType=job_container/none
 JobAcctGatherFrequency=30
-JobAcctGatherType=jobacct_gather/none
+JobAcctGatherType=jobacct_gather/linux
 SlurmctldDebug=info
 SlurmctldLogFile=/var/log/slurm-llnl/slurmctld.log
 SlurmdDebug=info
@@ -160,8 +160,9 @@ SlurmdLogFile=/var/log/slurm-llnl/slurmd.log
 #
 #
 # COMPUTE NODES
-NodeName=ubuntu2004 CPUs=2 RealMemory=16000 Sockets=1 CoresPerSocket=2 ThreadsPerCore=1 State=UNKNOWN
+NodeName=ubuntu2004 CPUs=2 RealMemory=3000 Sockets=1 CoresPerSocket=2 ThreadsPerCore=1 State=UNKNOWN
 PartitionName=cpu Nodes=ALL Default=YES MaxTime=INFINITE State=UP
+
 ```
 
 In NodeName must appear the name of the node give by ``hostname``
@@ -171,6 +172,8 @@ Copy this file to /etc/slurm-llnl
 ```
 $ sudo cp slurm.conf /etc/slurm-llnl
 $ sudo chmod 755 /etc/slurm-llnl/slurm.conf
+$ sudo touch /var/log/slurm_jobacct.log
+$ sudo chown slurm:slurm /var/log/slurm_jobacct.log
 ```
 
 Now it is time to start the services
@@ -186,16 +189,31 @@ $ sudo systemctl status slurmd
 To check if the slurm system is running, you will see something like the above:
 
 ```
-ubuntu@ubuntu2004:~/gecos$ sinfo
+ubuntu@ubuntu2004:~$ sudo scontrol update nodename=ubuntu2004 state=idle
+ubuntu@ubuntu2004:~$ sinfo
 PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
-cpu*         up   infinite      0    n/a 
+cpu*         up   infinite      1  drain ubuntu2004
 ```
 
-In this case, there is a partition called cpu. To handle any issues, you can find information in the following log files:
+In this case, there is a partition called cpu. However, there is a problem that drained the node, to kown the reason write:
+```
+ubuntu@ubuntu2004:~/gecos$ sinfo -R
+REASON               USER      TIMESTAMP           NODELIST
+Low RealMemory       slurm     2022-03-17T10:32:28 ubuntu2004
+```
+ You need to make changes in the ``slurm.conf`` file and restart both services ``systemctld`` and ``systemd`` services. In this example, change the value of RealMemory in the NodeName section of the ``slurm.conf´´. In addition, you can find information of any issues in the following log files:
 
 ```
 sudo cat /var/log/slurm-llnl/slurmd.log 
 sudo cat /var/log/slurm-llnl/slurmctld.log
 ```
+After make the changes, 
+```
+ubuntu@ubuntu2004:~/gecos$ sinfo 
+PARTITION AVAIL  TIMELIMIT  NODES  STATE NODELIST
+cpu*         up   infinite      1   idle ubuntu2004
+```
+
+Now the slurm system is working.
 
 

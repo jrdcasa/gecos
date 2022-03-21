@@ -367,7 +367,7 @@ class GecosRdkit:
             energy = self._df_conformers['OptEnergy'][index]
             iconf = self._df_conformers['Conformations'][index]
 
-            print("{0:d} {1:d} of {2:d} (# clusters {3:d})".format(int(index), int(iconf), n_conformers, icluster))
+            # print("{0:d} {1:d} of {2:d} (# clusters {3:d})".format(int(index), int(iconf), n_conformers, icluster))
 
             if icluster == 0:
                 threshold = energy + energy_threshold
@@ -395,7 +395,7 @@ class GecosRdkit:
                     #                                    atomIds=list_indices_heavy_atoms, prealigned=True)
                     # ===== FOR DEBUG REASONS =====
                     rmsd_noh = self.getconformerrms(iconf_ref, iconf_target,
-                                                    atomids=list_indices_heavy_atoms, prealigned=True)
+                                                    atomids=list_indices_heavy_atoms, align=True)
                     if rmsd_noh < rms_threshold:
                         cluster[i]["pairs"].append([rmsd_noh, energy])
                         cluster[i]["files"].append("")
@@ -425,8 +425,10 @@ class GecosRdkit:
                             cluster[maximum_number_clusters+1]["elements"].append(index)
                             self._df_conformers.at[index, 'Cluster'] = icluster
                         else:
-                            cluster[maximum_number_clusters+1] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
-                                                                  "elements": [], "nelements": 0, "pairs": [], "files": []}
+                            cluster[maximum_number_clusters+1] = {"seed": index, "lowest_energy": energy,
+                                                                  "highest_energy": energy,
+                                                                  "elements": [], "nelements": 0,
+                                                                  "pairs": [], "files": []}
                             cluster[maximum_number_clusters+1]["files"].append(index)
                             cluster[maximum_number_clusters+1]["nelements"] += 1
                             cluster[maximum_number_clusters+1]["elements"].append(index)
@@ -438,7 +440,7 @@ class GecosRdkit:
         return cluster
 
     # =========================================================================
-    def getconformerrms(self, iconf_ref, iconf_target, atomids=None, prealigned=False):
+    def getconformerrms(self, iconf_ref, iconf_target, atomids=None, align=False):
 
         """
         This extends the function rdkit.Chem.AllChem.GetConformerRMS. The original funciton cannot calculate the rmsd
@@ -458,15 +460,23 @@ class GecosRdkit:
 
         # align the conformers if necessary
         # Note: the reference conformer is always the first one
-        if not prealigned:
+        if align:
             if atomids:
-                rdkit.Chem.AlignMolConformers(self.mol_rdkit, confIds=[iconf_ref, iconf_target], atomIds=atomids)
+                rdkit.Chem.rdMolAlign.AlignMolConformers(self.mol_rdkit,
+                                                         confIds=[iconf_ref, iconf_target], atomIds=atomids)
             else:
-                rdkit.Chem.AlignMolConformers(self.mol_rdkit, confIds=[iconf_ref, iconf_target])
+                rdkit.Chem.rdMolAlign.AlignMolConformers(self.mol_rdkit,
+                                                         confIds=[iconf_ref, iconf_target])
 
         # calculate the RMS between the two conformations
         conf1 = self.mol_rdkit.GetConformer(id=iconf_ref)
         conf2 = self.mol_rdkit.GetConformer(id=iconf_target)
+
+        # DEBUG ==================
+        #rdkit.Chem.rdmolfiles.MolToPDBFile(self.mol_rdkit, "conf{0:04d}.pdb".format(iconf_ref), confId=iconf_ref)
+        #rdkit.Chem.rdmolfiles.MolToPDBFile(self.mol_rdkit, "conf{0:04d}.pdb".format(iconf_target), confId=iconf_target)
+        # DEBUG ==================
+
         ssr = 0
         for i in atomids:
             d = conf1.GetAtomPosition(i).Distance(conf2.GetAtomPosition(i))
@@ -479,7 +489,7 @@ class GecosRdkit:
                             maxattempts=1000, prunermsthresh=-0.01, useexptorsionangleprefs=False,
                             usebasicknowledge=True,  enforcechirality=True,
                             ff_name="MMFF",
-                            cluster_method="RMSD", cluster_threshold=2.0,
+                            cluster_method="RMSD", cluster_threshold=1.0,
                             write_gaussian=True, g16_key="#p 6-31g* mp2", g16_mem=4000,
                             g16_nproc=4, pattern="conformers", charge=0, multiplicity=1, debug_flag=False):
 
@@ -542,13 +552,18 @@ class GecosRdkit:
         m += "\t\t 1. Generating {} conformers ({})".format(nconfs, now)
         print(m) if self._logger is None else self._logger.info(m)
 
-        # Generate conformations wihich are stores in the self._mol_rdkit
+        # Generate conformations which are stores in the self.mol_rdkit
         conformerIds = rdkit.Chem.AllChem.EmbedMultipleConfs(self.mol_rdkit, numConfs=nconfs,
                                                              maxAttempts=maxattempts,
                                                              pruneRmsThresh=prunermsthresh,
                                                              useExpTorsionAnglePrefs=useexptorsionangleprefs,
                                                              useBasicKnowledge=usebasicknowledge,
                                                              enforceChirality=enforcechirality)
+
+        # DEBUG ===
+        # rdkit.Chem.rdmolfiles.MolToPDBFile(self.mol_rdkit, "all_conformers_nominimized.pdb")
+        # exit()
+        # DEBUG ===
 
         conformerPropsDict = defaultdict()
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -568,11 +583,15 @@ class GecosRdkit:
         print(m) if self._logger is None else self._logger.info(m)
 
         for conf_id in utils.progressbar(conformerIds, "\t\tMinimizing", 40):
-
             # Calculate energy and minimize
             props = self.mm_calc_energy(conf_id, ff_name=ff_name, minimize_iterations=minimize_iterations)
             conformerPropsDict[conf_id] = props
         self._df_conformers = self._df_conformers.sort_values('OptEnergy')
+
+        # DEBUG ===
+        # rdkit.Chem.rdmolfiles.MolToPDBFile(self.mol_rdkit, "all_conformers_minimized.pdb")
+        # exit()
+        # DEBUG ===
 
         # cluster the MM conformers
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -589,7 +608,7 @@ class GecosRdkit:
         print(m) if self._logger is None else self._logger.info(m)
 
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-        m = "\t\t 4. Get structure of minimum energy for each cluster ({})\n".format(now)
+        m = "\t\t 4. Get structure of minimum energy for each cluster ({})".format(now)
         print(m) if self._logger is None else self._logger.info(m)
 
         filepdb_name = os.path.join(localdir, "{}_cluster_rdkit_optMM_trj.pdb".format(pattern))
@@ -607,7 +626,7 @@ class GecosRdkit:
 
         if write_gaussian:
             now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
-            m = "\t\t 6. Write Conformers to Gaussian16 ({})\n".format(now)
+            m = "\t\t 6. Write Conformers to Gaussian16 inputs ({})\n".format(now)
             m += "\t\t\tInputfiles in {}_g16_conformers/ directory".format(pattern)
             print(m) if self._logger is None else self._logger.info(m)
 
@@ -617,21 +636,27 @@ class GecosRdkit:
         m = "\t\t**************** GENERATE CONFORMERS ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
 
-        m = "\n\t\t**************** CONFORMER MM ENERGIES ***************"
+        m = "\t\t**************** CONFORMER MM ENERGIES ***************"
+        m += "\n\t\tEnergies in kcal/mol, RMSD in angstroms."
+        m += "\n\t\tRMSD threshold = {0:5.3f} angstroms.".format(cluster_threshold)
+        m += "\n\t\tNumber of clusters = {0:4d}".format(len(MMClusters))
         print(m) if self._logger is None else self._logger.info(m)
-        m = "\t\tCluster Conformer_ID  {}_energy(kcal/mol)  Relative_energy(kcal/mol) " \
-            "Highest energy(kcal/mol) nelements\n".format(ff_name)
-        m += "\t\t"+len(m)*"-"+"\n"
+        m = "\t\tCluster Conformer_ID  {}_energy  Relative_energy " \
+            "Highest_energy    RMSD   nelements\n".format(ff_name)
+        separator = "\t\t"+len(m)*"-"+"\n"
+        m += separator
         icluster = 1
         minEnergy = MMClusters[1]['lowest_energy']
         for icluster, ival in MMClusters.items():
 
             iconf = ival['seed']
             energy_abs = ival['lowest_energy']
-            m += "\t\t {0:^5d}  {1:^12d}  {2:^20.2f}  {3:^30.2f}  {4:^16.2f}  {5:^8d}\n".\
+            m += "\t\t {0:^5d}  {1:^12d}  {2:^12.2f}  {3:^12.2f}  {4:^14.2f}  {5:^10.3f}  {6:^6d}\n".\
                  format(icluster, iconf, energy_abs,
                         energy_abs-minEnergy, MMClusters[icluster]['highest_energy'],
+                        MMClusters[icluster]['pairs'][0][0],
                         MMClusters[icluster]['nelements'])
+        m += separator
         m += "\t\t**************** CONFORMER MM ENERGIES ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
 

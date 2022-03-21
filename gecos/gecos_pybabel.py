@@ -128,7 +128,6 @@ class GecosPyBabel:
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         m += "\t\t 1. Generating conformers with openbabel ({})".format(nconfs, now)
         print(m) if self._logger is None else self._logger.info(m)
-
         if ff_name.upper() == "MMFF":
             ff = ob.OBForceField.FindForceField("mmff94")
         elif ff_name.upper() == "UFF":
@@ -140,7 +139,11 @@ class GecosPyBabel:
         try:
             assert (ff.Setup(self._mol_pybabel))
         except AssertionError:
-            return None
+            m = "\t\t Force field {} have problems with this molecule\n".format(ff_name)
+            m += "\t\t Try other force field: GAFF, MMFF or UFF\n".format(ff_name)
+            m += "\t\t PROGRAM STOPS!!!!!"
+            print(m) if self._logger is None else self._logger.info(m)
+            exit()
 
         nrotors = self._mol_pybabel.NumRotors()
         m = "\t\t\tMolecule = {}\n".format(self._mol_pybabel.GetTitle())
@@ -230,20 +233,26 @@ class GecosPyBabel:
         print(m) if self._logger is None else self._logger.info(m)
 
         m = "\n\t\t**************** CONFORMER MM ENERGIES ***************\n"
+        m += "\n\t\tEnergies in kcal/mol, RMSD in angstroms."
+        m += "\n\t\tRMSD threshold = {0:5.3f} angstroms.".format(cluster_threshold)
+        m += "\n\t\tNumber of clusters = {0:4d}".format(len(MMClusters))
         print(m) if self._logger is None else self._logger.info(m)
-        m = "\t\tCluster Conformer_ID  {}_energy(kcal/mol)  Relative_energy(kcal/mol) " \
-            "Highest energy(kcal/mol) nelements\n".format(ff_name)
-        m += "\t\t"+len(m)*"-"+"\n"
+        m = "\t\tCluster Conformer_ID  {}_energy  Relative_energy " \
+            "Highest_energy    RMSD   nelements\n".format(ff_name)
+        separator = "\t\t" + len(m) * "-" + "\n"
+        m += separator
         icluster = 1
         minEnergy = MMclusters[1]['lowest_energy']
         for icluster, ival in MMclusters.items():
 
             iconf = ival['seed']
             energy_abs = ival['lowest_energy']
-            m += "\t\t {0:^5d}  {1:^12d}  {2:^20.2f}  {3:^30.2f}  {4:^16.2f}  {5:^8d}\n".\
-                 format(icluster, iconf, energy_abs,
-                        energy_abs-minEnergy, MMclusters[icluster]['highest_energy'],
-                        MMclusters[icluster]['nelements'])
+            m += "\t\t {0:^5d}  {1:^12d}  {2:^12.2f}  {3:^12.2f}  {4:^14.2f}  {5:^10.3f}  {6:^6d}\n". \
+                format(icluster, iconf, energy_abs,
+                       energy_abs - minEnergy, MMClusters[icluster]['highest_energy'],
+                       MMClusters[icluster]['pairs'][0][0],
+                       MMClusters[icluster]['nelements'])
+        m += separator
         m += "\t\t**************** CONFORMER MM ENERGIES ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
 

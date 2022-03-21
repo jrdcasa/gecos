@@ -20,5 +20,5 @@ FLOW CHART TODO
 
 #### [3. Setup GeCos using the GUI](docs/03-setupgecosgui.md)
 
-#### [Appendix 1: Brief guide to install SLURM in an UBUNTU localhost](docs/ap01-slurm.md)
+#### [Apendix 1: Brief guide to install SLURM in an UBUNTU localhost](docs/ap01-slurm.md)
 

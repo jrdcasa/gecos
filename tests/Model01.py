@@ -2,40 +2,41 @@ import os
 import utils
 import gecos
 
-v_filename = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/Calculation01_EVOH_CCCOCC/pdbs/Model01_EVOH.pdb'
-v_nameserver = 'trueno.csic.es'
+v_filename = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C001_EVOH_CCCOCC_localhotst/opt/Model01_EVOH_opt.pdb'
+v_nameserver = 'totem'
 v_username = 'jramos'
-v_keysshfile = '/home/jramos/.ssh/id_rsa_chiripa'
+v_keysshfile = '/home/jramos/.ssh/id_rsa_localhost'
 v_encrypt_pass = None
-v_slurm_part = 'generic'
+v_slurm_part = 'cpu'
 v_list_nodes = ['']
-v_slurm_part_master = 'generic'
+v_slurm_part_master = 'cpu'
 v_node_master = None
-v_localdir = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/Calculation01_EVOH_CCCOCC/02-CONF_OBABEL'
-v_remotedir = '/home/cfmac/jramos/EVOH_QM/02-CONF_OPENBABEL'
-v_pattern = 'Model_EVOHob'
-v_databasefullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/Calculation01_EVOH_CCCOCC/02-CONF_OBABEL/Model_EVOHob.db'
-v_fileoutputfullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/Calculation01_EVOH_CCCOCC/02-CONF_OBABEL/Model_EVOHob.log'
-v_g16path = '/opt/gaussian/g16_legacy/'
-v_g16_keywords = '#p opt 6-31g(d,p) pop=mk m062x'
-v_ncpus = 1
-v_mem = 4000
+v_localdir = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C001_EVOH_CCCOCC_localhotst/01-CONF_RDKIT_LOCAL'
+v_remotedir = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C001_EVOH_CCCOCC_localhotst/01-CONF_RDKIT_REMOTE'
+v_pattern = '01-EVOH'
+v_databasefullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C001_EVOH_CCCOCC_localhotst/01-CONF_RDKIT_LOCAL/01-EVOH.db'
+v_fileoutputfullpath = '/home/jramos/PycharmProjects/GITHUB_REPO_DIR/GeCos_tutorials/C001_EVOH_CCCOCC_localhotst/01-CONF_RDKIT_LOCAL/01-EVOH.log'
+v_g16path = '/opt/g16/g16'
+v_g16_keywords = '#p m062x/6-311G** opt'
+v_ncpus = 4
+v_mem = 2000
 v_charge = 0
 v_multiplicity = 1
 v_write_gaussian = True
-v_nconfs = 4000
-v_min_iter_mm = 3000
-v_cutoff_rmsd_qm = 1.0
+v_nconfs = 1000
+v_min_iter_mm = 1000
+v_cutoff_rmsd_qm = 0.5
 v_bond_perception = True
 v_dockrmsdpack = '/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg/thirdparty/dockrmsd.x'
-v_confpack = 'openbabel'
-v_openbabel_rmsd_cutoff_confab = 0.500000
-v_openbabel_energy_cutoff_confab = 50.000000
-v_openbabel_verbose = False
-v_openbabel_rmsddock_confab = 0.500000
-v_openbabel_ffname = 'MMFF'
-v_openbabel_cluster_energy_threshold = 99999.000000
-v_openbabel_cluster_max_number_cluster = 100
+v_confpack = 'rdkit'
+v_rdkit_maxattempts = 1000
+v_rdkit_prunermsthresh = -0.010
+v_rdkit_useexptorsionangleprefs = True
+v_rdkit_usebasicknowlwdge = True
+v_rdkit_enforcechirality = True
+v_rdkit_cluster_method = 'RMSD'
+v_rdkit_ffname = 'MMFF'
+v_rdkit_cluster_thres = 0.5
 
 if not os.path.isfile(v_databasefullpath):
 
@@ -44,9 +45,8 @@ if not os.path.isfile(v_databasefullpath):
         fileoutput=v_fileoutputfullpath,
         append=False, inscreen=False)
 
-    g1 = gecos.GecosPyBabel(
+    g1 = gecos.GecosRdkit(
         filename=v_filename,
-        exec_rmsddock=v_dockrmsdpack,
         total_charge=v_charge,
         bond_perception=v_bond_perception,
         logger=log)
@@ -55,22 +55,21 @@ if not os.path.isfile(v_databasefullpath):
         v_localdir,
         nconfs=v_nconfs,
         minimize_iterations=v_min_iter_mm,
-        rmsd_cutoff_confab=v_openbabel_rmsd_cutoff_confab,
-        energy_cutoff_confab=v_openbabel_energy_cutoff_confab,
-        confab_verbose_confab=v_openbabel_verbose,
-        cutoff_rmsddock_confab=v_openbabel_rmsddock_confab,
-        energy_threshold_cluster=v_openbabel_cluster_energy_threshold,
-        max_number_cluster=v_openbabel_cluster_max_number_cluster,
-        ff_name=v_openbabel_ffname,
-        pattern=v_pattern,
+        maxattempts=v_rdkit_maxattempts,
+        prunermsthresh=v_rdkit_prunermsthresh,
+        useexptorsionangleprefs=v_rdkit_useexptorsionangleprefs,
+        usebasicknowledge=v_rdkit_usebasicknowlwdge,
+        enforcechirality=v_rdkit_enforcechirality,
+        ff_name=v_rdkit_ffname,
+        cluster_method=v_rdkit_cluster_method,
+        cluster_threshold=v_rdkit_cluster_thres,
         write_gaussian=v_write_gaussian,
+        pattern=v_pattern,
         g16_key=v_g16_keywords,
         g16_nproc=v_ncpus,
         g16_mem=v_mem,
         charge=v_charge,
-        multiplicity=v_multiplicity
-        )
-
+        multiplicity=v_multiplicity)
 
     gecos.send_qm_conformers(
             v_nameserver,
