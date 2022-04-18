@@ -12,7 +12,7 @@ FLOW CHART TODO
 
 ## User guide
 
-#### [0. Release Notes](docs/00-release.md)
+#### [0. Release Notes](docs/00-release_notes.md)
 
 #### [1. Downloads](docs/01-downloads.md)
 

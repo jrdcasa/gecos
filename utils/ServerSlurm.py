@@ -259,7 +259,9 @@ class ServerSlurmBasic(utils.ServerBasic):
             target = os.path.join(out_localdir, energyfilename)
             server_sftp.get(source, target)
         except FileNotFoundError:
-            print("summary_energy.txt not found in the remote server!!!")
+            m = "summary_energy.txt not found in the remote server!!!\n"
+            m += " or local {} is not accesible!!".format(out_localdir)
+            print(m) if self._logger is None else self._logger.info(m)
             pass
 
         try:
@@ -267,8 +269,11 @@ class ServerSlurmBasic(utils.ServerBasic):
             target = os.path.join(out_localdir, summaryfilename)
             server_sftp.get(source, target)
         except FileNotFoundError:
-            print("summary.txt not found in the remote server!!!")
+            m = "summary.txt not found in the remote server!!!\n"
+            m += " or local {} is not accesible!!".format(out_localdir)
+            print(m) if self._logger is None else self._logger.info(m)
             pass
+
         server_sftp.close()
 
         # Update database
@@ -336,6 +341,10 @@ class ServerSlurmBasic(utils.ServerBasic):
 
     # ===========================================================================================
     def server_check_qm_jobs(self, localdir, remotedir, outdir_local, exec_rmsddock, cutoff_rmsd=1.0):
+
+        # Create a directory to put results
+        if not os.path.isdir(outdir_local):
+            os.mkdir(outdir_local)
 
         # Is the calculation already finnished?. Check for done file in the remote dir.
         try:

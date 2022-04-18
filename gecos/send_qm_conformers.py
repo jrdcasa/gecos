@@ -162,11 +162,19 @@ def write_final_results(localdir, remotedir, server, pattern, logger=None):
 
     cd = defaultdict(list)
     for ind in df.index:
-        line = "\t\t{0:^37s} {1:^19.2f} {2:^8.3f} {3:^17.3f} {4:^10d}\n".format(df['name_job'][ind],
-                                                                                df['DeltaE'][ind],
-                                                                                df['RMSD'][ind],
-                                                                                df['RMSD_INCLUSTER'][ind],
-                                                                                df['Cluster'][ind])
+        try:
+            line = "\t\t{0:^37s} {1:^19.2f} {2:^8.3f} {3:^17.3f} {4:^10d}\n".format(df['name_job'][ind],
+                                                                                    df['DeltaE'][ind],
+                                                                                    df['RMSD'][ind],
+                                                                                    df['RMSD_INCLUSTER'][ind],
+                                                                                    int(df['Cluster'][ind]))
+        except:
+            line = "\t\t{0:^37s} {1:^19.2f} {2:^8.3f} {3:^17.3f} {4:^10d}\n".format(df['name_job'][ind],
+                                                                                    999999.9,
+                                                                                    -0.1,
+                                                                                    -0.1,
+                                                                                    -1)
+
         cd[df['Cluster'][ind]].append(df['name_job'][ind])
         m += line
     print(m) if logger is None else logger.info(m)

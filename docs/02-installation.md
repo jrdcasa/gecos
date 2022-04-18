@@ -1,9 +1,8 @@
-Installation guide
-==============
+# Installation guide
 
 **``Gecos``** toolkit is implemented in Python. This toolkit have some dependencies from other python packages such as:
 
-*  [MDAnalysis](https://www.mdanalysis.org/) 
+* [MDAnalysis](https://www.mdanalysis.org/) 
 * [Rdkit](https://www.rdkit.org/) 
 * [Indigox](https://github.com/allison-group/indigox) 
 * [Openbabel](http://openbabel.org/wiki/Main_Page)
@@ -14,8 +13,11 @@ The full list of dependencies can be followed from both **[requirements.txt](../
 These dependencies are handled by the **setup.py** script and they should be installed automatically following these steps. Anyway, few software need to be installed manually (see Pre-installation section)
 
 -------------------
-#### Pre-installation
+
+## Pre-installation
+
 -------------------
+
 Previous to install the program  some software need to be installed in your system. Installation of the software using the Ubuntu package repository is given between parentheses, for other distributions please check their documentations.
 
 * `git` (sudo apt-get install git)
@@ -25,17 +27,19 @@ Previous to install the program  some software need to be installed in your syst
 * `swig` (sudo apt-get install swig)
 
 -------------------
-#### Create a virtualenv environment 
+
+## Create a virtualenv environment 
+
 -------------------
 It is highly recommended to create a virtual environment. This is a Python environment such that the Python interpreter, libraries and scripts installed into it are isolated from those installed in other virtual environments, and (by default) any libraries installed in a “system” Python.
 
 First, we create an isolated Python environment to install the required packages (see dependencies below). Then, activate the virtual environment.
 
 ```bash
-$ python3 -m venv <name_of_env>
-$ source <name_of_env>/bin/activate
-$ pip list
-$ pip install --upgrade pip
+python3 -m venv <name_of_env>
+source <name_of_env>/bin/activate
+pip list
+pip install --upgrade pip
 ```
 
 **``WARNING:``** This virtual environment **must** be activate in order to use the program.
@@ -55,12 +59,16 @@ setuptools    44.0.0
 (sandbox_gecos) ubuntu@ubuntu2004:~$ deactivate
 ubuntu@ubuntu2004:~$ 
 ```
+
 Note that the python environment is activated, (sandbox_gecos) before the linux prompt. The environment can be deactivate using the **deactivate** command.
 
 -------------------
-#### Clone the github repository and install Gecos
+
+## Clone the github repository and install Gecos
+
 -------------------
-With the python virtual environment activated, clone and install requested python libraries
+With the python virtual environment activated, clone and install requested python libraries.
+
 ```bash
 git clone https://github.com/jrdcasa/gecos.git
 cd gecos
@@ -69,21 +77,26 @@ python setup.py install
 ```
 
 If installation is correct you should see the following message:
-```
+
+```bash
 (...)
 Installed /home/ubuntu/sandbox_gecos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg
 Processing dependencies for gecos==0.1
 Finished processing dependencies for gecos==0.1
 
-		 Installation Done!!!! at 16/03/2022 11:09:06
+    Installation Done!!!! at 16/03/2022 11:09:06
 ```
+
 An **install.log** file has been generated with information about the installation process
 
 -------------------
-#### Run Gecos
+
+## Run Gecos
+
 -------------------
 You can run GeCos using the command line as:
-```
+
+```bash
 (sandbox_gecos) ubuntu@ubuntu2004:~/gecos$ gecos
 usage: gecos [-h] (-j JSON_FILE | -p PYTHON_FILE)
 gecos: error: one of the arguments -j/--json -p/--python is required
@@ -91,7 +104,8 @@ gecos: error: one of the arguments -j/--json -p/--python is required
 ```
 
 Also, a GUI can be used to run GeCos:
-```
+
+```bash
 (sandbox_gecos) ubuntu@ubuntu2004:~/gecos$ gecos_gui
 ```
 

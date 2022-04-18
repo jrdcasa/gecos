@@ -1,4 +1,4 @@
-__version__ = "1.0"
+__version__ = "2.0"
 
 import contextlib
 from typing import Optional, List, TextIO

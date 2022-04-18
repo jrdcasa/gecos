@@ -3,6 +3,7 @@ import os
 import subprocess
 from openbabel import openbabel as ob
 from collections import defaultdict
+from utils.atomic_data import atomic_number, element_vdw_truhlar_radius
 
 
 # ===========================================================================================
@@ -234,6 +235,7 @@ def get_optimized_coordinates(localdir):
         obmol = ob.OBMol()
         obconversion.ReadFile(obmol, xyzname)
         obconversion.WriteFile(obmol, basename+".mol2")
+
     fmovie.close()
 
 
@@ -367,3 +369,89 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
         index += 1
 
     return cluster_dict, deltaE_dict, rmsd_dict, rmsd_dict_incluster
+
+
+# ===========================================================================================
+def write_gaussian_from_mol2(fileproplist, dirmol2, localdir, pattern="QM",
+                             g16_key="#p 6-31g* mp2", g16_mem=4000,
+                             g16_nproc=4, charge=0, multiplicity=1):
+
+    idx = 0
+    for imol2 in fileproplist:
+        fmol2path = os.path.join(dirmol2, imol2)
+
+        obconversion = ob.OBConversion()
+        obconversion.SetInAndOutFormats('mol2', 'xyz')
+
+        obmol = ob.OBMol()
+        xyz_obmol = obconversion.ReadFile(obmol, fmol2path)
+        if not xyz_obmol:
+            m = "Something is wrong with Gaussian16 input files\n"
+            m += "Gaussian input files are not written"
+            print(m) if self._logger is None else self._logger.error(m)
+            return None
+
+        xyz_list = obconversion.WriteString(obmol).split("\n")
+
+        try:
+            iconf_seed = int(imol2.split("_")[1].split("_")[0])
+        except:
+            iconf_seed = idx
+
+        fname = os.path.join(localdir, "{0:s}_{1:03d}_g16.com".format(pattern, iconf_seed))
+        fchk_name = "{0:s}_{1:03d}_gaussian.chk".format(pattern, iconf_seed)
+        with open(fname, 'w') as f:
+            f.writelines("%chk={}\n".format(fchk_name))
+            f.writelines("%nproc={}\n".format(g16_nproc))
+            f.writelines("%mem={}Mb\n".format(g16_mem))
+            f.writelines("{}\n".format(g16_key))
+            f.writelines("\nConformer number {0:03d}.\n".format(iconf_seed))
+            f.writelines("\n")
+            f.writelines("{0:1d} {1:1d}\n".format(charge, multiplicity))
+            for line in xyz_list[2:]:
+                f.writelines(line + "\n")
+
+            if pattern == "WFN":
+                # Write Connectivity matrix ===============================
+                nbonds = obmol.NumBonds()
+                connect = defaultdict(list)
+                bondorder = defaultdict(list)
+                atomic_numbers_set = []
+                for ibond in range(nbonds):
+                    i_obbond = obmol.GetBondById(ibond)
+                    iatom = i_obbond.GetBeginAtomIdx()
+                    jatom = i_obbond.GetEndAtomIdx()
+                    iatom_atnum = i_obbond.GetBeginAtom().GetAtomicNum()
+                    jatom_atnum = i_obbond.GetEndAtom().GetAtomicNum()
+                    atomic_numbers_set.append(iatom_atnum)
+                    atomic_numbers_set.append(jatom_atnum)
+                    bo = i_obbond.GetBondOrder()
+                    connect[iatom].append(jatom)
+                    bondorder[iatom].append(bo)
+                    connect[jatom].append(iatom)
+                    bondorder[jatom].append(bo)
+                for iat, value in sorted(connect.items()):
+                    for jat in value:
+                        connect[jat].remove(iat)
+
+                atomic_numbers_set = set(atomic_numbers_set)
+
+                line = ""
+                for ikey, value in sorted(connect.items()):
+                    line += "{0:4d} ".format(ikey)
+                    jdx = 0
+                    for item in value:
+                        line += "{0:4d} {1:3.1f} ".format(item, bondorder[ikey][jdx])
+                        jdx += 1
+                    line += "\n"
+                f.writelines(line + "\n")
+
+                # Write radii
+                line = ""
+                for item in atomic_numbers_set:
+                    for key, value in atomic_number.items():
+                        if value == item:
+                            line += "{0:s} {1:4.2f}\n".format(key, element_vdw_truhlar_radius[key])
+                f.writelines(line + "\n")
+
+        idx += 1

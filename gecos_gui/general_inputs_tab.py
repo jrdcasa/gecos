@@ -117,7 +117,7 @@ gaussian_col = Sg.Column([
                                  enable_events=True, key="-GAUSSIAN16_URL-", pad=pad1, text_color='blue')
                          ],
                 ], title_color='blue', pad=pad1)
-     ]
+    ]
 ])
 
 conformers_col = Sg.Column([

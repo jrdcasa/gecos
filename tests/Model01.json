@@ -15,16 +15,18 @@
 	"exec_rmsddock": "/home/jramos/PycharmProjects/sandbox_GeCos/lib/python3.8/site-packages/gecos-0.1-py3.8.egg/thirdparty/dockrmsd.x",
 	"exec_g16": "/opt/g16/g16",
 	"conformer_program": "rdkit",
-	"g16_nproc": 4,
-	"g16_mem": 2000,
-	"nconfs": 1000,
-	"cutoff_rmsd_QM": 0.5,
-	"minimize_iterations": 1000,
-	"charge": 0,
-	"multiplicity": 1,
+	"g16_nproc":  4,
+	"g16_mem":  2000,
+	"nconfs":  1000,
+	"cutoff_rmsd_QM":  0.5,
+	"minimize_iterations":  1000,
+	"charge":  0,
+	"multiplicity":  1,
 	"exclude_nodes": [
 		""	],
 	"bond_perception": false,
 	"write_gaussian": true,
-	"rdkit_cluster_thres": 0.5
+	"rdkit_maxattempts":  1000,
+	"rdkit_prunermsthresh":  -0.010,
+	"rdkit_cluster_thres":  0.5
 }

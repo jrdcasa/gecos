@@ -6,8 +6,10 @@ from gecos_gui.main_figure_layout import image_layout, lizard_gif
 from gecos_gui.events import waiting_for_events
 from gecos_gui.common_elements import row_buttons, theme, status_label, python_script, inforun_label
 
+
 def main_gui_app():
-    # # MAIN WINDOW LOOP
+
+    # MAIN WINDOW LOOP
     Sg.ChangeLookAndFeel(theme)
     layout = [[menu_layout], [image_layout, tabgroup_layout_col], [row_buttons],
               [status_label], [inforun_label], [python_script]]
@@ -27,6 +29,8 @@ def main_gui_app():
     window['-LINK_GITHUB-'].bind('<Leave>', '+MOUSE AWAY+')
     window['-GAUSSIAN16_URL-'].bind('<Enter>', '+MOUSE OVER+')
     window['-GAUSSIAN16_URL-'].bind('<Leave>', '+MOUSE AWAY+')
+    window['-INPUT_OTHERSOLV_PROP-'].bind('<Enter>', '+MOUSE OVER+')
+    window['-INPUT_OTHERSOLV_PROP-'].bind('<Leave>', '+MOUSE AWAY+')
 
     while True:
 

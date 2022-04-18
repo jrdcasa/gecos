@@ -69,7 +69,6 @@ if not os.path.isfile(v_databasefullpath):
 		multiplicity=v_multiplicity
 		)
 
-
 	gecos.send_qm_conformers(
 			v_nameserver,
 			v_databasefullpath,
