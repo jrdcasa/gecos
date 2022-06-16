@@ -1,6 +1,7 @@
 import PySimpleGUI as Sg
 import paramiko
 import os
+import sys
 from collections import defaultdict
 from socket import gaierror, error
 from passwd_encrypt.passwd_encrypt import pw_encrypt_msg, pw_decrypt_msg
@@ -440,6 +441,7 @@ def check_prop_conformers(window, keys_properties, dict_properties):
                 return False
 
     return True
+
 
 # =============================================================================
 def check_prop_types(window, keys_input_int_labels):
