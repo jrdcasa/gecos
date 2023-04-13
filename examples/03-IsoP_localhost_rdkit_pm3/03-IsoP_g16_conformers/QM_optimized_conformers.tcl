@@ -6,7 +6,7 @@ proc newRep { sel type color rep imol} {
     mol modcolor $rep $imol $color
 }
 
-set dir "/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers"
+set dir "/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers"
 
 display projection orthographic
 axes location off

@@ -1,6 +1,8 @@
 import glob
 import os
 import subprocess
+import datetime
+import numpy as np
 from openbabel import openbabel as ob
 from collections import defaultdict
 from utils.atomic_data import atomic_number, element_vdw_truhlar_radius
@@ -8,7 +10,7 @@ from utils.atomic_data import atomic_number, element_vdw_truhlar_radius
 
 # ===========================================================================================
 def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=None,
-                             ncpus=None, mem=None):
+                             ncpus=None, mem=None, timelimit=None, extraslurminfo=None):
     """
 
     Args:
@@ -18,6 +20,8 @@ def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=N
         exclude_nodes:
         ncpus:
         mem:
+        timelimit:
+        extraslurminfo:
 
     Returns:
 
@@ -38,6 +42,8 @@ def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=N
         ll += "#SBATCH --cpus-per-task={}\n".format(ncpus)
     if mem is not None:
         ll += "#SBATCH --mem={}M\n".format(mem)
+    if timelimit is not None:
+        ll += "#SBATCH --time={}\n".format(timelimit)
 
     # Send all files in listfiles from localdir to remotedir
     jobindex = 0
@@ -46,11 +52,13 @@ def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=N
         inputfile_com = os.path.split(ifile)[-1]
         ll2 = "#SBATCH --job-name={}\n".format(inputfile_com.split(".")[0])
         ll2 += "\n"
-        ll2 += "g16legacy_root={}\n".format(g16path)
-        ll2 += 'GAUSS_SCRDIR="$TMPDIR"\n'
-        ll2 += "source $g16legacy_root/bsd/g16.profile\n"
-        ll2 += "export g16legacy_root GAUSS_SCRDIR\n"
-        ll2 += "$g16legacy_root/g16 {}\n".format(inputfile_com)
+        # ll2 += "g16legacy_root={}\n".format(g16path)
+        # ll2 += 'GAUSS_SCRDIR="$TMPDIR"\n'
+        # ll2 += "source $g16legacy_root/bsd/g16.profile\n"
+        # ll2 += "export g16legacy_root GAUSS_SCRDIR\n"
+        for item in extraslurminfo:
+            ll2 += "{}\n".format(item)
+        ll2 += "g16 {}\n".format(inputfile_com)
         jobindex += 1
         with open(base + ".sh", 'w') as fin:
             fin.writelines(ll)
@@ -208,7 +216,7 @@ def get_optimized_coordinates(localdir):
             lines = fin.readlines()
             index = 0
             for iline in lines:
-                if iline.find("Input orientation:") != -1:
+                if iline.find("Input orientation:") != -1 or iline.find("Standard orientation") != -1:
                     index_last = index
                 if iline.find("NAtoms") != -1:
                     natoms = int(iline.split()[1])
@@ -297,7 +305,12 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
     icluster = 0
     index = 0
     rmsd_dict_incluster = defaultdict()
+    # deltaE_dict is sorted from lowest to hightest energies.
+    nitems = len(deltaE_dict)
     for item in deltaE_dict:
+        if index % (int(np.floor(nitems*0.1))+1) == 0:
+            now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            print("Clustering element {} out of {} ({})".format(index, nitems, now))
 
         energy = deltaE_dict[item]
 
@@ -305,35 +318,58 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
             threshold = energy + energy_threshold
             icluster += 1
             cluster_dict[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
-                                      "nelements": 0, "pairs": [], "files": []}
+                                      "nelements": 0, "pairs": [], "files": [], "pattern": []}
             cluster_dict[icluster]["pairs"].append([0.000, energy])
             cluster_dict[icluster]["files"].append(item+"_allign.mol2")
+            cluster_dict[icluster]["pattern"].append(item)
             cluster_dict[icluster]["nelements"] += 1
             rmsd_dict[item] = 0.000
             rmsd_dict_incluster [item] = 0.000
             min_energy = energy
 
-        elif energy < threshold:
+        # elif energy < threshold:
+        else:
             tmp_name_mol2 = os.path.join(localdir, item+"_allign.mol2")
+            energy_current = deltaE_dict[item]
             found = False
             for i in range(1, icluster + 1):
                 idx = cluster_dict[i]["seed"]
                 ref_name_mol2 = os.path.join(localdir, cluster_dict[i]["files"][0])
+                energy_ref = deltaE_dict[cluster_dict[i]["pattern"][0]]
                 # Take into account Hs
                 # cmd = '{} {} {} -h -c -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
                 # Do not take into account Hs
                 cmd = '{} {} {} -c -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
                 # RMSD with the seed of the cluster[i]
-                rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
+                try:
+                    rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
+                except subprocess.CalledProcessError:
+                    try:
+                        cmd = '{} {} {} -s'.format(exec_rmsddock, ref_name_mol2, tmp_name_mol2)
+                        rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
+                    except subprocess.CalledProcessError:
+                        # This exception can occur if the Template and query don't have the same bonding network
+                        # so rmsd_dock cannot be calculated. Arbitrarily a value of 1000 is assigned.
+                        rmsd_dock = 1000
                 rmsd_dict_incluster[item] = rmsd_dock
                 # Calculate the rmsd with the seed of the cluster 0 (lowest energy)
                 min_name_mol2 = os.path.join(localdir, cluster_dict[1]["files"][0])
-                # Do not take into account Hs
-                cmd = '{} {} {} -c -s'.format(exec_rmsddock, min_name_mol2, tmp_name_mol2)
-                rmsd_dict[item] = float(subprocess.check_output(cmd, shell=True).decode())
-                if float(rmsd_dock) < cutoff:
+                # Do not take into account Hs. -c --> Assume atomic correspondence between files
+                try:
+                    cmd = '{} {} {} -c -s'.format(exec_rmsddock, min_name_mol2, tmp_name_mol2)
+                    rmsd_dict[item] = float(subprocess.check_output(cmd, shell=True).decode())
+                except subprocess.CalledProcessError:
+                    try:
+                        cmd = '{} {} {} -s'.format(exec_rmsddock, min_name_mol2, tmp_name_mol2)
+                        rmsd_dict[item] = float(subprocess.check_output(cmd, shell=True).decode())
+                    except subprocess.CalledProcessError:
+                        # This exception can occur if the Template and query don't have the same bonding network
+                        # so rmsd_dock cannot be calculated. Arbitrarily a value of 1000 is assigned.
+                        rmsd_dict[item] = 1000
+                if float(rmsd_dock) < cutoff and abs(energy_current-energy_ref) < energy_threshold:
                     cluster_dict[i]["pairs"].append([rmsd_dock, energy])
                     cluster_dict[i]["files"].append(item+"_allign.mol2")
+                    cluster_dict[i]["pattern"].append(item)
                     cluster_dict[i]["highest_energy"] = energy
                     cluster_dict[i]["nelements"] += 1
                     found = True
@@ -343,8 +379,9 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
                 if icluster < maximum_number_clusters:
                     icluster += 1
                     cluster_dict[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
-                                              "nelements": 0, "pairs": [], "files": []}
+                                              "nelements": 0, "pairs": [], "files": [], "pattern": []}
                     cluster_dict[icluster]["files"].append(item+"_allign.mol2")
+                    cluster_dict[icluster]["pattern"].append(item)
                     cluster_dict[icluster]["nelements"] += 1
                     cluster_dict[icluster]["pairs"].append([rmsd_dock, energy])
                     rmsd_dict_incluster[item] = 0.000
@@ -352,19 +389,22 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
                     if cluster_dict[maximum_number_clusters + 1]:
                         cluster_dict[maximum_number_clusters + 1]["pairs"].append([rmsd_dock, energy])
                         cluster_dict[maximum_number_clusters + 1]["files"].append(item+"_allign.mol2")
+                        cluster_dict[maximum_number_clusters + 1]["pattern"].append(item)
                         cluster_dict[maximum_number_clusters + 1]["highest_energy"] = energy
                         cluster_dict[maximum_number_clusters + 1]["nelements"] += 1
                         rmsd_dict_incluster[item] = 0.000
                     else:
                         cluster_dict[maximum_number_clusters + 1] = {"seed": index, "lowest_energy": energy,
                                                                      "highest_energy": energy,
-                                                                     "nelements": 0, "pairs": [], "files": []}
+                                                                     "nelements": 0, "pairs": [],
+                                                                     "files": [], "pattern": []}
                         cluster_dict[maximum_number_clusters + 1]["files"].append(item+"_allign.mol2")
+                        cluster_dict[maximum_number_clusters + 1]["pattern"].append(item+"_allign.mol2")
                         cluster_dict[maximum_number_clusters + 1]["nelements"] += 1
                         cluster_dict[maximum_number_clusters + 1]["pairs"].append([rmsd_dock, energy])
                         rmsd_dict_incluster[item] = 0.000
-        else:
-            pass
+        # else:
+        #     pass
 
         index += 1
 
@@ -374,7 +414,7 @@ def cluster_optimized_coordinates(edict, localdir, exec_rmsddock, cutoff=1.0,
 # ===========================================================================================
 def write_gaussian_from_mol2(fileproplist, dirmol2, localdir, pattern="QM",
                              g16_key="#p 6-31g* mp2", g16_mem=4000,
-                             g16_nproc=4, charge=0, multiplicity=1):
+                             g16_nproc=4, charge=0, multiplicity=1, logger=None):
 
     idx = 0
     for imol2 in fileproplist:
@@ -388,30 +428,30 @@ def write_gaussian_from_mol2(fileproplist, dirmol2, localdir, pattern="QM",
         if not xyz_obmol:
             m = "Something is wrong with Gaussian16 input files\n"
             m += "Gaussian input files are not written"
-            print(m) if self._logger is None else self._logger.error(m)
+            print(m) if logger is None else logger.error(m)
             return None
 
         xyz_list = obconversion.WriteString(obmol).split("\n")
 
         try:
-            iconf_seed = int(imol2.split("_")[1].split("_")[0])
+            iconf_seed = imol2.split(".")[0]
         except:
             iconf_seed = idx
 
-        fname = os.path.join(localdir, "{0:s}_{1:03d}_g16.com".format(pattern, iconf_seed))
-        fchk_name = "{0:s}_{1:03d}_gaussian.chk".format(pattern, iconf_seed)
+        fname = os.path.join(localdir, "{0:s}_{1:s}_g16.com".format(iconf_seed, pattern))
+        fchk_name = "{0:s}_{1:s}_gaussian.chk".format(iconf_seed, pattern)
+
         with open(fname, 'w') as f:
             f.writelines("%chk={}\n".format(fchk_name))
             f.writelines("%nproc={}\n".format(g16_nproc))
             f.writelines("%mem={}Mb\n".format(g16_mem))
             f.writelines("{}\n".format(g16_key))
-            f.writelines("\nConformer number {0:03d}.\n".format(iconf_seed))
+            f.writelines("\nConformer name {0:s}.\n".format(iconf_seed))
             f.writelines("\n")
             f.writelines("{0:1d} {1:1d}\n".format(charge, multiplicity))
             for line in xyz_list[2:]:
                 f.writelines(line + "\n")
-
-            if pattern == "WFN":
+            if pattern.upper() == "WFN":
                 # Write Connectivity matrix ===============================
                 nbonds = obmol.NumBonds()
                 connect = defaultdict(list)

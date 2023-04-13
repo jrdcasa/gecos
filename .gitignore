@@ -10,4 +10,5 @@ tests_pysimplegui/
 install.log
 .idea/*
 tests_pysimplegui/*
-
+TMP
+slurm-*

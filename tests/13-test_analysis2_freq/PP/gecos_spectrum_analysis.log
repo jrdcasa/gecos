@@ -1,0 +1,48 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 07-02-2023 18:05:02 ============
+
+		Command line: 
+			python gecos_analysis.py spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian
+			         or
+			gecos_analysis spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian
+
+		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/13-test_analysis2_freq
+		Directory with Log files      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq
+
+
+		#                    ID                     DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaEscf(kcal/mol) 
+		# =============================================================================================================================
+		 C12H26O3_pair_004_088_allign_FREQ_g16          0.00                     -0.00               0.00               0.00
+		 C12H26O3_pair_001_018_allign_FREQ_g16          0.30                      2.21              -1.91              -1.56
+		 C12H26O3_pair_003_098_allign_FREQ_g16          0.31                      2.22              -1.91              -1.56
+		 C12H26O3_pair_037_041_allign_FREQ_g16          5.52                     -0.57               6.09               6.20
+
+		# =============================================================================================================================
+
+		 Job Finnished: 07-02-2023 18:05:02
+

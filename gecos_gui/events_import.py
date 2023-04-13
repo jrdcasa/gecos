@@ -1,264 +1,11 @@
-import json
 import re
+import ast
 
 
 # =============================================================================
-def import_jsonfile_to_gui(window, filename, rdkit_dict_options,
-                           openbabel_dict_options, pass_encrypted_file):
-    """
-    Use a json file containing the keywords for GeCos and load the parameters in the GUI
-
-    Args:
-        window: window instance
-        filename: json file
-        rdkit_dict_options:
-        pass_encrypted_file:
-
-    """
-
-    # If filename None, the CANCEL button has been pushed
-    if filename is None or len(filename) == 0:
-        return False
-
-    # Open json file
-    with open(filename, 'r') as fjson:
-        data = json.load(fjson)
-        for item in data:
-            if item.upper() == "MOLECULEFILE":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"moleculefile:\" must be a string.")
-                    return False
-                else:
-                    window['-MOLECULE_INPUT-'].update(data[item])
-            elif item.upper() == "NAMESERVER":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"nameserver:\" must be a string.")
-                    return False
-                else:
-                    window['-NAME_SERVER-'].update(data[item])
-            elif item.upper() == "USERNAME":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"username:\" must be a string.")
-                    return False
-                else:
-                    window['-USER_NAME-'].update(data[item])
-            elif item.upper() == "KEYFILE":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"keyfile:\" must be a string.")
-                    return False
-                else:
-                    window['-KEY_SSH_FILE-'].update(data[item])
-            elif item.upper() == "PARTITION":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"partition:\" must be a string.")
-                    return False
-                else:
-
-                    window['-SLURM_PART-'].update(data[item])
-            elif item.upper() == "EXCLUDE_NODES":
-                if not isinstance(data[item], list):
-                    popup_error(window, "Json error: \"exclude_nodes:\" must be a list.")
-                    return False
-                else:
-                    string = ""
-                    for i in data[item]:
-                        string += i + ","
-                    window['-EXCLUDE_NODES-'].update(string[:-1])
-            elif item.upper() == "NODEMASTER":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"nodemaster:\" must be a string.")
-                    return False
-                else:
-                    window['-NODE_MASTER-'].update(data[item])
-            elif item.upper() == "PARTITIONMASTER":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"partitionmaster:\" must be a string.")
-                    return False
-                else:
-                    window['-SLURM_PART_MASTER-'].update(data[item])
-            elif item.upper() == "LOCALDIR":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"localdir:\" must be a string.")
-                    return False
-                else:
-                    window['-LOCAL_DIR-'].update(data[item])
-            elif item.upper() == "REMOTEDIR":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"remotedir:\" must be a string.")
-                    return False
-                else:
-                    window['-REMOTE_DIR-'].update(data[item])
-            elif item.upper() == "PATTERN":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"pattern:\" must be a string.")
-                    return False
-                else:
-                    window['-PATTERN-'].update(data[item])
-            elif item.upper() == "DATABASENAME":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"databasename:\" must be a string.")
-                    return False
-                else:
-                    window['-DATABASE_NAME-'].update(data[item])
-            elif item.upper() == "FILELOG":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"filelog:\" must be a string.")
-                    return False
-                else:
-                    window['-FILENAME_LOG-'].update(data[item])
-            elif item.upper() == "G16_KEY":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"g16_key:\" must be a string.")
-                    return False
-                else:
-                    window['-G16_KEYWORDS-'].update(data[item])
-            elif item.upper() == "G16_NPROC":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"g16_nproc:\" must be an integer.")
-                    return False
-                else:
-                    if data[item] != 0:
-                        window['-G16_NPROC-'].update(data[item])
-            elif item.upper() == "G16_MEM":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"g16_mem:\" must be an integer.")
-                    return False
-                else:
-                    if data[item] != 0:
-                        window['-G16_MEM-'].update(data[item])
-            elif item.upper() == "NCONFS":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"nconfs:\" must be an integer.")
-                    return False
-                else:
-                    if data[item] != 0:
-                        window['-NCONF-'].update(data[item])
-            elif item.upper() == "MINIMIZE_ITERATIONS":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"minimize_iterations:\" must be an integer.")
-                    return False
-                else:
-                    if data[item] != 0:
-                        window['-MIN_ITER_MM-'].update(data[item])
-            elif item.upper() == "CUTOFF_RMSD_QM":
-                if not isinstance(data[item], float):
-                    try:
-                        if float(data[item]) > 0.01:
-                            window['-CUTOFF_RMSD_QM-'].update(float(data[item]))
-                    except:
-                        popup_error(window, "Json error: \"cutoff_rmsd_QM:\" must be a float.")
-                        return False
-                else:
-                    if data[item] > 0.01:
-                        window['-CUTOFF_RMSD_QM-'].update(data[item])
-            elif item.upper() == "EXEC_RMSDDOCK":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"exec_rmsddock:\" must be a string.")
-                    return False
-                else:
-                    window['-DOCKRMSDPACK-'].update(data[item])
-            elif item.upper() == "EXEC_G16":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"exec_g16:\" must be a string.")
-                    return False
-                else:
-                    window['-GAUSSIAN16PACK-'].update(data[item])
-            elif item.upper() == "BOND_PERCEPTION":
-                if not isinstance(data[item], bool):
-                    popup_error(window, "Json error: \"bond_perception:\" must be a boolean.")
-                    return False
-                else:
-                    if data[item]:
-                        window['-BOND_PERCEPTION-'].update(value=True)
-                    else:
-                        window['-BOND_PERCEPTION-'].update(value=False)
-
-            elif item.upper() == "CONFORMER_PROGRAM":
-                if not isinstance(data[item], str):
-                    popup_error(window, "Json error: \"conformer_program:\" must be a string.")
-                    return False
-                else:
-                    if data[item].upper() == "RDKIT":
-                        window['-CONFPACK-'].update("rdkit")
-                    elif data[item].upper() == "OPENBABEL":
-                        window['-CONFPACK-'].update("openbabel")
-                    else:
-                        window['-CONFPACK-'].update("")
-            elif item.upper() == "CHARGE":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"Charge:\" must be an integer.")
-                    return False
-                else:
-                    window['-CHARGE-'].update(data[item])
-            elif item.upper() == "MULTIPLICITY":
-                if not isinstance(data[item], int):
-                    popup_error(window, "Json error: \"Multiplicity:\" must be an integer.")
-                    return False
-                else:
-                    window['-MULTIPLICITY-'].update(data[item])
-            elif item.upper() == "WRITE_GAUSSIAN":
-                if not isinstance(data[item], bool):
-                    popup_error(window, "Json error: \"write_gaussian:\" must be a boolean.")
-                    return False
-                else:
-                    if data[item]:
-                        window['-WRITE_GAUSSIAN-'].update(value=True)
-                    else:
-                        window['-WRITE_GAUSSIAN-'].update(value=False)
-            elif item.upper() == "RDKIT_MAXATTEMPTS":
-                rdkit_dict_options["-RDKIT_MAXATTEMPTS-"] = data[item]
-            elif item.upper() == "RDKIT_PRUNERMSTHRESH":
-                rdkit_dict_options["-RDKIT_PRUNERMSTHRESH-"] = data[item]
-            elif item.upper() == "RDKIT_USEEXPTORSIONANGLEPREFS":
-                if data[item]:
-                    rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'] = True
-                else:
-                    rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'] = False
-            elif item.upper() == "RDKIT_USEBASICKNOWLEDGE":
-                if data[item]:
-                    rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'] = True
-                else:
-                    rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'] = False
-            elif item.upper() == "RDKIT_ENFORCECHIRALITY":
-                if data[item]:
-                    rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'] = True
-                else:
-                    rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'] = False
-            elif item.upper() == "RDKIT_FFNAME":
-                rdkit_dict_options["-RDKIT_FFNAME-"] = data[item]
-            elif item.upper() == "RDKIT_CLUSTER_METHOD":
-                rdkit_dict_options["-RDKIT_CLUSTER_METHOD-"] = data[item]
-            elif item.upper() == "RDKIT_CLUSTER_THRES":
-                rdkit_dict_options["-RDKIT_CLUSTER_THRES-"] = data[item]
-            elif item.upper() == "OPENBABEL_RMSD_CUTOFF":
-                openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'] = data[item]
-            elif item.upper() == "OPENBABEL_ENERGY_CUTOFF":
-                openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'] = data[item]
-            elif item.upper() == "OPENBABEL_VERBOSE":
-                if data[item]:
-                    openbabel_dict_options['-CONFAB_VERBOSE-'] = True
-                else:
-                    openbabel_dict_options['-CONFAB_VERBOSE-'] = False
-            elif item.upper() == "OPENBABEL_RMSD_CUTOFF_RMSDDOCK":
-                openbabel_dict_options['-CONFAB_RMSD_CUTOFF_RMSDDOCK-'] = data[item]
-            elif item.upper() == "OPENBABEL_FFNAME":
-                openbabel_dict_options['-CONFAB_FFNAME-'] = data[item]
-            elif item.upper() == "OPENBABEL_ENERGY_THRESHOLD":
-                openbabel_dict_options['-CONFAB_ENERGY_THRESHOLD-'] = data[item]
-            elif item.upper() == "OPENBABEL_MAX_ENERGY_CLUSTERS":
-                openbabel_dict_options['-CONFAB_MAX_ENERGY_CLUSTERS-'] = data[item]
-            elif item.upper() == "ENCRYPTED_PASSWD":
-                pass_encrypted_file = data[item]
-                window['-ENCRYPT_PASS_FILE-'].update(data[item])
-
-        keys_activate_mainguibuttons_labels = ['-BUTTONRUN-', '-BUTTONCREATESCRIPT-',
-                                               '-BUTTONVISRESULTS-', '-BUTTONVIEWLOG-']
-        for item in keys_activate_mainguibuttons_labels:
-            window[item].update(disabled=True)
-
-
-# =============================================================================
-def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
+def import_pythonfile_to_gui(window, filename, rdkit_dict_options,
+                             openbabel_dict_options, extractmd_dict_options,
+                             systematicgrid_dict_options):
 
     """
     Use a json file containing the keywords for GeCos and load the parameters in the GUI
@@ -267,6 +14,9 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
         window: window instance
         filename: python file
         rdkit_dict_options:
+        openbabel_dict_options
+        extractmd_dict_options
+        systematicgrid_dict_options
 
     """
 
@@ -288,6 +38,7 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
         'v_g16_keywords': '-G16_KEYWORDS-',
         'v_dockrmsdpack': '-DOCKRMSDPACK-',
         'v_g16path': '-GAUSSIAN16PACK-',
+        'v_timelimitslurm' : '-TIME_NODES-'
     }
 
     var_to_encrypt = {'v_encrypt_pass': '-ENCRYPT_PASS_FILE-',
@@ -302,24 +53,30 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
         'v_list_nodes': '-EXCLUDE_NODES-',
     }
 
+    var_to_dict_multipleline = {
+        'v_g16_extrainfo': '-GAUSSIAN16_EXTRAINFO-',
+        'v_bash_extrainfo': "-BASH_EXTRAINFO-"
+    }
+
     var_to_dict_pathlast = {
         'v_databasefullpath': '-DATABASE_NAME-',
         'v_fileoutputfullpath': '-FILENAME_LOG-'
     }
 
     var_to_dict_intfloat = {
-        'v_ncpus': '-G16_NPROC-',
-        'v_mem': '-G16_MEM-',
-        'v_charge': '-CHARGE-',
-        'v_multiplicity': '-MULTIPLICITY-',
-        'v_nconfs': '-NCONF-',
-        'v_min_iter_mm': '-MIN_ITER_MM-',
-        'v_cutoff_rmsd_qm': '-CUTOFF_RMSD_QM-',
+        'v_g16_ncpus': '-G16_NPROC-',
+        'v_g16_mem': '-G16_MEM-',
+        'v_g16_charge': '-CHARGE-',
+        'v_g16_multiplicity': '-MULTIPLICITY-',
+        #cJ 'v_cutoff_rmsd_qm': '-CUTOFF_RMSD_QM-',
+        #cJ 'v_energy_threshold': '-CUTOFF_ENERGY_QM-',
+        'v_maxjobsslurm': '-MAX_JOBS_SLURM-'
     }
 
     var_to_dict_boolean = {
         'v_write_gaussian': '-WRITE_GAUSSIAN-',
-        'v_bond_perception': '-BOND_PERCEPTION-'
+        'v_run_gaussian': '-RUN_GAUSSIAN-',
+        'v_bond_perception': '-BOND_PERCEPTION-',
     }
 
     var_to_dict_rdkit_str = {
@@ -329,22 +86,29 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
     var_to_dict_rdkit_boolean = {
         'v_rdkit_useexptorsionangleprefs': '-RDKIT_USEEXPTORSIONANGLEPREFS-',
         'v_rdkit_usebasicknowlwdge': '-RDKIT_USEBASICKNOWLEDGE-',
-        'v_rdkit_enforcechirality': '-RDKIT_ENFORCECHIRALITY-'
+        'v_rdkit_enforcechirality': '-RDKIT_ENFORCECHIRALITY-',
+        'v_rdkit_rmsd_only_heavy': '-RDKIT_RMSD_ONLY_HEAVY-'
     }
 
     var_to_dict_rdkit_intfloat = {
         'v_rdkit_maxattempts': '-RDKIT_MAXATTEMPTS-',
         'v_rdkit_prunermsthresh': '-RDKIT_PRUNERMSTHRESH-',
-        'v_rdkit_cluster_thres': '-RDKIT_CLUSTER_THRES-'
+        'v_rdkit_rmsd_thres': '-RDKIT_RMSD_THRES-',
+        'v_rdkit_nconfs': '-RDKIT_NCONF-',
+        'v_rdkit_min_iter_mm': '-RDKIT_MIN_ITER_MM-',
+        'v_rdkit_energy_thres': '-RDKIT_ENERGY_THRES-',
+        'v_rdkit_rotconst_thres': '-RDKIT_ROTCONST_THRES-',
+        'v_rdkit_window_energy': '-RDKIT_WINDOW_ENERGY-',
     }
 
     var_to_dict_openbabel_intfloat = {
+        'v_openbabel_nconf': '-CONFAB_NCONF-',
+        'v_openbabel_min_iter_mm': '-CONFAB_MIN_ITER_MM-',
         'v_openbabel_rmsd_cutoff_confab': '-CONFAB_RMSD_CUTOFF-',
         'v_openbabel_energy_cutoff_confab': '-CONFAB_ENERGY_CUTOFF-',
         'v_openbabel_rmsddock_confab': '-CONFAB_RMSD_CUTOFF_RMSDDOCK-',
         'v_openbabel_cluster_energy_threshold': '-CONFAB_ENERGY_THRESHOLD-',
         'v_openbabel_cluster_max_number_cluster': '-CONFAB_MAX_ENERGY_CLUSTERS-'
-
     }
 
     var_to_dict_openbabel_boolean = {
@@ -355,11 +119,40 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
         'v_openbabel_ffname': '-CONFAB_FFNAME-'
     }
 
+    var_to_dict_extractmd_str = {
+        'v_filemolextractfullpath': '-MOLECULE_INPUT-',
+        'v_extract_method': '-METHOD_EXTRACT-',
+    }
+
+    var_to_dict_extractmd_intfloat = {
+        'v_radius_sphere': '-RADIUS_SPHERE-',
+    }
+
+    var_to_dict_extractmd_boolean = {
+        'v_extract_monomers': '-EXTRACT_MONOMER-',
+        'v_extract_pairs': '-EXTRACT_PAIR-',
+        'v_extract_onlydifferentmols': '-EXTRACT_ONLYDIFFMOL-'
+    }
+
+    var_to_dict_systematicgrid_intfloat = {
+        'v_sg_ndihedrals': '-SG_NDIHEDRALS-',
+        'v_sg_maxMMoptiter': '-SG_MM_MAX_ITER-'
+    }
+
+    var_to_dict_systematicgrid_list = {
+        'v_sg_listdih': '-SG_DIH_STEPS-',
+    }
+
+    var_to_dict_systematicgrid_boolean = {
+        'v_sg_MMoptimization': '-SG_MM_OPTIMIZATION-',
+    }
+
     with open(filename, 'r') as fpython:
         data = fpython.read()
 
         for ikey in var_to_dict_str.keys():
             regex = ikey+".*="
+            print(ikey)
             if re.search(regex, data) is not None:
                 str2 = re.search(ikey+".*=.*", data).group(0)
                 # value = re.search("(?:'|\").*(?:'|\")", str2).group(0)
@@ -373,7 +166,6 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
             regex = ikey + ".*="
             if re.search(regex, data) is not None:
                 str2 = re.search(ikey + ".*=.*", data).group(0)
-                # value = re.search("(?:'|\").*(?:'|\")", str2).group(0)
                 tmp = re.search("(?:['\"]).*(?:['\"])", str2)
                 if tmp is not None:
                     value = tmp.group(0)
@@ -386,12 +178,16 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
             regex = ikey+".*="
             if re.search(regex, data) is not None:
                 str2 = re.search(ikey+".*=.*", data).group(0)
-                # value = re.search('(?:\'|").*(?:\'|")', str2).group(0)
                 value = re.search("(?:['\"]).*(?:['\"])", str2).group(0)
                 value = value.replace("'", "")
                 value = value.replace("\"", "")
                 label = var_to_dict_combobox[ikey]
                 window[label].update(value)
+            if value.upper() == 'EXTRACT FROM MD FRAME':
+                window['-NCONF-'].update(disabled=True, text_color='grey')
+                window['-MIN_ITER_MM-'].update(disabled=True, text_color='grey')
+                window['-CUTOFF_RMSD_QM-'].update(disabled=False)
+                window['-CUTOFF_ENERGY_QM-'].update(disabled=False)
 
         for ikey in var_to_dict_list.keys():
             regex = ikey+".*="
@@ -504,6 +300,84 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options):
                 label = var_to_dict_openbabel_str[ikey]
                 openbabel_dict_options[label] = value
 
+        for ikey in var_to_dict_extractmd_str.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                str2 = re.search(ikey+".*=.*", data).group(0)
+                # value = re.search('(?:\'|").*(?:\'|")', str2).group(0)
+                value = re.search("(?:['\"]).*(?:['\"])", str2).group(0)
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+                label = var_to_dict_extractmd_str[ikey]
+                # print(label, ikey, var_to_dict_extractmd_str[ikey], value)
+                extractmd_dict_options[label] = value
+
+        for ikey in var_to_dict_extractmd_boolean.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                value = re.search(ikey+".*=.*", data).group(0)
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+                value = value.split("=")[-1]
+                if value.find('True') != -1:
+                    valbol = True
+                else:
+                    valbol = False
+                label = var_to_dict_extractmd_boolean[ikey]
+                extractmd_dict_options[label] = valbol
+
+        for ikey in var_to_dict_extractmd_intfloat.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                value = re.search(ikey+".*=.*", data).group(0)
+                value = value.split("=")[-1]
+                label = var_to_dict_extractmd_intfloat[ikey]
+                extractmd_dict_options[label] = value
+
+        for ikey in var_to_dict_systematicgrid_intfloat.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                value = re.search(ikey+".*=.*", data).group(0)
+                value = value.split("=")[-1]
+                label = var_to_dict_systematicgrid_intfloat[ikey]
+                systematicgrid_dict_options[label] = int(value)
+
+        for ikey in var_to_dict_systematicgrid_list.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                str2 = re.search(ikey+".*=.*", data).group(0)
+                token_list = str2.split("=")[-1].lstrip()
+                label = var_to_dict_systematicgrid_list[ikey]
+                systematicgrid_dict_options[label] = ast.literal_eval(token_list)
+
+        for ikey in var_to_dict_systematicgrid_boolean.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                value = re.search(ikey+".*=.*", data).group(0)
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+                value = value.split("=")[-1]
+                if value.find('True') != -1:
+                    valbol = True
+                else:
+                    valbol = False
+                label = var_to_dict_systematicgrid_boolean[ikey]
+                systematicgrid_dict_options[label] = valbol
+
+        for ikey in var_to_dict_multipleline.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                str2 = re.search(ikey+".*=.*", data).group(0)
+                value = re.search("(?:['\"]).*(?:['\"])", str2).group(0)
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+                token_list = value.split(",")
+                line = ""
+                for itoken in token_list:
+                    line += itoken.lstrip()+"\n"
+                label = var_to_dict_multipleline[ikey]
+                window[label].update(value=line)
+
 
 # =============================================================================
 def import_pythonfileprops_to_gui(window, filename):
@@ -538,6 +412,8 @@ def import_pythonfileprops_to_gui(window, filename):
         'p_mem': '-G16_MEM-',
         'p_charge': '-CHARGE-',
         'p_multiplicity': '-MULTIPLICITY-',
+        'p_maxjobsslurm': '-MAX_JOBS_SLURM-',
+        'p_cutoffenergy': '-QM_PROP_CUTOFF_ENERGY-'
     }
 
     var_to_dict_pathlast = {
@@ -606,22 +482,28 @@ def import_pythonfileprops_to_gui(window, filename):
         # Extract parameters from the Keyword_line
         tokens = window['-KEYWORD_LINE-'].get().split()
         tokens_str = ' '.join(tokens)
-        method, basisset = tokens[1].split("/")
+        try:
+            method, basisset = tokens[1].split("/")
+        except ValueError:
+            method = tokens[1]
 
         try:
             solvent_model = [string for string in tokens if "scrf" in string][0].split("(")[-1][0:-1]
-        except:
+        except (Exception,):
             solvent_model = 'None'
 
         try:
             solvent = [string for string in tokens if "solvent" in string][0].split("=")[-1][0:-1]
-        except:
+        except (Exception,):
             solvent = 'None'
         if solvent == '':
             solvent = 'None'
 
         window['-INPUT_METHOD_PROP-'].update(value=method)
-        window['-INPUT_BASISSET_PROP-'].update(value=basisset)
+        try:
+            window['-INPUT_BASISSET_PROP-'].update(value=basisset)
+        except UnboundLocalError:
+            window['-INPUT_BASISSET_PROP-'].update(value="")
         window['-COMBO_MODELSOLVENT_PROP-'].update(value=solvent_model)
         window['-COMBO_SOLVENT_PROP-'].update(value=solvent)
 

@@ -1,0 +1,5 @@
+
+		#               ID               DeltaEnergy(kcal/mol) RMSDwithHs(A) RMSDwithoutHs(A)   RotConstA(Ghz)   RotConstB(Ghz)   RotConstC(Ghz)  AngleMainPrincipalAxes(deg)  NHbonds  NvdwCont_Intermol NvdwCont_Intramol
+		# =======================================================================================================================================================================================================================
+		   MD_extract_012_gaussian               0.00                0.000          0.000          5.055256        2.199191         1.660071                   nan               0               0               0
+		   MD_extract_011_gaussian               0.05                1.553          0.645          3.873964        2.702094         1.937482                   nan               0               0               0

@@ -1,5 +1,5 @@
 28
-/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_001_gaussian.xyz
+/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_001_gaussian.xyz
 6 -0.583566 -0.682771 -0.522065
 1 -0.654936 -1.779828 -0.376766
 1 -0.046369 -0.543221 -1.481320
@@ -29,7 +29,7 @@
 1 -0.314789 -0.211858 1.580825
 1 0.276777 1.046276 0.481834
 28
-/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_004_gaussian.xyz
+/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_004_gaussian.xyz
 6 -0.787680 -0.732063 -0.202986
 1 -0.198607 -1.357279 -0.902171
 1 -1.134965 -1.416432 0.604803
@@ -59,7 +59,7 @@
 1 -0.497697 0.975484 1.106335
 1 0.425433 1.066013 -0.403781
 28
-/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_005_gaussian.xyz
+/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_005_gaussian.xyz
 6 -0.715831 -0.534020 -0.716284
 1 -0.760462 -1.395288 -0.011745
 1 -0.386997 -0.950630 -1.689136
@@ -89,7 +89,7 @@
 1 -0.043933 0.900572 0.772416
 1 0.347154 1.355949 -0.895168
 28
-/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_007_gaussian.xyz
+/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_007_gaussian.xyz
 6 -0.641091 0.779160 -0.382827
 1 -0.777276 1.775093 0.087423
 1 -0.106657 0.970124 -1.335179
@@ -119,7 +119,7 @@
 1 0.483187 -1.048330 -0.035136
 1 -0.383155 -0.445438 1.389488
 28
-/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_008_gaussian.xyz
+/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/03-IsoP_g16_conformers/03-IsoP_008_gaussian.xyz
 6 -1.157005 1.065928 0.247738
 1 -1.313740 0.710343 1.290449
 1 -1.555498 2.099293 0.213183

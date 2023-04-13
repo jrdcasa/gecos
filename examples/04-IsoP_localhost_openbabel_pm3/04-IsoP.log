@@ -27,7 +27,7 @@
 
 		Conformers will be generated with openbabel library (https://openbabel.org/wiki/Python, https://openbabel.github.io/api/3.0/index.shtml)
 
-		Molecular file seed  : /home/jramos/PycharmProjects/GeCos/data/IsoP.pdb
+		Molecular file seed  : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/IsoP.pdb
 		Bond Perception: True
 
 		Formula          = C10H18
@@ -40,96 +40,17 @@
 
 		**************** GENERATE CONFORMERS ***************
 		 1. Generating conformers with openbabel (500)
-			Molecule = /home/jramos/PycharmProjects/GeCos/data/IsoP.pdb
+			Molecule = /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/IsoP.pdb
 			Number of rotatable bonds = 3
 			Force Field = MMFF94 force field.
 			Conformer Searching = ConFab
 			Options: rmsd_cutoff = 0.5 A, nconfs = 500
 			Options: energy_cutoff = 50.0 kcal/mol, confab_verbose = False
 			 ** CONFAB has generated 44 conformers **
-		 2. Minimizing 44 conformers. Max_iters = 3000 (17-09-2021 19:55:06)
+		 2. Minimizing 44 conformers. Max_iters = 3000 (07-09-2022 14:45:39)
 			 Using MMFF forcefield
-		 3. Cluster Conformers (17-09-2021 19:55:10)
+		 3. Cluster Conformers (07-09-2022 14:45:51)
 			44 conformers generated grouped in 13 clusters (rmsd_threshold= 2.0 angstroms)
-		 4. Get structure of minimum energy for each cluster (17-09-2021 19:55:12)
-		 5. Write Conformers to MOL2 (17-09-2021 19:55:12)
-			Filename: /home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_cluster_ob_optMM_trj.mol2
-		**************** GENERATE CONFORMERS ***************
-
-
-		**************** CONFORMER MM ENERGIES ***************
-
-		Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol) Highest energy(kcal/mol) nelements
-		------------------------------------------------------------------------------------------------------------
-		   1         0               24.91                       0.00                    27.43           6    
-		   2         2               25.19                       0.28                    25.19           1    
-		   3         7               25.22                       0.31                    30.72           7    
-		   4         5               25.43                       0.52                    30.03           4    
-		   5         36              25.90                       0.99                    29.38           4    
-		   6         8               26.05                       1.13                    28.61           2    
-		   7         28              26.19                       1.27                    31.73           5    
-		   8         12              26.41                       1.50                    29.64           6    
-		   9         41              26.84                       1.93                    27.22           2    
-		  10         13              27.09                       2.18                    27.79           3    
-		  11         30              27.34                       2.43                    28.43           2    
-		  12         24              27.98                       3.07                    27.98           1    
-		  13         15              28.54                       3.62                    28.54           1    
-		**************** CONFORMER MM ENERGIES ***************
-
-		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
-			1. Connected to localhost (17-09-2021 19:55:13)
-			   Database /home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_localhost.db created
-			2. Prepare SLURM script for each conformer (17-09-2021 19:55:13).
-			3. Send input files (com and sh) to server. (17-09-2021 19:55:13)
-			   Prepare and send full.sh script.
-			   Update database.
-			4. Send QM calculations to server. (17-09-2021 19:55:13)
-			5. Close connection
-		**************** OPTIMIZE CONFORMERS USING GAUSSIAN16 ***************
-
-			 :::: Checking start: 17-09-2021 19:56:27
-			 :::: Completed 12 of 13 jobs
-			 :::: Checking end: 17-09-2021 19:57:08
-
-
-		**************** SUMMARY ***************
-
-		Localdir                      : /home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3
-		Database                      : /home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_localhost.db
-		Trajectory file MM conformers : 04-IsoP_conf_min_trj.pdb
-		Directory with QM files       : 04-IsoP_g16_conformers/
-
-		#              Name_job               DeltaE_QM(kcal/mol) RMSD(A)  RMSD_incluster(A) Cluster_QM
-		# =============================================================================================
-		        04-IsoP_008_gaussian                 0.00          0.000         0.000           1     
-		        04-IsoP_012_gaussian                 0.61          0.866         0.866           1     
-		        04-IsoP_013_gaussian                 0.99          0.799         0.799           1     
-		        04-IsoP_030_gaussian                 0.00          1.039         0.000           2     
-		        04-IsoP_041_gaussian                 0.99          1.455         0.806           2     
-		        04-IsoP_024_gaussian                 1.84          1.481         0.674           2     
-		        04-IsoP_002_gaussian                 0.12          1.102         0.844           3     
-		        04-IsoP_005_gaussian                 0.12          1.108         0.000           3     
-		        04-IsoP_000_gaussian                 0.13          1.137         0.780           3     
-		        04-IsoP_015_gaussian                 1.31          1.058         0.339           3     
-		        04-IsoP_036_gaussian                 0.66          1.416         0.000           4     
-		        04-IsoP_007_gaussian                 0.68          1.280         0.846           4     
-		        04-IsoP_028_gaussian                 0.66          1.287         0.000           5     
-
-		## Optimized conformers:
-			04-IsoP_008_gaussian_allign.mol2
-			04-IsoP_030_gaussian_allign.mol2
-			04-IsoP_002_gaussian_allign.mol2
-			04-IsoP_036_gaussian_allign.mol2
-			04-IsoP_028_gaussian_allign.mol2
-		## Optimized conformers:
-
-			-------- ATTENTION --------
-			You should remove the files in /home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/remote_files
-			from the server localhost
-			-------- ATTENTION --------
-
-		**************** SUMMARY ***************
-
-
-		 Job Finnished: 17-09-2021 19:57:22
-
+		 4. Get structure of minimum energy for each cluster (07-09-2022 14:45:54)
+		 5. Write Conformers to MOL2 (07-09-2022 14:45:54)
+			Filename: /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_cluster_ob_optMM_trj.mol2

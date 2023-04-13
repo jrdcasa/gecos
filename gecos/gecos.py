@@ -262,7 +262,7 @@ def create_python_script(filename, keywords_dict, save=True):
              "\n            append=True," \
              "\n            inscreen=False)\n"
     lines += "\n"
-    lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_conformers')\n"
+    lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_results')\n"
     lines += "\n"
     lines += "    gecos.check_qm_jobs(" \
              "\n            v_nameserver," \
@@ -290,7 +290,7 @@ def create_python_script(filename, keywords_dict, save=True):
 
 
 # =============================================================================
-def main_gui_app():
+def main_app():
 
     opts = parse_arguments()
 
@@ -336,4 +336,4 @@ def main_gui_app():
 
 # =============================================================================
 if __name__ == "__main__":
-    main_gui_app()
+    main_app()

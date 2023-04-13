@@ -12,10 +12,10 @@ def popup_error(window, msg):
     loc = window.current_location()
     x, y = window.size
     newloc = (loc[0] + x / 2., loc[1] + y / 2.)
-    window.disappear()
+    # window.disappear()
     Sg.popup(msg, title='ERROR', grab_anywhere=True, location=newloc,
              background_color='red', text_color='white')
-    window.reappear()
+    # window.reappear()
 
 
 # =============================================================================
@@ -23,10 +23,10 @@ def popup_msg(window, msg):
     loc = window.current_location()
     x, y = window.size
     newloc = (loc[0] + x / 2., loc[1] + y / 2.)
-    window.disappear()
+    # window.disappear()
     Sg.popup(msg, title='INFO', grab_anywhere=True, location=newloc,
              background_color='green', text_color='white', )
-    window.reappear()
+    # window.reappear()
 
 
 # =============================================================================
@@ -34,10 +34,10 @@ def popup_msg_run(window, msg):
 
     loc = window.current_location()
     newloc = (loc[0] + 100., loc[1] + 100.)
-    window.disappear()
+    # window.disappear()
     Sg.popup(msg, title='Running', grab_anywhere=True, location=newloc,
              background_color='blue', text_color='white', non_blocking=True, keep_on_top=True)
-    window.reappear()
+    # window.reappear()
 
 
 # =============================================================================
@@ -106,12 +106,10 @@ def check_server_stuffs(window, dict_options, pass_encrypted_file):
         key = paramiko.RSAKey.from_private_key_file(keyfile)
     except paramiko.ssh_exception.SSHException:
         msg = "Not a valid RSA private key file:\nkeyfile {}\n  ".format(keyfile)
-        key = ""
         popup_error(window, msg)
         return None, False
     except FileNotFoundError:
         msg = "Key file is not found"
-        key = ""
         popup_error(window, msg)
         return None, False
 
@@ -228,6 +226,9 @@ def check_nodemaster(window, dict_options, server):
 
     nodemaster = dict_options["nodemaster"]
     partitionmaster = dict_options["partitionmaster"]
+
+    if len(nodemaster) < 1 or nodemaster is None:
+        return True
 
     command = "scontrol show node {} | egrep 'not found'".format(nodemaster)
     stdin, stdout, stderr = server.exec_command(command, timeout=10)  # Non-blocking call
@@ -435,6 +436,7 @@ def check_prop_conformers(window, keys_properties, dict_properties):
                     is_default_exe_found = True
                     break
             if not is_default_exe_found:
+                pathfile = window["-DOCKRMSDPACK-"].get()
                 msg = "{}: {} does not exist\n".format(ikey, pathfile)
                 msg += "and default dockrmsd cannot find in sys.path"
                 popup_error(window, msg)
@@ -455,3 +457,34 @@ def check_prop_types(window, keys_input_int_labels):
             return False
 
     return True
+
+
+# =============================================================================
+def check_extract_options(window, keys_extract):
+
+    dict_extract = defaultdict()
+    keys_extract = ['-MOLECULE_INPUT_EXTRACT-', '-METHOD_EXTRACT-', '-RADIUS_SPHERE-']
+
+    for ikey in keys_extract:
+        if ikey == '-MOLECULE_INPUT_EXTRACT-':
+            # Check if file exists
+            if not os.path.isfile(window[ikey].get()):
+                msg = "File {} must be exist.\n  ".format(window[ikey].get())
+                popup_error(window, msg)
+                return None, False
+            else:
+                dict_extract['v_filemolextractfullpath'] = window[ikey].get()
+                dirtmp = os.path.split(window[ikey].get())
+                dict_extract['v_fileoutputfullpath'] = os.path.join(dirtmp[0], "extract_mol.log")
+        elif ikey == '-METHOD_EXTRACT-':
+            dict_extract['v_extractmethod'] = window[ikey].get()
+        elif ikey == '-RADIUS_SPHERE-':
+            ivalue = window[ikey].get()
+            try:
+                dict_extract['v_radiussphere'] = float(ivalue)
+            except ValueError:
+                msg = "Radius must be a real number.\n "
+                popup_error(window, msg)
+                return None, False
+
+    return dict_extract, True

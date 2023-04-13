@@ -1,4 +1,4 @@
-Tutorial create a passwordless RSA key for SSH connection in localhost
+Tutorial for creating a passwordless RSA key for an SSH connection on a local computer.
 ===================================================
 
 #### Create the RSA key
@@ -34,7 +34,8 @@ jramos@totem:.ssh$ cat id_rsa_localhost.pub >> ~/.ssh/authorized_keys
 jramos@totem:.ssh$ chmod og-wx ~/.ssh/authorized_keys 
 ```
 
-Ensure that the permisions are:
+Make sure the permissions are:
+
 ```bash
 chmod g-w /home/user
 chmod 700 /home/user/.ssh
@@ -52,4 +53,4 @@ Last login: Sun Mar 20 14:20:33 2022 from 127.0.0.1
 jramos@totem:~$ 
 ```
 
-If succesfull you connect to the localhost without password. 
+If succesful you connect to localhost without password. 

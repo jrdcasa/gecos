@@ -2,20 +2,20 @@ import os
 import utils
 import gecos
 
-v_filename = '/home/jramos/PycharmProjects/GeCos/data/IsoP.pdb'
+v_filename = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/IsoP.pdb'
 v_nameserver = 'localhost'
 v_username = 'jramos'
-v_keysshfile = '/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/keys/keylocal.pem'
-v_encrypt_pass = '/home/jramos/PycharmProjects/GeCos/examples/03-IsoP_localhost_rdkit_pm3/keys/passwd_encrypted.bin'
+v_keysshfile = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/keys/keylocal.pem'
+v_encrypt_pass = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/03-IsoP_localhost_rdkit_pm3/keys/passwd_encrypted.bin'
 v_slurm_part = 'cpu'
 v_list_nodes = ['']
 v_slurm_part_master = 'cpu'
 v_node_master = 'totem'
-v_localdir = '/home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3'
-v_remotedir = '/home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/remote_files'
+v_localdir = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/04-IsoP_localhost_openbabel_pm3'
+v_remotedir = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/04-IsoP_localhost_openbabel_pm3/remote_files'
 v_pattern = '04-IsoP'
-v_databasefullpath = '/home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_localhost.db'
-v_fileoutputfullpath = '/home/jramos/PycharmProjects/GeCos/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP.log'
+v_databasefullpath = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP_localhost.db'
+v_fileoutputfullpath = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/examples/04-IsoP_localhost_openbabel_pm3/04-IsoP.log'
 v_g16path = '/opt/g16/g16'
 v_g16_keywords = '#p opt pm3'
 v_ncpus = 1
@@ -27,7 +27,7 @@ v_nconfs = 500
 v_min_iter_mm = 3000
 v_cutoff_rmsd_qm = 1.0
 v_bond_perception = True
-v_dockrmsdpack = '/home/jramos/PycharmProjects/GeCos/thirdparty/dock_rmsd/dockrmsd.x'
+v_dockrmsdpack = '/home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/thirdparty/dock_rmsd/dockrmsd.x'
 v_confpack = 'openbabel'
 v_openbabel_rmsd_cutoff_confab = 0.5
 v_openbabel_energy_cutoff_confab = 50.0

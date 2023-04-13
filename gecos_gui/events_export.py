@@ -1,4 +1,5 @@
 import os
+from gecos_gui.events_check import popup_error
 
 
 # =============================================================================
@@ -11,6 +12,9 @@ def export_jsonfile_from_gui(window, filename, rdkit_dict_options,
     Args:
         window: window instance
         filename: json file
+        rdkit_dict_options:
+        openbabel_dict_options:
+        pass_encrypted_file:
         save: Save file
 
     """
@@ -113,9 +117,9 @@ def export_jsonfile_from_gui(window, filename, rdkit_dict_options,
             key = 'rdkit_cluster_method'
             data = rdkit_dict_options['-RDKIT_CLUSTER_METHOD-']
             lines += "\t\"{}\": \"{}\",\n".format(key, data)
-        if rdkit_dict_options['-RDKIT_CLUSTER_THRES-'] != 2.0:
+        if rdkit_dict_options['-RDKIT_RMSD_THRES-'] != 2.0:
             key = 'rdkit_cluster_thres'
-            data = rdkit_dict_options['-RDKIT_CLUSTER_THRES-']
+            data = rdkit_dict_options['-RDKIT_RMSD_THRES-']
             lines += "\t\"{}\": {},\n".format(key, data)
         lines = lines[:-2]  # Delete last comma
     elif window['-CONFPACK-'].get().upper() == "OPENBABEL":
@@ -160,6 +164,8 @@ def export_jsonfile_from_gui(window, filename, rdkit_dict_options,
 
 # =============================================================================
 def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel_dict_options,
+                                 extractmd_dict_options, systematicgrid_dict_options,
+                                 cluster_qmrmsd_dict_options,
                                  pass_encrypted_file, save=True):
 
     # If filename None, the CANCEL button has been pushed
@@ -174,6 +180,7 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
     lines += "import os\n"
     lines += "import utils\n"
     lines += "import gecos\n"
+    lines += "from pathlib import Path\n"
     lines += "\n"
     # KEYWORDS =====================================
     lines += "v_filename = '{}'\n".format(window['-MOLECULE_INPUT-'].get())
@@ -185,12 +192,19 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
     else:
         lines += "v_encrypt_pass = None\n"
     lines += "v_slurm_part = '{}'\n".format(window['-SLURM_PART-'].get())
+    multistep = window['-BASH_EXTRAINFO-'].get()
+    lines += "v_bash_extrainfo = ["
+    for i in multistep.split("\n"):
+        lines += "'{}',".format(i)
+    lines += "]\n"
     lines += "v_list_nodes = {}\n".format(v_list_nodes)
     lines += "v_slurm_part_master = '{}'\n".format(window['-SLURM_PART_MASTER-'].get())
     if len(window['-NODE_MASTER-'].get()) > 1 and window['-NODE_MASTER-'].get().upper() != "NONE":
         lines += "v_node_master = '{}'\n".format(window['-NODE_MASTER-'].get())
     else:
         lines += "v_node_master = None\n"
+    lines += "v_maxjobsslurm = {0:d}\n".format(int(window['-MAX_JOBS_SLURM-'].get()))
+    lines += "v_timelimitslurm = '{}'\n".format(window['-TIME_NODES-'].get())
     lines += "v_localdir = '{}'\n".format(window['-LOCAL_DIR-'].get())
     lines += "v_remotedir = '{}'\n".format(window['-REMOTE_DIR-'].get())
     lines += "v_pattern = '{}'\n".format(window['-PATTERN-'].get())
@@ -200,28 +214,53 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
                                                                  window['-FILENAME_LOG-'].get()))
     lines += "v_g16path = '{}'\n".format(window['-GAUSSIAN16PACK-'].get())
     lines += "v_g16_keywords = '{}'\n".format(window['-G16_KEYWORDS-'].get())
-    lines += "v_ncpus = {0:d}\n".format(int(window['-G16_NPROC-'].get()))
-    lines += "v_mem = {0:d}\n".format(int(window['-G16_MEM-'].get()))
-    lines += "v_charge = {0:d}\n".format(int(window['-CHARGE-'].get()))
-    lines += "v_multiplicity = {0:d}\n".format(int(window['-MULTIPLICITY-'].get()))
+    multistep = window['-GAUSSIAN16_EXTRAINFO-'].get()
+    lines += "v_g16_extrainfo = ["
+    for i in multistep.split("\n"):
+        lines += "'{}',".format(i)
+    lines += "]\n"
+    lines += "v_g16_ncpus = {0:d}\n".format(int(window['-G16_NPROC-'].get()))
+    lines += "v_g16_mem = {0:d}\n".format(int(window['-G16_MEM-'].get()))
+    lines += "v_g16_charge = {0:d}\n".format(int(window['-CHARGE-'].get()))
+    lines += "v_g16_multiplicity = {0:d}\n".format(int(window['-MULTIPLICITY-'].get()))
     if window['-WRITE_GAUSSIAN-'].get():
         lines += "v_write_gaussian = True\n"
     else:
         lines += "v_write_gaussian = False\n"
-    lines += "v_nconfs = {0:d}\n".format(int(window['-NCONF-'].get()))
-    lines += "v_min_iter_mm = {0:d}\n".format(int(window['-MIN_ITER_MM-'].get()))
-    lines += "v_cutoff_rmsd_qm = {0:.1f}\n".format(float(window['-CUTOFF_RMSD_QM-'].get()))
-
-    if window['-BOND_PERCEPTION-'].get():
-        lines += "v_bond_perception = True\n"
+    if window['-RUN_GAUSSIAN-'].get():
+        lines += "v_run_gaussian = True\n"
     else:
-        lines += "v_bond_perception = False\n"
+        lines += "v_run_gaussian = False\n"
+
+    if window['-CONFPACK-'].get().upper() == "RDKIT" or window['-CONFPACK-'].get().upper() == "OPENBABEL":
+        #cJ lines += "v_nconfs = {0:d}\n".format(int(window['-NCONF-'].get()))
+        #cJ lines += "v_min_iter_mm = {0:d}\n".format(int(window['-MIN_ITER_MM-'].get()))
+        #cJ lines += "v_cutoff_rmsd_qm = {0:.1f}\n".format(float(window['-CUTOFF_RMSD_QM-'].get()))
+        lines += "v_cutoff_rmsd_qm = {0:.1f}\n".format(float(cluster_qmrmsd_dict_options['-CUTOFF_RMSD_QM-']))
+        lines += "v_energy_threshold = {0:.1f}\n".format(float(cluster_qmrmsd_dict_options['-CUTOFF_ENERGY_QM-']))
+        if window['-BOND_PERCEPTION-'].get():
+            lines += "v_bond_perception = True\n"
+        else:
+            lines += "v_bond_perception = False\n"
+    else:
+        #cJ lines += "v_nconfs = 0\n"
+        #cJ lines += "v_min_iter_mm = 0\n"
+        #cJ lines += "v_cutoff_rmsd_qm = {0:.1f}\n".format(float(window['-CUTOFF_RMSD_QM-'].get()))
+        #cJ lines += "v_energy_threshold = {0:.1f}\n".format(float(window['-CUTOFF_ENERGY_QM-'].get()))
+        lines += "v_cutoff_rmsd_qm = {0:.1f}\n".format(float(cluster_qmrmsd_dict_options['-CUTOFF_RMSD_QM-']))
+        lines += "v_energy_threshold = {0:.1f}\n".format(float(cluster_qmrmsd_dict_options['-CUTOFF_ENERGY_QM-']))
+        if window['-BOND_PERCEPTION-'].get():
+            lines += "v_bond_perception = True\n"
+        else:
+            lines += "v_bond_perception = False\n"
 
     lines += "v_dockrmsdpack = '{}'\n".format(window['-DOCKRMSDPACK-'].get())
     lines += "v_confpack = '{}'\n".format(window['-CONFPACK-'].get())
 
     # RDKITS PARAMETERS ===================
     if window['-CONFPACK-'].get().upper() == "RDKIT":
+        lines += "v_rdkit_nconfs = {0:d}\n".format(int(rdkit_dict_options['-RDKIT_NCONF-']))
+        lines += "v_rdkit_min_iter_mm = {0:d}\n".format(int(rdkit_dict_options['-RDKIT_MIN_ITER_MM-']))
         lines += "v_rdkit_maxattempts = {0:d}\n".format(int(rdkit_dict_options['-RDKIT_MAXATTEMPTS-']))
         lines += "v_rdkit_prunermsthresh = {0:.3f}\n".format(float(rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-']))
         if rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-']:
@@ -232,16 +271,24 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
             lines += "v_rdkit_usebasicknowlwdge = True\n"
         else:
             lines += "v_rdkit_usebasicknowlwdge = False\n"
-
         if rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-']:
             lines += "v_rdkit_enforcechirality = True\n"
         else:
             lines += "v_rdkit_enforcechirality = False\n"
+        if rdkit_dict_options['-RDKIT_RMSD_ONLY_HEAVY-']:
+            lines += "v_rdkit_rmsd_only_heavy = True\n"
+        else:
+            lines += "v_rdkit_rmsd_only_heavy = False\n"
         lines += "v_rdkit_cluster_method = '{}'\n".format(rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'])
         lines += "v_rdkit_ffname = '{}'\n".format(rdkit_dict_options['-RDKIT_FFNAME-'])
-        lines += "v_rdkit_cluster_thres = {}\n".format(float(rdkit_dict_options['-RDKIT_CLUSTER_THRES-']))
+        lines += "v_rdkit_rmsd_thres = {}\n".format(float(rdkit_dict_options['-RDKIT_RMSD_THRES-']))
+        lines += "v_rdkit_energy_thres = {}\n".format(float(rdkit_dict_options['-RDKIT_ENERGY_THRES-']))
+        lines += "v_rdkit_rotconst_thres = {}\n".format(float(rdkit_dict_options['-RDKIT_ROTCONST_THRES-']))
+        lines += "v_rdkit_window_energy = {}\n".format(float(rdkit_dict_options['-RDKIT_WINDOW_ENERGY-']))
     # CONFAB PARAMETERS ===================
     elif window['-CONFPACK-'].get().upper() == "OPENBABEL":
+        lines += "v_openbabel_nconf = {0:d}\n".format(int(openbabel_dict_options['-CONFAB_NCONF-']))
+        lines += "v_openbabel_min_iter_mm = {0:d}\n".format(int(openbabel_dict_options['-CONFAB_MIN_ITER_MM-']))
         lines += "v_openbabel_rmsd_cutoff_confab = {0:f}\n".\
             format(float(openbabel_dict_options['-CONFAB_RMSD_CUTOFF-']))
         lines += "v_openbabel_energy_cutoff_confab = {0:f}\n".\
@@ -259,25 +306,53 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
         lines += "v_openbabel_cluster_max_number_cluster = {0:d}\n".\
             format(int(openbabel_dict_options['-CONFAB_MAX_ENERGY_CLUSTERS-']))
 
+    elif window['-CONFPACK-'].get().upper() == "EXTRACT FROM MD FRAME":
+        lines += "v_filemolextractfullpath = \"{}\"\n".format(window['-MOLECULE_INPUT-'].get())
+        lines += "v_extract_method = \"{}\"\n".format(extractmd_dict_options['-METHOD_EXTRACT-'])
+        lines += "v_radius_sphere = {}\n".format(float(extractmd_dict_options['-RADIUS_SPHERE-']))
+        if extractmd_dict_options['-EXTRACT_MONOMER-']:
+            lines += "v_extract_monomers = True\n"
+            lines += "v_extract_type = \"monomer\"\n"
+        else:
+            lines += "v_extract_monomers = False\n"
+        if extractmd_dict_options['-EXTRACT_PAIR-']:
+            lines += "v_extract_pairs = True\n"
+            lines += "v_extract_type = \"pair\"\n"
+        else:
+            lines += "v_extract_pairs = False\n"
+        if extractmd_dict_options['-EXTRACT_ONLYDIFFMOL-']:
+            lines += "v_extract_onlydifferentmols = True\n"
+        else:
+            lines += "v_extract_onlydifferentmols = False\n"
+    elif window['-CONFPACK-'].get().upper() == "SYSTEMATIC GRID":
+        lines += "v_sg_ndihedrals = {}\n".format(systematicgrid_dict_options['-SG_NDIHEDRALS-'])
+        lines += "v_sg_listdih = {}\n".format(systematicgrid_dict_options['-SG_DIH_STEPS-'])
+        lines += "v_sg_MMoptimization = {}\n".format(systematicgrid_dict_options['-SG_MM_OPTIMIZATION-'])
+        lines += "v_sg_maxMMoptiter = {}\n".format(systematicgrid_dict_options['-SG_MM_MAX_ITER-'])
+
+    lines += "\n"
+    lines += "cwd = Path(__file__).parent.absolute()\n"
+    lines += "donepath = os.path.join(cwd, 'done')\n"
+
     # LOOP
     lines += "\n"
-    lines += "if not os.path.isfile(v_databasefullpath):\n\n"
+    lines += "if not os.path.isfile(v_databasefullpath) and  not os.path.isfile(donepath):\n\n"
     lines += "    log = utils.init_logger(\n" \
              "        \"Output2\",\n" \
              "        fileoutput=v_fileoutputfullpath,\n" \
-             "        append=False, inscreen=False)\n\n"
+             "        append=False, inscreen=True)\n\n"
 
     if window['-CONFPACK-'].get().upper() == "RDKIT":
         lines += "    g1 = gecos.GecosRdkit(\n" \
                  "        filename=v_filename,\n" \
-                 "        total_charge=v_charge,\n" \
+                 "        total_charge=v_g16_charge,\n" \
                  "        bond_perception=v_bond_perception,\n" \
                  "        logger=log)\n"
         lines += "\n"
         lines += "    g1.generate_conformers(\n" \
                  "        v_localdir,\n" \
-                 "        nconfs=v_nconfs,\n" \
-                 "        minimize_iterations=v_min_iter_mm,\n" \
+                 "        nconfs=v_rdkit_nconfs,\n" \
+                 "        minimize_iterations=v_rdkit_min_iter_mm,\n" \
                  "        maxattempts=v_rdkit_maxattempts,\n" \
                  "        prunermsthresh=v_rdkit_prunermsthresh,\n" \
                  "        useexptorsionangleprefs=v_rdkit_useexptorsionangleprefs,\n" \
@@ -285,65 +360,131 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
                  "        enforcechirality=v_rdkit_enforcechirality,\n" \
                  "        ff_name=v_rdkit_ffname,\n" \
                  "        cluster_method=v_rdkit_cluster_method,\n" \
-                 "        cluster_threshold=v_rdkit_cluster_thres,\n" \
+                 "        rmsd_only_heavy = v_rdkit_rmsd_only_heavy,\n" \
+                 "        rmsd_threshold=v_rdkit_rmsd_thres,\n" \
+                 "        energy_threshold=v_rdkit_energy_thres,\n" \
+                 "        rotconst_threshold=v_rdkit_rotconst_thres,\n" \
+                 "        window_energy=v_rdkit_window_energy,\n" \
                  "        write_gaussian=v_write_gaussian,\n" \
                  "        pattern=v_pattern,\n" \
                  "        g16_key=v_g16_keywords,\n" \
-                 "        g16_nproc=v_ncpus,\n" \
-                 "        g16_mem=v_mem,\n" \
-                 "        charge=v_charge,\n" \
-                 "        multiplicity=v_multiplicity)\n"
+                 "        g16_nproc=v_g16_ncpus,\n" \
+                 "        g16_mem=v_g16_mem,\n" \
+                 "        g16_extra_info=v_g16_extrainfo,\n" \
+                 "        charge=v_g16_charge,\n" \
+                 "        multiplicity=v_g16_multiplicity)\n"
+
     elif window['-CONFPACK-'].get().upper() == "OPENBABEL":
         lines += "    g1 = gecos.GecosPyBabel(\n" \
                  "        filename=v_filename,\n" \
                  "        exec_rmsddock=v_dockrmsdpack,\n" \
-                 "        total_charge=v_charge,\n" \
+                 "        total_charge=v_g16_charge,\n" \
                  "        bond_perception=v_bond_perception,\n" \
                  "        logger=log)\n"
         lines += "\n"
         lines += "    g1.generate_conformers(\n" \
-                 "        v_localdir,\n" \
-                 "        nconfs=v_nconfs,\n" \
-                 "        minimize_iterations=v_min_iter_mm,\n" \
-                 "        rmsd_cutoff_confab=v_openbabel_rmsd_cutoff_confab,\n" \
-                 "        energy_cutoff_confab=v_openbabel_energy_cutoff_confab,\n" \
-                 "        confab_verbose_confab=v_openbabel_verbose,\n" \
-                 "        cutoff_rmsddock_confab=v_openbabel_rmsddock_confab,\n" \
-                 "        energy_threshold_cluster=v_openbabel_cluster_energy_threshold,\n" \
-                 "        max_number_cluster=v_openbabel_cluster_max_number_cluster,\n" \
-                 "        ff_name=v_openbabel_ffname,\n" \
-                 "        pattern=v_pattern,\n" \
-                 "        write_gaussian=v_write_gaussian,\n" \
-                 "        g16_key=v_g16_keywords,\n" \
-                 "        g16_nproc=v_ncpus,\n" \
-                 "        g16_mem=v_mem,\n" \
-                 "        charge=v_charge,\n" \
-                 "        multiplicity=v_multiplicity\n" \
+                 "            v_localdir,\n" \
+                 "            nconfs=v_openbabel_nconf,\n" \
+                 "            minimize_iterations=v_openbabel_min_iter_mm,\n" \
+                 "            rmsd_cutoff_confab=v_openbabel_rmsd_cutoff_confab,\n" \
+                 "            energy_cutoff_confab=v_openbabel_energy_cutoff_confab,\n" \
+                 "            confab_verbose_confab=v_openbabel_verbose,\n" \
+                 "            cutoff_rmsddock_confab=v_openbabel_rmsddock_confab,\n" \
+                 "            energy_threshold_cluster=v_openbabel_cluster_energy_threshold,\n" \
+                 "            max_number_cluster=v_openbabel_cluster_max_number_cluster,\n" \
+                 "            ff_name=v_openbabel_ffname,\n" \
+                 "            pattern=v_pattern,\n" \
+                 "            write_gaussian=v_write_gaussian,\n" \
+                 "            g16_key=v_g16_keywords,\n" \
+                 "            g16_nproc=v_g16_ncpus,\n" \
+                 "            g16_mem=v_g16_mem,\n" \
+                 "            g16_extra_info=v_g16_extrainfo,\n" \
+                 "            charge=v_g16_charge,\n" \
+                 "            multiplicity=v_g16_multiplicity\n" \
                  "        )\n"
-
         lines += "\n"
+
+    elif window['-CONFPACK-'].get().upper() == "EXTRACT FROM MD FRAME":
+
+        lines += "    g1 = gecos.GecosExtractNeighbors(\n" \
+                 "                           v_filemolextractfullpath,\n" \
+                 "                           write_tcl=True,\n" \
+                 "                           pattern=v_pattern,\n" \
+                 "                           radius=v_radius_sphere,\n" \
+                 "                           logger=log)\n"
+        lines += "\n"
+        lines += "    g1.extract_conformers(\n" \
+                 "            v_localdir,\n" \
+                 "            calc_com=True,\n" \
+                 "            method=v_extract_method,\n" \
+                 "            extract_type=v_extract_type,\n" \
+                 "            write_gaussian=v_write_gaussian,\n" \
+                 "            g16_key=v_g16_keywords,\n" \
+                 "            g16_nproc=v_g16_ncpus,\n" \
+                 "            g16_mem=v_g16_mem,\n" \
+                 "            g16_extra_info=v_g16_extrainfo,\n" \
+                 "            pattern=v_pattern,\n" \
+                 "            charge=v_g16_charge,\n" \
+                 "            multiplicity=v_g16_multiplicity,\n" \
+                 "            onlydifferentmols=v_extract_onlydifferentmols)\n"
+
+    elif window['-CONFPACK-'].get().upper() == "SYSTEMATIC GRID":
+
+        lines += "    g1 = gecos.GecosSystematicGrid(\n" \
+                 "                           v_filename,\n" \
+                 "                           pattern=v_pattern,\n" \
+                 "                           total_charge=v_g16_charge,\n" \
+                 "                           bond_perception=v_bond_perception,\n" \
+                 "                           logger=log)\n"
+        lines += "\n"
+        lines += "    g1.generate_systematic_conformers(\n" \
+                 "            v_localdir,\n" \
+                 "            optimize=v_sg_MMoptimization,\n" \
+                 "            maxmmoptiters=v_sg_maxMMoptiter,\n" \
+                 "            ndihedrals=v_sg_ndihedrals,\n" \
+                 "            dih_list=v_sg_listdih,\n"  \
+                 "            write_gaussian=v_write_gaussian,\n" \
+                 "            g16_key=v_g16_keywords,\n" \
+                 "            g16_nproc=v_g16_ncpus,\n" \
+                 "            g16_mem=v_g16_mem,\n" \
+                 "            g16_extra_info=v_g16_extrainfo,\n" \
+                 "            pattern=v_pattern,\n" \
+                 "            charge=v_g16_charge,\n" \
+                 "            multiplicity=v_g16_multiplicity)\n" \
+
+
     else:
         msg = "Package {} to calculate conformers is not available.".format(window['-CONFPACK-'].get())
         popup_error(window, msg)
 
     lines += "\n"
-    lines += "    gecos.send_qm_conformers(" \
+    lines += "    if v_run_gaussian:\n"
+    lines += "        gecos.send_qm_conformers(" \
              "\n            v_nameserver," \
              "\n            v_databasefullpath," \
              "\n            v_username," \
              "\n            v_keysshfile," \
              "\n            v_localdir," \
              "\n            v_remotedir," \
-             "\n            v_g16path,"\
+             "\n            v_g16path," \
+             "\n            maxjobsslurm=v_maxjobsslurm," \
              "\n            regex='*g16*/*.com'," \
              "\n            partition=v_slurm_part," \
              "\n            exclude_nodes=v_list_nodes," \
-             "\n            ncpus=v_ncpus, " \
+             "\n            ncpus=v_g16_ncpus, " \
              "\n            partitionmaster=v_slurm_part_master," \
              "\n            nodemaster=v_node_master," \
-             "\n            mem=v_mem," \
-             "\n            encrypted_pass=v_encrypt_pass,"\
+             "\n            mem=v_g16_mem," \
+             "\n            timelimit=v_timelimitslurm," \
+             "\n            encrypted_pass=v_encrypt_pass," \
+             "\n            extraslurminfo=v_bash_extrainfo," \
              "\n            logger=log)\n"
+    lines += "    else:\n"
+    lines += "        m = 'QM calculations will not be performed'\n"
+    lines += "        print(m) if log is None else log.info(m)\n"
+    lines += "        with open('done', 'w') as f:\n"
+    lines += "            f.writelines('')\n"
+
     lines += "\n"
     lines += "else:\n"
     lines += "\n"
@@ -351,11 +492,12 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
              "\n            \"Output2\"," \
              "\n            fileoutput=v_fileoutputfullpath," \
              "\n            append=True," \
-             "\n            inscreen=False)\n"
+             "\n            inscreen=True)\n"
     lines += "\n"
-    lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_conformers')\n"
+    lines += "    v_outdir = os.path.join(v_localdir, v_pattern + '_g16_results')\n"
     lines += "\n"
-    lines += "    gecos.check_qm_jobs(" \
+    lines += "    if not os.path.isfile(donepath):\n"
+    lines += "        gecos.check_qm_jobs(" \
              "\n            v_nameserver," \
              "\n            v_databasefullpath," \
              "\n            v_username," \
@@ -367,6 +509,7 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
              "\n            v_dockrmsdpack," \
              "\n            encrypted_pass=v_encrypt_pass," \
              "\n            cutoff_rmsd=v_cutoff_rmsd_qm," \
+             "\n            energy_threshold=v_energy_threshold," \
              "\n            logger=log)\n"
 
     lines += "\nprint(\"Job Done!!!\")\n"
@@ -431,8 +574,10 @@ def write_python_script_prop_from_gui(window, filename,
         p_pattern = "SP"
     lines += "{} = '{}'\n".format('p_pattern', p_pattern)
 
-    regex = '{}*.com'.format(p_pattern)
+    regex = '*_{}_*.com'.format(p_pattern)
     lines += "p_dockrmsdpack = '{}'\n".format(window['-DOCKRMSDPACK-'].get())
+    lines += "p_maxjobsslurm = {0:d}\n".format(int(window['-MAX_JOBS_SLURM-'].get()))
+    lines += "p_cutoffenergy = {0:f}\n".format(float(window['-QM_PROP_CUTOFF_ENERGY-'].get()))
 
     # LOOP
     lines += "\n"
@@ -463,7 +608,8 @@ def write_python_script_prop_from_gui(window, filename,
              "\n            p_keysshfile," \
              "\n            p_localdir,"\
              "\n            p_remotedir," \
-             "\n            p_g16path,"\
+             "\n            p_g16path," \
+             "\n            maxjobsslurm = p_maxjobsslurm,"\
              "\n            regex='{}'," \
              "\n            partition=p_slurm_part," \
              "\n            exclude_nodes=p_list_nodes," \
@@ -483,7 +629,7 @@ def write_python_script_prop_from_gui(window, filename,
              "\n            append=True," \
              "\n            inscreen=False)\n"
 
-    lines += "    p_outdir = os.path.join(p_localdir, p_pattern + '_g16_conformers')\n"
+    lines += "    p_outdir = os.path.join(p_localdir, p_pattern + '_g16_results')\n"
     lines += "    p_cutoff_rmsd_qm = 10.0\n"
     lines += "\n"
     lines += "    gecos.check_qm_jobs(" \

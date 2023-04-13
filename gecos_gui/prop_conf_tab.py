@@ -10,24 +10,33 @@ pad2 = ((20, 20), (10, 10))
 
 mol_grid_conf = Sg.Frame(title="Load QM Conformers",
                          layout=[
-                             [Sg.Text('Mol2 Folder:', size=(15, 1), pad=pad1),
+                             [Sg.Text('Opt Results Folder:', size=(22, 1), pad=pad1),
                               Sg.Input(key='-QM_PROP_MOL2LOCAL_DIR-', size=(120, 1), enable_events=True,
-                                       tooltip='Folder containing the mol2 files of the alligned QM molecules.'
+                                       tooltip='Folder containing the mol2 files of the alligned QM molecules.\n'
+                                               'This folder is created from a previous optimization job from GeCos.\n'
                                                'The directory must exist in the local server', pad=pad1),
                               Sg.FolderBrowse(button_text="Browse", key='-QMMOL_MOL2DIR_BROWSER-'),
                               ],
-                             [Sg.Text('Opt Local Folder:', size=(15, 1), pad=pad1),
+                             [Sg.Text('Prop Local Folder:', size=(22, 1), pad=pad1),
                               Sg.Input(key='-QM_PROP_LOCAL_DIR-', size=(120, 1), enable_events=True,
                                        tooltip='Local Folder to store property QM calculations.'
                                                'The directory must exist in the local server', pad=pad1),
                               Sg.FolderBrowse(button_text="Browse", key='-QMMOL_DIR_BROWSER-'),
                               ],
-                             [Sg.Text('Remote Folder:', size=(15, 1), pad=pad1),
+                             [Sg.Text('Prop Remote Folder:', size=(22, 1), pad=pad1),
                               Sg.Input(key='-QM_PROP_REMOTE_DIR-', size=(120, 1), enable_events=True,
                                        tooltip='Folder where QM calculations will be stored.'
-                                               'The directory must exist in the local server', pad=pad1),
+                                               'The directory must exist in the remote server', pad=pad1),
                               ],
-                         ], title_color='blue', pad=pad2, size=(1350, 140))
+                             [Sg.Text('Cut-off energy (kcal/mol):', size=(22, 1), pad=pad1),
+                              Sg.Input(key='-QM_PROP_CUTOFF_ENERGY-', size=(10, 1), enable_events=True,
+                                       tooltip='Cut-off energy to send the optimized structure\n'
+                                               'to property calculation.\n'
+                                               'Example: 10 kcal/mol, send all structures\n'
+                                               'within 10kcal/mol from the minimimun', default_text="25.0",
+                                       pad=pad1, justification='right'),
+                              ],
+                         ], title_color='blue', pad=pad2, size=(1350, 180))
 
 browse_analysis = Sg.Column([
     [Sg.Frame('QM optimized conformers',
@@ -114,11 +123,15 @@ browse_analysis2 = Sg.Column([
                    ],
               ], title_color='blue', pad=pad1, size=(900, 400))
     ],
-    [Sg.Button('Run Properties', key='-BUTTONRUN_PROP-', disabled=False),
+    [Sg.Button('Check/Run Properties', key='-BUTTONRUN_PROP-', disabled=True),
      Sg.Button('Import Python Properties', key='-IMPORTPYTHON_PROP-', disabled=False),
-     Sg.Input('No python for properties is loaded.', key='-PROP_HIDEINPUTSCRIPT-', visible=True,
-              readonly=True, justification="left"),
+     Sg.Button('Export Python Properties', key='-EXPORTPYTHON_PROP-', disabled=True),
      ],
+    [
+     Sg.Input('No python for properties is loaded.', key='-PROP_HIDEINPUTSCRIPT-', visible=True,
+              readonly=True, justification="right", tooltip='Name of the loaded python script for properties.',
+              size=(110, 1)),
+    ],
 ])
 
 prop_conf_layout = [[mol_grid_conf], [browse_analysis, browse_analysis2]]

@@ -1,50 +1,137 @@
 import PySimpleGUI as Sg
 import os
 import sqlite3
-from collections import defaultdict
 import pandas as pd
 import matplotlib.pyplot as plt
+import webbrowser
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 # =============================================================================
-def open_advance_window_rdkit(loc, rdkit_dict_options):
+def popup_window(loc, window, title='Window', msg=''):
+    # noinspection PyBroadException
+    try:
+        x, y = window.size
+    except Exception:
+        x, y = (400, 400)
+    newloc = (loc[0] + (x / 2.) * 0.5, loc[1] + (y / 2.) * 0.5)
+    Sg.popup(msg,
+             title=title,
+             grab_anywhere=True, location=newloc)
 
+
+# =============================================================================
+def open_advance_window_rdkit(loc, rdkit_dict_options):
     col1 = [
         [
-         Sg.Text('maxattempts:', size=(15, 1)),
-         Sg.Input(key='-RDKIT_MAXATTEMPTS-', enable_events=True,
-                  default_text=rdkit_dict_options['-RDKIT_MAXATTEMPTS-'], size=(10, 1))
+            Sg.Text('Number of Conformers:', size=(22, 1), enable_events=True),
+            Sg.Input(key='-RDKIT_NCONF-', size=(10, 1),
+                     tooltip='Number of conformers.', enable_events=True
+                     , default_text=rdkit_dict_options['-RDKIT_NCONF-'])
+         ],
+        [
+            Sg.Text('Minimize Iterations MM:', size=(22, 1), enable_events=True),
+            Sg.Input(key='-RDKIT_MIN_ITER_MM-', size=(8, 1),
+                     tooltip='Number of iterations to minimize the conformers.',
+                     enable_events=True, default_text=rdkit_dict_options['-RDKIT_MIN_ITER_MM-']),
+         ],
+        [
+            Sg.Text('maxattempts:', size=(22, 1)),
+            Sg.Input(key='-RDKIT_MAXATTEMPTS-', enable_events=True,
+                     tooltip="RDKIT: The maximum number of attempts to try embedding",
+                     default_text=rdkit_dict_options['-RDKIT_MAXATTEMPTS-'], size=(10, 1))
+         ],
+        [
+            Sg.Text('prunermsthresh:', size=(22, 1)),
+            Sg.Input(key='-RDKIT_PRUNERMSTHRESH-', enable_events=True,
+                     tooltip="RDKIT: Retain only the conformations out of ‘numConfs’\n"
+                             "after embedding that are at least\n"
+                             "this far apart from each other. RMSD is computed on the heavy atoms.\n"
+                             "Pruning is greedy; i.e. the first embedded conformation is retained\n"
+                             "and from then on only those that are at least\n"
+                             "pruneRmsThresh away from all retained conformations are kept.\n"
+                             "The pruning is done after embedding\n"
+                             "and bounds violation minimization. No pruning by default\n",
+                     default_text=rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-'], size=(10, 1))
+        ],
+
+        [
+            Sg.Checkbox('useexptorsionangleprefs', enable_events=True,
+                        default=rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'],
+                        tooltip="Impose experimental torsion angle preferences",
+                        key='-RDKIT_USEEXPTORSIONANGLEPREFS-', size=(26, 1)),
+
         ],
         [
-         Sg.Text('prunermsthresh:', size=(15, 1)),
-         Sg.Input(key='-RDKIT_PRUNERMSTHRESH-', enable_events=True,
-                  default_text=rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-'], size=(10, 1))
+            Sg.Checkbox('usebasicknowledge', enable_events=True,
+                        default=rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'],
+                        tooltip="Impose basic knowledge such as flat rings",
+                        key='-RDKIT_USEBASICKNOWLEDGE-', size=(26, 1)),
         ],
         [
-            Sg.Text('cluster_threshold:', size=(15, 1)),
-            Sg.Input(key='-RDKIT_CLUSTER_THRES-', enable_events=True,
-                     default_text=rdkit_dict_options['-RDKIT_CLUSTER_THRES-'], size=(10, 1))
+            Sg.Checkbox('enforcechirality', enable_events=True,
+                        default=rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'],
+                        tooltip="Enforce the correct chirality if chiral centers are present",
+                        key='-RDKIT_ENFORCECHIRALITY-', size=(26, 1)),
         ],
     ]
 
-    col2 = [
-        [
-         Sg.Checkbox('useexptorsionangleprefs', enable_events=True,
-                     default=rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'],
-                     key='-RDKIT_USEEXPTORSIONANGLEPREFS-', size=(26, 1)),
+    # col2 = [
+    #     [
+    #         Sg.Checkbox('useexptorsionangleprefs', enable_events=True,
+    #                     default=rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'],
+    #                     tooltip="Impose experimental torsion angle preferences",
+    #                     key='-RDKIT_USEEXPTORSIONANGLEPREFS-', size=(26, 1)),
+    #
+    #     ],
+    #     [
+    #         Sg.Checkbox('usebasicknowledge', enable_events=True,
+    #                     default=rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'],
+    #                     tooltip="Impose basic knowledge such as flat rings",
+    #                     key='-RDKIT_USEBASICKNOWLEDGE-', size=(26, 1)),
+    #     ],
+    #     [
+    #         Sg.Checkbox('enforcechirality', enable_events=True,
+    #                     default=rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'],
+    #                     tooltip="Enforce the correct chirality if chiral centers are present",
+    #                     key='-RDKIT_ENFORCECHIRALITY-', size=(26, 1)),
+    #     ],
+    # ]
 
-        ],
-        [
-         Sg.Checkbox('usebasicknowledge', enable_events=True,
-                     default=rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'],
-                     key='-RDKIT_USEBASICKNOWLEDGE-', size=(26, 1)),
-        ],
-        [
-         Sg.Checkbox('enforcechirality', enable_events=True,
-                     default=rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'],
-                     key='-RDKIT_ENFORCECHIRALITY-', size=(26, 1)),
-        ],
+    col3 = [
+
+        [Sg.Checkbox('RMSD only heavy atoms', enable_events=True,
+                     default=rdkit_dict_options['-RDKIT_RMSD_ONLY_HEAVY-'],
+                     tooltip="RMSD computes using only heavy atoms (not hydrogens)",
+                     key='-RDKIT_RMSD_ONLY_HEAVY-', size=(22, 1)),
+         ],
+
+        [Sg.Text('Energy_threshold (kcal/mol):', size=(22, 1)),
+         Sg.Input(key='-RDKIT_ENERGY_THRES-', enable_events=True,
+                  tooltip="Energy threshold to assign the conformer to a cluster.\n",
+                  disabled=True, text_color="gray",
+                  default_text=rdkit_dict_options['-RDKIT_ENERGY_THRES-'], size=(10, 1))
+         ],
+        [Sg.Text('RMSD_threshold (A):', size=(22, 1)),
+         Sg.Input(key='-RDKIT_RMSD_THRES-', enable_events=True,
+                  tooltip="RMSD threshold to assign the conformer to a cluster.\n"
+                          "RMSD is computed on the heavy atoms.\n"
+                          "This parameter only works with Cluster method = RMSD",
+                  disabled=True, text_color="gray",
+                  default_text=rdkit_dict_options['-RDKIT_RMSD_THRES-'], size=(10, 1))
+         ],
+        [Sg.Text('RotConst_threshold (cm-1):', size=(22, 1)),
+         Sg.Input(key='-RDKIT_ROTCONST_THRES-', enable_events=True,
+                  tooltip="Rotational constants threshold to assign the conformer to a cluster.\n",
+                  disabled=True, text_color="gray",
+                  default_text=rdkit_dict_options['-RDKIT_ROTCONST_THRES-'], size=(10, 1))
+         ],
+        [Sg.Text('Window energy (kcal/mol):', size=(22, 1)),
+         Sg.Input(key='-RDKIT_WINDOW_ENERGY-', enable_events=True,
+                  tooltip="Window energy. Conformations with energy greatest that this are discarded\n",
+                  disabled=True, text_color="gray",
+                  default_text=rdkit_dict_options['-RDKIT_WINDOW_ENERGY-'], size=(10, 1))
+         ],
     ]
 
     row = [
@@ -52,7 +139,13 @@ def open_advance_window_rdkit(loc, rdkit_dict_options):
          Sg.Combo(['MMFF', 'UFF'], enable_events=True, disabled=False, key='-RDKIT_FFNAME-',
                   default_value=rdkit_dict_options['-RDKIT_FFNAME-'], size=(40, 1))],
         [Sg.Text('cluster method:', size=(15, 1)),
-         Sg.Combo(['RMSD'], enable_events=True, disabled=False, key='-RDKIT_CLUSTER_METHOD-',
+         Sg.Combo(['None', 'RMSD', 'Conformer Ensemble'], enable_events=True, disabled=False,
+                  key='-RDKIT_CLUSTER_METHOD-',
+                  tooltip="None method: No cluster method is performed. All generated conformers are selected.\n"
+                          "RMSD method: Assign conformers to different clusters based on the RMSD (heavy atoms).\n"
+                          "             of the conformer to the lowest energy conformer in its cluster.\n"
+                          "             The result is a number of conformers, in which the lowest energy conformer\n"
+                          "             is selected. The rest are discarded.\n",
                   default_value=rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'], size=(40, 1))]
     ]
 
@@ -61,18 +154,41 @@ def open_advance_window_rdkit(loc, rdkit_dict_options):
          Sg.Button('CLOSE', key='-RDKIT_CLOSE-', disabled=False, size=(40, 1), enable_events=True)]
     ], )
 
-    layout = [[Sg.Text("RDKIT options", justification='c', size=(500, 1),
-                       key='-LINK_RDKITOPTIONS-', enable_events=True)],
-              [Sg.Column(col1), Sg.Column(col2)], [row], [row_buttons]]
+    layout = [[Sg.Text("RDKIT options", justification='c', size=(53, 1),
+                       key='-LINK_RDKITOPTIONS-', enable_events=True, text_color='blue',
+                       tooltip='Click to RDKIT Manual'),
+               Sg.Text("More info", justification='c',
+                       key='-LINK2_RDKITOPTIONS-', enable_events=True, text_color='blue',
+                       tooltip='Click to article with information of the algorithm.', size=(20, 1))],
+              [Sg.Column(col1), Sg.Column(col3)], [row], [row_buttons]]
     window2 = Sg.Window("RDKIT options docs", layout, modal=True, location=loc,
-                        background_color='lightblue', size=(550, 260))
+                        background_color='lightblue', size=(600, 400), finalize=True)
+
+    window2['-LINK_RDKITOPTIONS-'].bind('<Enter>', '+MOUSE OVER+')
+    window2['-LINK_RDKITOPTIONS-'].bind('<Leave>', '+MOUSE AWAY+')
+    window2['-LINK2_RDKITOPTIONS-'].bind('<Enter>', '+MOUSE OVER+')
+    window2['-LINK2_RDKITOPTIONS-'].bind('<Leave>', '+MOUSE AWAY+')
 
     while True:
 
         event2, values2 = window2.read()
 
-        if event2 == '-LINK_RDKITOPTIONS-':
+        if event2 == "-LINK_RDKITOPTIONS-+MOUSE OVER+":
+            window2['-LINK_RDKITOPTIONS-'].update(text_color="green")
+        if event2 == "-LINK_RDKITOPTIONS-+MOUSE AWAY+":
+            window2['-LINK_RDKITOPTIONS-'].update(text_color="blue")
+
+        if event2 == "-LINK2_RDKITOPTIONS-+MOUSE OVER+":
+            window2['-LINK2_RDKITOPTIONS-'].update(text_color="green")
+        if event2 == "-CONF_URL-+MOUSE AWAY+":
+            window2['-LINK2_RDKITOPTIONS-'].update(text_color="blue")
+
+        if event2 == '-LINK_RDKITOPTIONS-''-RDKIT_RMSD_THRES-':
             url = "https://www.rdkit.org/docs/source/rdkit.Chem.rdDistGeom.html"
+            webbrowser.open(url)
+
+        if event2 == '-LINK2_RDKITOPTIONS-':
+            url = "https://pubs.acs.org/doi/10.1021/acs.jcim.5b00654"
             webbrowser.open(url)
 
         if event2 == "Exit" or event2 == Sg.WIN_CLOSED:
@@ -81,6 +197,30 @@ def open_advance_window_rdkit(loc, rdkit_dict_options):
         if event2 == '-RDKIT_CLOSE-':
             break
 
+        if event2 == '-RDKIT_CLUSTER_METHOD-':
+            if window2['-RDKIT_CLUSTER_METHOD-'].get().upper() == 'NONE':
+                window2['-RDKIT_RMSD_ONLY_HEAVY-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_RMSD_THRES-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_ENERGY_THRES-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_ROTCONST_THRES-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_WINDOW_ENERGY-'].update(disabled=True, text_color="gray")
+            elif window2['-RDKIT_CLUSTER_METHOD-'].get().upper() == 'RMSD':
+                window2['-RDKIT_RMSD_ONLY_HEAVY-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_RMSD_THRES-'].update(disabled=False, text_color="black")
+                window2['-RDKIT_ENERGY_THRES-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_ROTCONST_THRES-'].update(disabled=True, text_color="gray")
+                window2['-RDKIT_WINDOW_ENERGY-'].update(disabled=True, text_color="gray")
+            elif window2['-RDKIT_CLUSTER_METHOD-'].get().upper() == 'CONFORMER ENSEMBLE':
+                window2['-RDKIT_RMSD_ONLY_HEAVY-'].update(disabled=False, text_color="black")
+                window2['-RDKIT_RMSD_THRES-'].update(disabled=False, text_color="black")
+                window2['-RDKIT_ENERGY_THRES-'].update(disabled=False, text_color="black")
+                window2['-RDKIT_ROTCONST_THRES-'].update(disabled=False, text_color="black")
+                window2['-RDKIT_WINDOW_ENERGY-'].update(disabled=False, text_color="black")
+
+        if event2 == '-RDKIT_NCONF-':
+            rdkit_dict_options['-RDKIT_NCONF-'] = window2['-RDKIT_NCONF-'].get()
+        if event2 == '-RDKIT_MIN_ITER_MM-':
+            rdkit_dict_options['-RDKIT_MIN_ITER_MM-'] = window2['-RDKIT_MIN_ITER_MM-'].get()
         if event2 == '-RDKIT_MAXATTEMPTS-':
             rdkit_dict_options['-RDKIT_MAXATTEMPTS-'] = window2['-RDKIT_MAXATTEMPTS-'].get()
         if event2 == '-RDKIT_PRUNERMSTHRESH-':
@@ -95,19 +235,25 @@ def open_advance_window_rdkit(loc, rdkit_dict_options):
             rdkit_dict_options['-RDKIT_FFNAME-'] = values2['-RDKIT_FFNAME-']
         if event2 == '-RDKIT_CLUSTER_METHOD-':
             rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'] = values2['-RDKIT_CLUSTER_METHOD-']
-        if event2 == '-RDKIT_CLUSTER_THRES-':
-            rdkit_dict_options['-RDKIT_CLUSTER_THRES-'] = window2['-RDKIT_CLUSTER_THRES-'].get()
+        if event2 == '-RDKIT_RMSD_THRES-':
+            rdkit_dict_options['-RDKIT_RMSD_THRES-'] = window2['-RDKIT_RMSD_THRES-'].get()
 
         if event2 == '-RDKIT_DEFAULTVALUES-':
-            rdkit_dict_options = defaultdict()
+            # rdkit_dict_options = defaultdict()
+            rdkit_dict_options['-RDKIT_NCONF-'] = 200
+            rdkit_dict_options['-RDKIT_MIN_ITER_MM-'] = 0
             rdkit_dict_options['-RDKIT_MAXATTEMPTS-'] = 1000
-            rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-'] = -0.01
+            rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-'] = 0.1
             rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'] = True
             rdkit_dict_options['-RDKIT_USEBASICKNOWLEDGE-'] = True
             rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'] = True
             rdkit_dict_options['-RDKIT_FFNAME-'] = "MMFF"
-            rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'] = "RMSD"
-            rdkit_dict_options['-RDKIT_CLUSTER_THRES-'] = 0.5
+            rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'] = "None"
+            rdkit_dict_options['-RDKIT_RMSD_THRES-'] = 1.0  # A
+            rdkit_dict_options['-RDKIT_ENERGY_THRES-'] = 1.0  # kcal/mol
+            rdkit_dict_options['-RDKIT_ROTCONST_THRES-'] = 0.0005  # cm-1
+            rdkit_dict_options['-RDKIT_WINDOW_ENERGY-'] = 100.0  # kcal/mol
+            rdkit_dict_options['-RDKIT_RMSD_ONLY_HEAVY-'] = True
             window2['-RDKIT_MAXATTEMPTS-'].update(rdkit_dict_options['-RDKIT_MAXATTEMPTS-'])
             window2['-RDKIT_PRUNERMSTHRESH-'].update(rdkit_dict_options['-RDKIT_PRUNERMSTHRESH-'])
             window2['-RDKIT_USEEXPTORSIONANGLEPREFS-'].update(rdkit_dict_options['-RDKIT_USEEXPTORSIONANGLEPREFS-'])
@@ -116,24 +262,47 @@ def open_advance_window_rdkit(loc, rdkit_dict_options):
             window2['-RDKIT_ENFORCECHIRALITY-'].update(rdkit_dict_options['-RDKIT_ENFORCECHIRALITY-'])
             window2['-RDKIT_FFNAME-'].update(rdkit_dict_options['-RDKIT_FFNAME-'])
             window2['-RDKIT_CLUSTER_METHOD-'].update(rdkit_dict_options['-RDKIT_CLUSTER_METHOD-'])
-            window2['-RDKIT_CLUSTER_THRES-'].update(rdkit_dict_options['-RDKIT_CLUSTER_THRES-'])
+            window2['-RDKIT_RMSD_THRES-'].update(rdkit_dict_options['-RDKIT_RMSD_THRES-'])
+            window2['-RDKIT_ENERGY_THRES-'].update(rdkit_dict_options['-RDKIT_ENERGY_THRES-'])
+            window2['-RDKIT_ROTCONST_THRES-'].update(rdkit_dict_options['-RDKIT_ROTCONST_THRES-'])
+            window2['-RDKIT_WINDOW_ENERGY-'].update(rdkit_dict_options['-RDKIT_WINDOW_ENERGY-'])
+            window2['-RDKIT_RMSD_ONLY_HEAVY-'].update(rdkit_dict_options['-RDKIT_RMSD_ONLY_HEAVY-'])
+            window2['-RDKIT_RMSD_ONLY_HEAVY-'].update(disabled=True, text_color="gray")
+            window2['-RDKIT_RMSD_THRES-'].update(disabled=True, text_color="gray")
+            window2['-RDKIT_ENERGY_THRES-'].update(disabled=True, text_color="gray")
+            window2['-RDKIT_ROTCONST_THRES-'].update(disabled=True, text_color="gray")
+            window2['-RDKIT_WINDOW_ENERGY-'].update(disabled=True, text_color="gray")
 
     window2.close()
 
 
 # =============================================================================
 def open_advance_window_openbabel(loc, openbabel_dict_options):
-
     col1 = [
+
         [
-         Sg.Text('rmsd for confab diversity:', size=(26, 1)),
-         Sg.Input(key='-CONFAB_RMSD_CUTOFF-', enable_events=True,
-                  default_text=openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'], size=(10, 1))
+            Sg.Text('Number of Conformers:', size=(26, 1), enable_events=True),
+            Sg.Input(key='-CONFAB_NCONF-', size=(10, 1),
+                     tooltip='Number of conformers.', enable_events=True
+                     , default_text=openbabel_dict_options['-CONFAB_NCONF-'])
+        ],
+
+        [
+            Sg.Text('Minimize Iterations MM:', size=(26, 1), enable_events=True),
+            Sg.Input(key='-CONFAB_MIN_ITER_MM-', size=(10, 1),
+                     tooltip='Number of iterations to minimize the conformers.',
+                     enable_events=True, default_text=openbabel_dict_options['-CONFAB_MIN_ITER_MM-']),
+        ],
+
+        [
+            Sg.Text('rmsd for confab diversity:', size=(26, 1)),
+            Sg.Input(key='-CONFAB_RMSD_CUTOFF-', enable_events=True,
+                     default_text=openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'], size=(10, 1))
         ],
         [
-         Sg.Text('energy cutoff for confab:', size=(26, 1)),
-         Sg.Input(key='-CONFAB_ENERGY_CUTOFF-', enable_events=True,
-                  default_text=openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'], size=(10, 1))
+            Sg.Text('energy cutoff for confab:', size=(26, 1)),
+            Sg.Input(key='-CONFAB_ENERGY_CUTOFF-', enable_events=True,
+                     default_text=openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'], size=(10, 1))
         ],
         [
             Sg.Text('rmsd for confab rmsddock:', size=(26, 1)),
@@ -154,9 +323,9 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
 
     col2 = [
         [
-         Sg.Checkbox('Confab verbose', enable_events=True,
-                     default=openbabel_dict_options['-CONFAB_VERBOSE-'],
-                     key='-CONFAB_VERBOSE-', size=(26, 1)),
+            Sg.Checkbox('Confab verbose', enable_events=True,
+                        default=openbabel_dict_options['-CONFAB_VERBOSE-'],
+                        key='-CONFAB_VERBOSE-', size=(26, 1)),
 
         ],
     ]
@@ -176,7 +345,7 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
                        key='-LINK_OPENBABELOPTIONS-', enable_events=True)],
               [Sg.Column(col1), Sg.Column(col2)], [row], [row_buttons]]
     window3 = Sg.Window("OPENBABEL options docs", layout, modal=True, location=loc,
-                        background_color='lightblue', size=(550, 280))
+                        background_color='lightblue', size=(550, 350))
 
     while True:
 
@@ -192,6 +361,8 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
         if event3 == '-OPENBABEL_CLOSE-':
             break
 
+        if event3 == '-CONFAB_NCONF-':
+            openbabel_dict_options['-CONFAB_NCONF-'] = window3['-CONFAB_NCONF-'].get()
         if event3 == '-CONFAB_RMSD_CUTOFF-':
             openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'] = window3['-CONFAB_RMSD_CUTOFF-'].get()
         if event3 == '-CONFAB_ENERGY_CUTOFF-':
@@ -207,7 +378,7 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
         if event3 == '-CONFAB_FFNAME-':
             openbabel_dict_options['-CONFAB_FFNAME-'] = values3['-CONFAB_FFNAME-']
         if event3 == '-OPENBABEL_DEFAULTVALUES-':
-            openbabel_dict_options = defaultdict()
+            # openbabel_dict_options = defaultdict()
             openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'] = 0.5  # Angstroms
             openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'] = 50.0  # kcal/mol
             openbabel_dict_options['-CONFAB_VERBOSE-'] = False  # Verbose
@@ -215,6 +386,7 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
             openbabel_dict_options['-CONFAB_FFNAME-'] = "MMFF"
             openbabel_dict_options['-CONFAB_ENERGY_THRESHOLD-'] = 99999.0
             openbabel_dict_options['-CONFAB_MAX_ENERGY_CLUSTERS-'] = 100
+            openbabel_dict_options['-CONFAB_NCONF-'] = 4000000
             window3['-CONFAB_RMSD_CUTOFF-'].update(openbabel_dict_options['-CONFAB_RMSD_CUTOFF-'])
             window3['-CONFAB_ENERGY_CUTOFF-'].update(openbabel_dict_options['-CONFAB_ENERGY_CUTOFF-'])
             window3['-CONFAB_RMSD_CUTOFF_RMSDDOCK-'].update(openbabel_dict_options['-CONFAB_RMSD_CUTOFF_RMSDDOCK-'])
@@ -227,8 +399,291 @@ def open_advance_window_openbabel(loc, openbabel_dict_options):
 
 
 # =============================================================================
-def open_window_log(window, loc):
+def open_advance_window_extractmd(loc, extractmd_dict_options):
+    col1 = [
+        [
+            Sg.Text('Method to extract molecule:', size=(25, 1)),
+            Sg.Combo(['Sphere_COM', 'Sphere_MINATOM', 'Voronoi'], enable_events=True, disabled=False,
+                     key='-METHOD_EXTRACT-',
+                     default_value=extractmd_dict_options['-METHOD_EXTRACT-'], size=(17, 1),
+                     tooltip="Method to calculate the negihbors")
+        ],
+        [
+            Sg.Text('Sphere radius (angstroms):', size=(25, 1)),
+            Sg.Input(key='-RADIUS_SPHERE-', enable_events=True,
+                     default_text=extractmd_dict_options['-RADIUS_SPHERE-'], size=(17, 1),
+                     tooltip='Sphere method needs the radius sphere.', )
+        ],
+    ]
 
+    col2 = [
+        [
+            Sg.Radio('Extract monomers', "EXTRACT_RADIO", enable_events=True,
+                     default=extractmd_dict_options['-EXTRACT_MONOMER-'],
+                     key='-EXTRACT_MONOMER-', size=(26, 1)),
+
+        ],
+        [
+            Sg.Radio('Extract pairs', "EXTRACT_RADIO", enable_events=True,
+                     default=extractmd_dict_options['-EXTRACT_PAIR-'],
+                     key='-EXTRACT_PAIR-', size=(26, 1)),
+        ],
+        [
+            Sg.Checkbox('Extract only different \nmolecules in pairs', key='-EXTRACT_ONLYDIFFMOL-',
+                        enable_events=True, default=extractmd_dict_options['-EXTRACT_ONLYDIFFMOL-'])
+        ],
+    ]
+
+    row_buttons = Sg.Column([
+        [Sg.Button('Default Values', key='-EXTRACT_DEFAULTVALUES-', disabled=False, size=(40, 1), enable_events=True),
+         Sg.Button('CLOSE', key='-EXTRACT_CLOSE-', disabled=False, size=(40, 1), enable_events=True)]
+    ], )
+
+    layout = [[Sg.Text("EXTRACT MD options", justification='c', size=(550, 1),
+                       key='-LINK_EXTRACTMDOPTIONS-', enable_events=True)],
+              [Sg.Column(col1), Sg.Column(col2)], [row_buttons]]
+    window2 = Sg.Window("RDKIT options docs", layout, modal=True, location=loc,
+                        background_color='lightblue', size=(600, 200))
+
+    while True:
+
+        event2, values2 = window2.read()
+
+        if event2 == "Exit" or event2 == Sg.WIN_CLOSED:
+            extractmd_dict_options['-EXTRACT_MONOMER-'] = window2['-EXTRACT_MONOMER-'].get()
+            extractmd_dict_options['-EXTRACT_PAIR-'] = window2['-EXTRACT_PAIR-'].get()
+            extractmd_dict_options['-EXTRACT_ONLYDIFFMOL-'] = window2['-EXTRACT_ONLYDIFFMOL-'].get()
+            break
+
+        if event2 == '-EXTRACT_CLOSE-':
+            extractmd_dict_options['-EXTRACT_MONOMER-'] = window2['-EXTRACT_MONOMER-'].get()
+            extractmd_dict_options['-EXTRACT_PAIR-'] = window2['-EXTRACT_PAIR-'].get()
+            extractmd_dict_options['-EXTRACT_ONLYDIFFMOL-'] = window2['-EXTRACT_ONLYDIFFMOL-'].get()
+            break
+
+        if event2 == '-METHOD_EXTRACT-':
+            extractmd_dict_options['-METHOD_EXTRACT-'] = values2['-METHOD_EXTRACT-']
+        if event2 == '-RADIUS_SPHERE-':
+            extractmd_dict_options['-RADIUS_SPHERE-'] = window2['-RADIUS_SPHERE-'].get()
+        # if event2 == '-EXTRACT_MOL-':
+        #     print(window2['-EXTRACT_MOL-'].values())
+        #     print("H")
+        if event2 == '-EXTRACT_DEFAULTVALUES-':
+            # extractmd_dict_options = defaultdict()
+            extractmd_dict_options['-METHOD_EXTRACT-'] = "Sphere_COM"
+            extractmd_dict_options['-RADIUS_SPHERE-'] = 7.0
+            extractmd_dict_options['-EXTRACT_MONOMER-'] = True
+            extractmd_dict_options['-EXTRACT_PAIR-'] = False
+            extractmd_dict_options['-EXTRACT_ONLYDIFFMOL-'] = False
+            window2['-METHOD_EXTRACT-'].update(extractmd_dict_options['-METHOD_EXTRACT-'])
+            window2['-RADIUS_SPHERE-'].update(extractmd_dict_options['-RADIUS_SPHERE-'])
+            window2['-EXTRACT_MONOMER-'].update(True)
+            window2['-EXTRACT_PAIR-'].update(False)
+            window2['-EXTRACT_ONLYDIFFMOL-'].update(False)
+
+    window2.close()
+
+
+# =============================================================================
+def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
+
+    text = [Sg.Text('Atom indices start at one.',
+                    tooltip="Generate conformers in a systematic way using "
+                            "the dihedral angles below defined.")]
+    maxdihedral = 6
+
+    # Default values if the dictionary is not empty
+    default_cell = []
+    if systematicgrid_dict_options['-SG_NDIHEDRALS-'] != 0:
+        dftext = systematicgrid_dict_options['-SG_NDIHEDRALS-']
+        for i in range(0, maxdihedral):
+            default_cell.append([])
+            for j in range(0, 5):
+                try:
+                    vv = systematicgrid_dict_options['-SG_DIH_STEPS-'][i][j]
+                except IndexError:
+                    vv = None
+                default_cell[i].append(vv)
+    else:
+        dftext = None
+        for i in range(0, maxdihedral):
+            default_cell.append([])
+            for j in range(0, 5):
+                default_cell[i].append(None)
+
+    dfoptimize = systematicgrid_dict_options['-SG_MM_OPTIMIZATION-']
+    dfiter = systematicgrid_dict_options['-SG_MM_MAX_ITER-']
+
+    layout = [[
+        Sg.Text('Number of dihedrals (1 to {}):'.format(maxdihedral), size=(26, 1)),
+        Sg.Input(key='-SG_NDIHEDRALS-', enable_events=True,
+                 size=(8, 1), default_text=dftext,
+                 tooltip='Number of dihedrals to perform systematic grid. A number between 1 to {}'
+                 .format(maxdihedral))
+    ],
+    ]
+
+    head = [Sg.Text('Atom 1', justification='center', size=(10, 1), pad=(1, 1)),
+            Sg.Text('Atom 2', justification='center', size=(10, 1), pad=(1, 1)),
+            Sg.Text('Atom 3', justification='center', size=(10, 1), pad=(1, 1)),
+            Sg.Text('Atom 4', justification='center', size=(10, 1), pad=(1, 1)),
+            Sg.Text('Step', justification='center', size=(10, 1), pad=(1, 1),
+                    tooltip="Step angle to scan the dihedral angle between 0 to 360º")
+            ]
+    layout.append(head)
+
+    for i in range(maxdihedral):
+        row = [Sg.Input(size=(10, 1), key='-SG_CELL_{}_{}-'.format(i, j), justification='center',
+                        background_color='white', pad=(1, 1), default_text=default_cell[i][j],
+                        disabled=True) for j in range(5)]
+
+        layout.append(row)
+
+    checkboxes = [Sg.Checkbox('Optimize conformer using MMFF?', key='-SG_MM_OPTIMIZATION-',
+                              enable_events=True, default=dfoptimize),
+                  Sg.Text("Max. number of MM iterations:"),
+                  Sg.Input(size=(6, 1), key='-SG_MM_MAX_ITER-', default_text=dfiter, enable_events=True,
+                           tooltip="Maximum number of iterations for the MM optimization.", disabled=False)]
+
+    layout.append(checkboxes)
+
+    row_buttons = \
+        [Sg.Button('Clean Data', key='-SG_CLEAN_DATA-', disabled=False, size=(20, 1), enable_events=True),
+         Sg.Button('CLOSE', key='-SG_CLOSE-', disabled=False, size=(20, 1), enable_events=True)]
+
+    layout.append(row_buttons)
+
+    window2 = Sg.Window("Systematic Grid options docs", [text, layout], modal=True, location=loc,
+                        background_color='lightblue', size=(700, 100 + maxdihedral * 30 + 40))
+
+    first = True
+    while True:
+
+        event2, values2 = window2.read()
+
+        window2['-SG_NDIHEDRALS-'].bind("<Return>", "_Enter")
+        window2['-SG_NDIHEDRALS-'].bind("<Tab>", "_Enter")
+
+        # Event close
+        if event2 == "Exit" or event2 == Sg.WIN_CLOSED or event2 == '-SG_CLOSE-':
+            ndihedrals = int(window2['-SG_NDIHEDRALS-'].get())
+            systematicgrid_dict_options['-SG_NDIHEDRALS-'] = ndihedrals
+            success = True
+            for idihedral in range(ndihedrals):
+                try:
+                    systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral]
+                except IndexError:
+                    systematicgrid_dict_options['-SG_DIH_STEPS-'].append([])
+                for icol in range(0, 5):
+                    try:
+                        val = int(window2['-SG_CELL_{}_{}-'.format(idihedral, icol)].get())
+                        systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral][icol] = val
+                    except IndexError:
+                        systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral].append(val)
+                    except ValueError:
+                        if success and ndihedrals < 7:
+                            success = False
+                            popup_window(loc, window2,
+                                         title='Check number and type of dihedrals',
+                                         msg="ERROR!!!.Number of dihedrals and dihedral "
+                                             "definitions are not consistent.\n"
+                                             "Value in cell {},{} must be an integer".format(idihedral, icol))
+            if success:
+                # Calculate the number of conformers to be generated
+                nconfs = 0
+                for idihedral in systematicgrid_dict_options['-SG_DIH_STEPS-']:
+                    nsteps = 360 / idihedral[4]
+                    if nconfs == 0:
+                        nconfs = nsteps
+                    else:
+                        nconfs *= nsteps
+                popup_window(loc, window2,
+                             title='Number of conformers',
+                             msg="The number of conformers to be generated are {}".format(int(nconfs)))
+                break
+
+        elif event2 == '-SG_CLEAN_DATA-':
+            window2['-SG_NDIHEDRALS-'].update(value="", disabled=True)
+            for i in range(0, maxdihedral):
+                for j in range(0, 5):
+                    window2['-SG_CELL_{}_{}-'.format(i, j)].update(value="", disabled=True)
+
+        # Event change ndihedrals
+        elif event2 == "-SG_NDIHEDRALS-_Enter":
+            try:
+                ndihedrals = int(window2['-SG_NDIHEDRALS-'].get())
+            except ValueError:
+                ndihedrals = 0
+                pass
+            if ndihedrals < 1 or ndihedrals > maxdihedral:
+                x, y = window2.size
+                newloc = (loc[0] + (x / 2.) * 0.5, loc[1] + (y / 2.) * 0.5)
+                Sg.popup('Allowed values are in the range of 1 to {}'.format(maxdihedral),
+                         title='Check number of dihedrals',
+                         grab_anywhere=True, location=newloc)
+                window2['-SG_NDIHEDRALS-'].update(value="")
+                continue
+            # First disable all and after enabled only the ndihedral rows
+            for i in range(0, maxdihedral):
+                if i < ndihedrals:
+                    for j in range(0, 5):
+                        window2['-SG_CELL_{}_{}-'.format(i, j)].update(disabled=False)
+                else:
+                    for j in range(0, 5):
+                        window2['-SG_CELL_{}_{}-'.format(i, j)].update(disabled=True)
+
+    window2.close()
+
+
+# =============================================================================
+def open_advance_window_cluster_qmrmsd(loc, open_advance_window_cluster_qmrmsd):
+
+    text = [Sg.Text('RMSD QM clustering method.', pad=(100, 0),
+                    tooltip="Cluster the conformers in accordance with the heavy atoms RMSD to the minimum.")]
+
+    layout = \
+        [Sg.Text('Cutoff RMSD Cluster QM (A):', size=(30, 1), enable_events=True),
+         Sg.Input(key='-CUTOFF_RMSD_QM-', size=(12, 1),
+                  tooltip='RMSD Cutoff to clusterize the conformers after QM calculations.',
+                  enable_events=True, default_text=open_advance_window_cluster_qmrmsd['-CUTOFF_RMSD_QM-'])]
+    layout1 = \
+        [Sg.Text('Cutoff Energy Threshold(kcal/mol):', size=(30, 1), enable_events=True),
+         Sg.Input(key='-CUTOFF_ENERGY_QM-', size=(12, 1),
+                  tooltip='Energy Cutoff to clusterize the conformers after QM calculations.',
+                  enable_events=True, default_text=open_advance_window_cluster_qmrmsd['-CUTOFF_ENERGY_QM-'])]
+
+    layout.append(layout1)
+
+    row_buttons = \
+        [Sg.Button('Default Data', key='-RMSD_DEFAULT_DATA-', disabled=False, size=(20, 1), enable_events=True),
+         Sg.Button('Close', key='-RMSD_CLOSE-', disabled=False, size=(20, 1), enable_events=True)]
+
+    window2 = Sg.Window("Clustering method RMSD", [text, layout, row_buttons], modal=True, location=loc,
+                        background_color='lightblue', size=(400, 150))
+
+    first = True
+    while True:
+
+        event2, values2 = window2.read()
+        print(event2)
+        if event2 == "Exit" or event2 == Sg.WIN_CLOSED or event2 == '-RMSD_CLOSE-':
+            break
+
+        if event2 == '-RMSD_DEFAULT_DATA-':
+            window2['-CUTOFF_RMSD_QM-'].update(value=open_advance_window_cluster_qmrmsd['-CUTOFF_RMSD_QM-'])
+            window2['-CUTOFF_ENERGY_QM-'].update(value=open_advance_window_cluster_qmrmsd['-CUTOFF_ENERGY_QM-'])
+
+        if event2 == '-CUTOFF_RMSD_QM-':
+            open_advance_window_cluster_qmrmsd['-CUTOFF_RMSD_QM-'] = window2['-CUTOFF_RMSD_QM-'].get()
+
+        if event2 == '-CUTOFF_ENERGY_QM-':
+            open_advance_window_cluster_qmrmsd['-CUTOFF_ENERGY_QM-'] = window2['-CUTOFF_ENERGY_QM-'].get()
+
+    window2.close()
+
+
+# =============================================================================
+def open_window_log(window, loc):
     layout = [[Sg.Text("View Log", justification='c', size=(500, 1))],
               [Sg.Multiline(size=(360, 60), key='-LOG_WINDOW-', horizontal_scroll=True)]
               ]
@@ -251,7 +706,6 @@ def open_window_log(window, loc):
 
 # =============================================================================
 def open_window_results(window, vmd_path):
-
     def draw_figure(canvas, figure):
         figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
         figure_canvas_agg.draw()
@@ -341,12 +795,12 @@ def open_window_results(window, vmd_path):
             newloc2 = (loc[0] + (x / 2.) * 0.5, loc[1] + (y / 2.) * 0.5)
             filename = Sg.popup_get_file('Find path to vmd binary file', no_window=False,
                                          location=newloc2, file_types=(("ALL Files", "*"),))
-            if len(filename) > 2:
+            if filename is not None and len(filename) > 2:
                 vmd_path = filename
                 window4['-INPUTVMDPATH-'].update(filename)
 
         if event4 == "-BUTTONRUNVMD-":
-            tclpath = os.path.join(window['-LOCAL_DIR-'].get(), window['-PATTERN-'].get()+"_g16_conformers",
+            tclpath = os.path.join(window['-LOCAL_DIR-'].get(), window['-PATTERN-'].get() + "_g16_results",
                                    "QM_optimized_conformers.tcl")
             cmd = "{} -e {}".format(vmd_path, tclpath)
             os.system(cmd)

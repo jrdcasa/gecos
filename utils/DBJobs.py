@@ -150,7 +150,8 @@ class DBjobs(object):
 
         try:
             return self._cursor.execute(sql)
-        except sqlite3.Error:
+        except sqlite3.Error as e:
+            print(e)
             return None
 
     # ************************************************************************************

@@ -11,10 +11,10 @@ def main_gui_app():
 
     # MAIN WINDOW LOOP
     Sg.ChangeLookAndFeel(theme)
-    layout = [[menu_layout], [image_layout, tabgroup_layout_col], [row_buttons],
+    layout = [[menu_layout], [image_layout, tabgroup_layout_col],
               [status_label], [inforun_label], [python_script]]
 
-    window = Sg.Window('GeCos GUI', layout, size=(1650, 870), location=(100, 60),
+    window = Sg.Window('GeCos GUI', layout, size=(1650, 890), location=(100, 60),
                        finalize=True, return_keyboard_events=True, force_toplevel=False)
 
     window['-DOCK_URL-'].bind('<Enter>', '+MOUSE OVER+')
@@ -29,13 +29,15 @@ def main_gui_app():
     window['-LINK_GITHUB-'].bind('<Leave>', '+MOUSE AWAY+')
     window['-GAUSSIAN16_URL-'].bind('<Enter>', '+MOUSE OVER+')
     window['-GAUSSIAN16_URL-'].bind('<Leave>', '+MOUSE AWAY+')
+    window['-GAUSSIAN16_EXTRAINFO_URL-'].bind('<Enter>', '+MOUSE OVER+')
+    window['-GAUSSIAN16_EXTRAINFO_URL-'].bind('<Leave>', '+MOUSE AWAY+')
     window['-INPUT_OTHERSOLV_PROP-'].bind('<Enter>', '+MOUSE OVER+')
     window['-INPUT_OTHERSOLV_PROP-'].bind('<Leave>', '+MOUSE AWAY+')
 
     while True:
 
-        event, values = window.read(timeout=125)
-
+        # event, values = window.read(timeout=125)
+        event, values = window.read()
         if event == Sg.WIN_CLOSED or event == "Exit":
             script_path = window['-HIDEINPUTSCRIPT-'].get()
             directory = os.path.dirname(script_path)+"/"
@@ -46,6 +48,8 @@ def main_gui_app():
         window.Element('-IMAGE_LIZARD-').UpdateAnimation(lizard_gif,  time_between_frames=50)
 
         waiting_for_events(window, event, values)
+
+    window.close()
 
 
 if __name__ == "__main__":

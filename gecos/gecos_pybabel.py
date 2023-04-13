@@ -15,7 +15,8 @@ class GecosPyBabel:
 
 
     ** References **
-    .. [#] Boyle et al, Confab - Systematic generation of diverse low-energy conformers", Journal of Cheminformatics 3, Article number: 8 (2011), https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-3-8
+    .. [#] Boyle et al, Confab - Systematic generation of diverse low-energy conformers", Journal of Cheminformatics 3,
+     Article number: 8 (2011), https://jcheminf.biomedcentral.com/articles/10.1186/1758-2946-3-8
     """
 
     # =========================================================================
@@ -119,10 +120,10 @@ class GecosPyBabel:
     def generate_conformers(self, localdir, nconfs=100000, minimize_iterations=0,
                             rmsd_cutoff_confab=0.5, energy_cutoff_confab=50.0,
                             confab_verbose_confab=False, cutoff_rmsddock_confab=2.0,
-                            energy_threshold_cluster=99999, max_number_cluster= 100, ff_name="MMFF",
+                            energy_threshold_cluster=99999, max_number_cluster=100, ff_name="MMFF",
                             write_gaussian=True, g16_key="#p 6-31g* mp2", g16_mem=4000,
                             g16_nproc=4, pattern="conformers", charge=0, multiplicity=1,
-                            isclustering=True, debug_flag=False):
+                            g16_extra_info="", isclustering=True, debug_flag=False):
 
         m = "\t\t**************** GENERATE CONFORMERS ***************\n"
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
@@ -163,7 +164,8 @@ class GecosPyBabel:
         self._confs_to_write = self._mol_pybabel.NumConformers() - 1
 
         m = "\t\t\tOptions: rmsd_cutoff = {} A, nconfs = {}\n".format(rmsd_cutoff_confab, nconfs)
-        m += "\t\t\tOptions: energy_cutoff = {} kcal/mol, confab_verbose = {}\n".format(energy_cutoff_confab, confab_verbose_confab)
+        m += "\t\t\tOptions: energy_cutoff = {} kcal/mol, confab_verbose = {}\n".\
+            format(energy_cutoff_confab, confab_verbose_confab)
         m += "\t\t\t ** CONFAB has generated {} conformers **".format(self._confs_to_write)
         print(m) if self._logger is None else self._logger.info(m)
 
@@ -227,7 +229,7 @@ class GecosPyBabel:
 
         if write_gaussian:
             self._write_gaussian(localdir, optimized_strings_mols, MMclusters, pattern=pattern, g16_key=g16_key,
-                                 g16_mem=g16_mem, g16_nproc=g16_nproc, charge=charge, multiplicity=multiplicity)
+                                 g16_mem=g16_mem, g16_nproc=g16_nproc, g16_extra_info=g16_extra_info, charge=charge, multiplicity=multiplicity)
 
         m = "\t\t**************** GENERATE CONFORMERS ***************\n"
         print(m) if self._logger is None else self._logger.info(m)
@@ -401,7 +403,7 @@ class GecosPyBabel:
                 f.write(optimized_strings_mols[iconf])
 
             if self._exec_rmsddock is not None:
-                cmd = '{} {} {} -c -s'.format(self._exec_rmsddock, ref_name_mol2, tmp_name_mol2)
+                cmd = '{} {} {} -s'.format(self._exec_rmsddock, ref_name_mol2, tmp_name_mol2)
                 rmsd_dock = subprocess.check_output(cmd, shell=True)
                 self._df_conformers.at[iconf, 'RMSD'] = rmsd_dock.decode()
 
@@ -437,7 +439,7 @@ class GecosPyBabel:
                     with open(ref_name_mol2, 'w') as f:
                         f.write(optimized_strings_mols[int(idx)])
 
-                    cmd = '{} {} {} -h -c -s'.format(self._exec_rmsddock, ref_name_mol2, tmp_name_mol2)
+                    cmd = '{} {} {} -h -s'.format(self._exec_rmsddock, ref_name_mol2, tmp_name_mol2)
                     rmsd_dock = float(subprocess.check_output(cmd, shell=True).decode())
 
                     if float(rmsd_dock) < cutoff_rmsddock:
@@ -486,10 +488,10 @@ class GecosPyBabel:
 
     # =========================================================================
     def _write_gaussian(self, localdir, optimized_strings_mols, cluster, pattern="QM", g16_key="#p 6-31g* mp2",
-                        g16_mem=4000, g16_nproc=4, charge=0, multiplicity=1):
+                        g16_mem=4000, g16_nproc=4, g16_extra_info='', charge=0, multiplicity=1):
 
         # Create directory for gaussian inputs
-        parent_dir = os.path.join(localdir, "{}".format("{}_g16_conformers/").format(pattern))
+        parent_dir = os.path.join(localdir, "{}".format("{}_g16_results/").format(pattern))
         if not os.path.isdir(parent_dir):
             os.mkdir(parent_dir)
 
@@ -521,6 +523,12 @@ class GecosPyBabel:
                 f.writelines("{0:1d} {1:1d}\n".format(charge, multiplicity))
                 for line in xyz_list[2:]:
                     f.writelines(line+"\n")
+
+                for item2 in g16_extra_info:
+                    if not item2.strip() == '':
+                        f.writelines(item2)
+                        f.writelines("\n")
+                f.writelines("\n")
 
     # =========================================================================
     @staticmethod

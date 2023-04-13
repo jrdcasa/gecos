@@ -152,7 +152,7 @@ class ServerSlurmBasic(utils.ServerBasic):
         return stdout.read().decode("utf8"), stderr.read().decode("utf8")
 
     # ===========================================================================================
-    def send_input_files_to_server(self, listfiles, localdir, remotedir):
+    def send_input_files_to_server(self, listfiles, localdir, remotedir, maxjobsslurm):
 
         # FTP listfiles *********************************
         server_sftp = self.ftp_connect()
@@ -187,7 +187,7 @@ class ServerSlurmBasic(utils.ServerBasic):
                 exit()
 
         # Create script full_send.sh
-        utils.generate_bashscript_send_slurm(localdir)
+        utils.generate_bashscript_send_slurm(localdir, maxjobsslurm=maxjobsslurm)
         source = os.path.join(localdir, "full_send.sh")
         target = os.path.join(remotedir, "full_send.sh")
         server_sftp.put(source, target)
@@ -303,14 +303,23 @@ class ServerSlurmBasic(utils.ServerBasic):
         return dict_energy
 
     # ===========================================================================================
-    def send_qm_remote_calc(self, remotedir, partitionmaster=None, nodemaster=None, jobname="g16m"):
+    def send_qm_remote_calc(self, remotedir, partitionmaster=None, nodemaster=None, jobname="g16m",
+                            timelimit=None, memlimit=None):
 
         if nodemaster is None:
-            cmd1 = "cd %s; sbatch --partition=%s --job-name=%s  full_send.sh;"\
-                 % (remotedir, partitionmaster, jobname)
+            if timelimit is None:
+                cmd1 = "cd %s; sbatch --partition=%s --job-name=%s full_send.sh;"\
+                     % (remotedir, partitionmaster, jobname)
+            else:
+                cmd1 = "cd %s; sbatch --partition=%s --job-name=%s --time=%s --mem=%s full_send.sh;"\
+                     % (remotedir, partitionmaster, jobname, timelimit, memlimit)
         else:
-            cmd1 = "cd %s; sbatch --partition=%s --nodelist=%s --job-name=%s  full_send.sh;"\
-                 % (remotedir, partitionmaster, nodemaster, jobname)
+            if timelimit is None:
+                cmd1 = "cd %s; sbatch --partition=%s --nodelist=%s --job-name=%s  full_send.sh;"\
+                     % (remotedir, partitionmaster, nodemaster, jobname)
+            else:
+                cmd1 = "cd %s; sbatch --partition=%s --nodelist=%s --job-name=%s --time=%s --mem=%s full_send.sh;"\
+                     % (remotedir, partitionmaster, nodemaster, jobname, timelimit, memlimit)
 
         self.execute_cmd(cmd1)
 
@@ -322,7 +331,17 @@ class ServerSlurmBasic(utils.ServerBasic):
 
         # Get name of the completed jobs
         sql_query = "SELECT name_job FROM qm_jobs WHERE status_job LIKE 'COMPLETED'"
-        p = self._db_base.query_data(sql_query)
+        p = self._db_base.query_data(sql_query).fetchall()
+        sql_query = "SELECT name_job FROM qm_jobs"
+        q = self._db_base.query_data(sql_query).fetchall()
+        sql_query = "SELECT name_job FROM qm_jobs WHERE status_job LIKE 'FAILED'"
+        r = self._db_base.query_data(sql_query).fetchall()
+
+        m = "\t\tNumber of logs completed from server : {}\n".format(len(p))
+        m += "\t\tNumber of logs failed in server      : {}\n".format(len(r))
+        m += "\t\tNumber of logs in server             : {}\n".format(len(q))
+
+        print(m) if self._logger is None else self._logger.info(m)
 
         completed_jobs = 0
         for item in p:
@@ -331,6 +350,8 @@ class ServerSlurmBasic(utils.ServerBasic):
             completed_jobs += 1
             if os.path.exists(fullpath):
                 continue
+            else:
+                print("Transfering: {}, {} of {}".format(name_log, completed_jobs, len(p)))
             source = os.path.join(remotedir, name_log)
             target = os.path.join(outdir_local, name_log)
             server_sftp.get(source, target)
@@ -340,7 +361,8 @@ class ServerSlurmBasic(utils.ServerBasic):
         return completed_jobs
 
     # ===========================================================================================
-    def server_check_qm_jobs(self, localdir, remotedir, outdir_local, exec_rmsddock, cutoff_rmsd=1.0):
+    def server_check_qm_jobs(self, localdir, remotedir, outdir_local, exec_rmsddock,
+                             energy_threshold=99999.0, cutoff_rmsd=1.0):
 
         # Create a directory to put results
         if not os.path.isdir(outdir_local):
@@ -353,9 +375,9 @@ class ServerSlurmBasic(utils.ServerBasic):
             localfile = os.path.join(localdir, 'done')
             if os.path.exists(localfile):
                 return -1
+
+            # Check done in remote file after all operations
             server_sftp.stat(remotefile)
-            server_sftp.get(remotefile, localfile)
-            server_sftp.close()
 
             # Get energy from calculations
             e_dict = self.get_energy_from_calculations(outdir_local, remotedir)
@@ -367,7 +389,8 @@ class ServerSlurmBasic(utils.ServerBasic):
 
             # Allign and clusterize mol2 molecules
             cluster_dict, deltaE_dict, rmsd_dict, rmsd_incluster = \
-                utils.cluster_optimized_coordinates(e_dict, outdir_local, exec_rmsddock, cutoff=cutoff_rmsd)
+                utils.cluster_optimized_coordinates(e_dict, outdir_local, exec_rmsddock,
+                                                    energy_threshold=energy_threshold, cutoff=cutoff_rmsd)
 
             # Update database
             self._db_base.add_column("qm_jobs", "DeltaE", "FLOAT")
@@ -383,10 +406,14 @@ class ServerSlurmBasic(utils.ServerBasic):
 
             for key, value in cluster_dict.items():
                 for ifile in value['files']:
-                    item = ifile.split("_allign")[0]
+                    item = ifile.split("_allign.")[0]
                     self._db_base.update_data_row("qm_jobs", "Cluster", key, "name_job", item)
 
             self._db_base.commit_db()
+
+            # Create done in localdir file after all operations
+            server_sftp.get(remotefile, localfile)
+            server_sftp.close()
 
             return -2
 
@@ -411,6 +438,7 @@ class ServerSlurmBasic(utils.ServerBasic):
                     utils.cluster_optimized_coordinates(e_dict,
                                                         outdir_local,
                                                         exec_rmsddock,
+                                                        energy_threshold=energy_threshold,
                                                         cutoff=cutoff_rmsd)
 
                 # Update database

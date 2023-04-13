@@ -1,0 +1,45 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                         -----------------------------------
+                         
+                                    Version 0.1
+                         
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+                                   
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+                
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+                
+        ***********************************************************************
+                     
+        
+		******** CREATION OF THE GECOS EXTRACT NEIGHBORS OBJECT ********
+
+		Conformers will be extracted from a frame of a MD simulation.
+		 Find number of molecules in the frame.(09-01-2023 13:13:33)
+
+		Formula             = C500H1200O100
+		Number of atoms     = 1800
+		Molecular weight    = 8814.82 g/mol
+		Number of rings     = 0
+		Number of molecules = 100
+		******** CREATION OF THE GECOS EXTRACT NEIGHBORS OBJECT ********
+
+
+		**************** EXTRACT CONFORMERS ***************
+		 1. Unwrapping molecules to calculate center of masses (09-01-2023 13:13:36)
+		 2. Calculating center of masses (09-01-2023 13:13:39)
+		 3. Wrapping atoms to visualize (wrapper_atoms.pdb) (09-01-2023 13:13:39)
+		 4. Extracting conformations from frame (09-01-2023 13:13:40)
+		    4.a Using method SPHERE with radius 7.0 angstroms (09-01-2023 13:13:40)
+		    4.b Extracting pairs (09-01-2023 13:13:40)

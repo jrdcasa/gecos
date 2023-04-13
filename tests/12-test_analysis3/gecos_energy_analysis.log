@@ -1,0 +1,47 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 30-01-2023 19:05:32 ============
+
+		Command line: 
+			python gecos_analysis.py energy -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log3 -p g16 --vdw --hbonds
+			         or
+			gecos_analysis energy -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log3 -p g16 --vdw --hbonds
+
+		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/12-test_analysis3
+		Directory with Log files      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log3
+
+
+		#               ID               DeltaEnergy(kcal/mol) RMSDwithHs(A) RMSDwithoutHs(A)   RotConstA(Ghz)   RotConstB(Ghz)   RotConstC(Ghz)  AngleMainPrincipalAxes(deg)  NHbonds  NvdwCont_Intermol NvdwCont_Intramol
+		# =======================================================================================================================================================================================================================
+		   MD_extract_012_gaussian               0.00                0.000          0.000          5.055256        2.199191         1.660071                   nan               0               0               0
+		   MD_extract_011_gaussian               0.05                1.553          0.645          3.873964        2.702094         1.937482                   nan               0               0               0
+
+		# =======================================================================================================================================================================================================================
+
+
+		 Job Finnished: 30-01-2023 19:05:33
+
