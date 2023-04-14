@@ -328,7 +328,7 @@ def install_openbabel(log=None, namepkg=None):
         print(mm) if log is None else log.info(mm)
         exit()
 
-    if not os.path.isdir(fullpath_cmake+"/openbabel/build"):
+    if not not os.path.isdir(fullpath_cmake+"/openbabel/build"):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         mm = "{}: ** {}: Compiling openbabel\n".format(now, namepkg)
         print(mm) if log is None else log.info(mm)
@@ -348,7 +348,8 @@ def install_openbabel(log=None, namepkg=None):
 
         # Copy the library to the root site-engines of the python distribution
         dir_env_python = site.getsitepackages()[0]
-        dir_openbabel_installed = fullpath_cmake+"/openbabel/lib/python3.8/site-packages/openbabel"
+        label = str(sys.version_info.major)+"."+str(sys.version_info.minor)
+        dir_openbabel_installed = fullpath_cmake+"/openbabel/lib/python{}/site-packages/openbabel".format(label)
         subprocess.call(["rm", "-rf", "{}".format(os.path.join(dir_env_python, "openbabel"))])
         subprocess.call(["mv", "-f", "{}".format(dir_openbabel_installed), "{}".format(dir_env_python)])
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")

@@ -1,8 +1,9 @@
 #Gecos
 wheel
-GitPython>=3.1.1
-cython>=0.29.24
-rdkit-pypi>=2021.3.2.3
+GitPython
+cython
+rdkit-pypi
+rdkit
 pandas
 paramiko
 pycryptodome

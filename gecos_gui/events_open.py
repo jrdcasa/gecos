@@ -566,9 +566,14 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
 
         # Event close
         if event2 == "Exit" or event2 == Sg.WIN_CLOSED or event2 == '-SG_CLOSE-':
-            ndihedrals = int(window2['-SG_NDIHEDRALS-'].get())
-            systematicgrid_dict_options['-SG_NDIHEDRALS-'] = ndihedrals
-            success = True
+            try:
+                ndihedrals = int(window2['-SG_NDIHEDRALS-'].get())
+                systematicgrid_dict_options['-SG_NDIHEDRALS-'] = ndihedrals
+                success = True
+            except ValueError:
+                ndihedrals = 0
+                success = False
+
             for idihedral in range(ndihedrals):
                 try:
                     systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral]
@@ -588,6 +593,7 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
                                          msg="ERROR!!!.Number of dihedrals and dihedral "
                                              "definitions are not consistent.\n"
                                              "Value in cell {},{} must be an integer".format(idihedral, icol))
+
             if success:
                 # Calculate the number of conformers to be generated
                 nconfs = 0
@@ -600,7 +606,7 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
                 popup_window(loc, window2,
                              title='Number of conformers',
                              msg="The number of conformers to be generated are {}".format(int(nconfs)))
-                break
+            break
 
         elif event2 == '-SG_CLEAN_DATA-':
             window2['-SG_NDIHEDRALS-'].update(value="", disabled=True)
