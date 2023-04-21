@@ -671,7 +671,6 @@ def open_advance_window_cluster_qmrmsd(loc, open_advance_window_cluster_qmrmsd):
     while True:
 
         event2, values2 = window2.read()
-        print(event2)
         if event2 == "Exit" or event2 == Sg.WIN_CLOSED or event2 == '-RMSD_CLOSE-':
             break
 

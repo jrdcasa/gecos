@@ -52,14 +52,18 @@ def prepare_slurm_script_g16(listfiles, g16exec, partition=None, exclude_nodes=N
         inputfile_com = os.path.split(ifile)[-1]
         ll2 = "#SBATCH --job-name={}\n".format(inputfile_com.split(".")[0])
         ll2 += "\n"
-        # ll2 += "g16legacy_root={}\n".format(g16path)
-        # ll2 += 'GAUSS_SCRDIR="$TMPDIR"\n'
-        # ll2 += "source $g16legacy_root/bsd/g16.profile\n"
-        # ll2 += "export g16legacy_root GAUSS_SCRDIR\n"
-        for item in extraslurminfo:
-            ll2 += "{}\n".format(item)
-        ll2 += "g16 {}\n".format(inputfile_com)
-        jobindex += 1
+
+        try:
+            for item in extraslurminfo:
+                ll2 += "{}\n".format(item)
+            ll2 += "g16 {}\n".format(inputfile_com)
+            jobindex += 1
+        except TypeError:
+            ll2 += "g16legacy_root={}\n".format(g16path)
+            ll2 += 'GAUSS_SCRDIR="$TMPDIR"\n'
+            ll2 += "source $g16legacy_root/bsd/g16.profile\n"
+            ll2 += "export g16legacy_root GAUSS_SCRDIR\n"
+
         with open(base + ".sh", 'w') as fin:
             fin.writelines(ll)
             fin.writelines(ll2)

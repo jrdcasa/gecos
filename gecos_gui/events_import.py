@@ -38,12 +38,12 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options,
         'v_g16_keywords': '-G16_KEYWORDS-',
         'v_dockrmsdpack': '-DOCKRMSDPACK-',
         'v_g16path': '-GAUSSIAN16PACK-',
-        'v_timelimitslurm' : '-TIME_NODES-'
+        'v_timelimitslurm': '-TIME_NODES-'
     }
 
     var_to_encrypt = {'v_encrypt_pass': '-ENCRYPT_PASS_FILE-',
                       'v_node_master': '-NODE_MASTER-',
-    }
+                      }
 
     var_to_dict_combobox = {
         'v_confpack': '-CONFPACK-'
@@ -183,11 +183,12 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options,
                 value = value.replace("\"", "")
                 label = var_to_dict_combobox[ikey]
                 window[label].update(value)
-            if value.upper() == 'EXTRACT FROM MD FRAME':
-                window['-NCONF-'].update(disabled=True, text_color='grey')
-                window['-MIN_ITER_MM-'].update(disabled=True, text_color='grey')
-                window['-CUTOFF_RMSD_QM-'].update(disabled=False)
-                window['-CUTOFF_ENERGY_QM-'].update(disabled=False)
+                # TODO: This must be revised, the names have been changed
+                # if value.upper() == 'EXTRACT FROM MD FRAME':
+                #     window['-NCONF-'].update(disabled=True, text_color='grey')
+                #     window['-MIN_ITER_MM-'].update(disabled=True, text_color='grey')
+                #     window['-CUTOFF_RMSD_QM-'].update(disabled=False)
+                #     window['-CUTOFF_ENERGY_QM-'].update(disabled=False)
 
         for ikey in var_to_dict_list.keys():
             regex = ikey+".*="
@@ -396,15 +397,24 @@ def import_pythonfileprops_to_gui(window, filename):
         'p_g16_keywords': '-KEYWORD_LINE-',
         'p_localdir_mol2conf': '-QM_PROP_MOL2LOCAL_DIR-',
         'p_localdir': '-QM_PROP_LOCAL_DIR-',
-        'p_remotedir': '-QM_PROP_REMOTE_DIR-'
+        'p_remotedir': '-QM_PROP_REMOTE_DIR-',
+        'p_env_combo': '-ENV_COMBO-'
+    }
+
+    var_to_dict_boolean = {
+        'p_run_gaussian': '-CHECKBOX_RUN_GAUSSIAN_OPT_PROP-'
     }
 
     var_to_encrypt = {'v_encrypt_pass': '-ENCRYPT_PASS_FILE-',
-                      'v_node_master': '-NODE_MASTER-',
-    }
+                      'v_node_master': '-NODE_MASTER-'
+                      }
 
     var_to_dict_list = {
         'p_list_nodes': '-EXCLUDE_NODES-',
+    }
+
+    var_to_dict_list_multiline = {
+        'p_bash_extrainfo': '-BASH_EXTRAINFO-'
     }
 
     var_to_dict_intfloat = {
@@ -466,6 +476,20 @@ def import_pythonfileprops_to_gui(window, filename):
                 label = var_to_dict_list[ikey]
                 window[label].update(value)
 
+        for ikey in var_to_dict_list_multiline.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                str2 = re.search(ikey+".*=.*", data).group(0)
+                # value = re.search('(?:\'|").*(?:\'|")', str2).group(0)
+                value = re.search("(?:['\"]).*(?:['\"])", str2).group(0)
+                value = value.replace("'", "")
+                lll = value.split(",")
+                valuenew = ""
+                for item in lll:
+                    valuenew += item.strip()+"\n"
+                label = var_to_dict_list_multiline[ikey]
+                window[label].update(valuenew)
+
         for ikey in var_to_encrypt.keys():
             regex = ikey + ".*="
             if re.search(regex, data) is not None:
@@ -478,6 +502,20 @@ def import_pythonfileprops_to_gui(window, filename):
                     value = value.replace("\"", "")
                     label = var_to_encrypt[ikey]
                     window[label].update(value)
+
+        for ikey in var_to_dict_boolean.keys():
+            regex = ikey+".*="
+            if re.search(regex, data) is not None:
+                value = re.search(ikey+".*=.*", data).group(0)
+                value = value.replace("'", "")
+                value = value.replace("\"", "")
+                value = value.split("=")[-1]
+                if value.find('True') != -1:
+                    valbol = True
+                else:
+                    valbol = False
+                label = var_to_dict_boolean[ikey]
+                window[label].update(valbol)
 
         # Extract parameters from the Keyword_line
         tokens = window['-KEYWORD_LINE-'].get().split()

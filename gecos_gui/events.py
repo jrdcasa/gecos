@@ -70,7 +70,7 @@ keys_all_mainguibuttons_labels = ['-BUTTONIMPORTPYTHON-', '-BUTTONCHECK-', '-BUT
 
 keys_properties = ['-QM_PROP_LOCAL_DIR-', '-QM_PROP_MOL2LOCAL_DIR-', '-KEYWORD_LINE-',
                    '-INPUT_DATABASE_PROP-', '-INPUT_LOG_PROP-', '-QM_PROP_CUTOFF_ENERGY-',
-                   '-QM_PROP_REMOTE_DIR-']
+                   '-QM_PROP_REMOTE_DIR-', '-CHECKBOX_RUN_GAUSSIAN_OPT_PROP-']
 keys_properties_enter = ['-QM_PROP_LOCAL_DIR-_Enter', '-QM_PROP_MOL2LOCAL_DIR-_Enter',
                          '-KEYWORD_LINE-_Enter', '-INPUT_DATABASE_PROP-_Enter',
                          '-INPUT_LOG_PROP-_Enter', '-QM_PROP_CUTOFF_ENERGY-_Enter',
@@ -290,6 +290,13 @@ def check_parameteres_prop_gui(window, dict_properties):
     dict_options["remotedir"] = window['-QM_PROP_REMOTE_DIR-'].get()
     if len(dict_options["remotedir"]) == 0:
         return False, "remotedir"
+
+    dict_options["env_combo"] = window["-ENV_COMBO-"].get()
+    if len(dict_options["env_combo"]) == 0:
+        return False, "env_combo"
+    dict_options["bash_extrainfo"] = window["-BASH_EXTRAINFO-"].get()
+    if dict_options["env_combo"] != 'None' and len(dict_options["bash_extrainfo"]) == 0:
+        return False, "bash_extrainfo"
 
     # # Check server stuffs =====================================================
     server, status = check_server_stuffs(window, dict_options, pass_encrypted_file)

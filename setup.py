@@ -328,7 +328,7 @@ def install_openbabel(log=None, namepkg=None):
         print(mm) if log is None else log.info(mm)
         exit()
 
-    if not not os.path.isdir(fullpath_cmake+"/openbabel/build"):
+    if not os.path.isdir(fullpath_cmake+"/openbabel/build"):
         now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         mm = "{}: ** {}: Compiling openbabel\n".format(now, namepkg)
         print(mm) if log is None else log.info(mm)

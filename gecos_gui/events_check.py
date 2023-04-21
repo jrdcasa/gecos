@@ -386,6 +386,9 @@ def check_prop_conformers(window, keys_properties, dict_properties):
     dict_properties['p_remotedir'] = str(window['-QM_PROP_REMOTE_DIR-'].get())
     dict_properties['p_fileproplist'] = [window['-LISTBOX_MOL2-'].Values]
     dict_properties['p_dockrmsdpack'] = window['-DOCKRMSDPACK-'].get()
+    dict_properties['p_bash_extrainfo'] = window["-BASH_EXTRAINFO-"].get().split("\n")
+    dict_properties["p_env_combo"] = window["-ENV_COMBO-"].get()
+    dict_properties["p_run_gaussian"] = window["-CHECKBOX_RUN_GAUSSIAN_OPT_PROP-"].get()
 
     for ikey in keys_properties:
         if ikey == '-QM_PROP_LOCAL_DIR-':

@@ -72,7 +72,9 @@ browse_analysis2 = Sg.Column([
                             default_text="6-311G**", pad=pad3, disabled=False, text_color="black"),
                    Sg.Checkbox('Optimize?', key='-CHECKBOX_PROP_OPT-', size=(22, 1),
                                tooltip='Reoptimize the molecule', enable_events=True,
-                               default=False, pad=pad3, disabled=False, checkbox_color="white")
+                               default=False, pad=pad3, disabled=False, checkbox_color="white"),
+                   Sg.Checkbox('Run Gaussian?', key='-CHECKBOX_RUN_GAUSSIAN_OPT_PROP-',
+                               pad=pad3, enable_events=True, default=False)
                    ],
                   [
                    Sg.Text('Solvent model:', size=(12, 1), pad=pad3),

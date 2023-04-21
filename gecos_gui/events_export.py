@@ -563,9 +563,15 @@ def write_python_script_prop_from_gui(window, filename,
             for item in window['-LISTBOX_MOL2-'].Values:
                 p_fileproplist.append(item)
             lines += "{} = {}\n".format(ikey, p_fileproplist)
+        elif isinstance(value, list) and ikey == 'p_bash_extrainfo':
+            lines += "{} = {}\n".format(ikey, value)
         elif isinstance(value, int):
             lines += "{} = {}\n".format(ikey, dict_properties[ikey])
-
+        elif ikey == 'p_run_gaussian':
+            if value:
+                lines += "{} = True\n".format(ikey)
+            else:
+                lines += "{} = False\n".format(ikey)
     if dict_properties['p_g16_keywords'].count("freq") == 1:
         p_pattern = "FREQ"
     elif dict_properties['p_g16_keywords'].count("wfn") == 1:
@@ -601,7 +607,8 @@ def write_python_script_prop_from_gui(window, filename,
              "\n            charge=p_charge," \
              "\n            multiplicity=p_multiplicity)\n\n"
 
-    lines += "    gecos.send_qm_conformers(" \
+    lines += "    if p_run_gaussian:\n"
+    lines += "        gecos.send_qm_conformers(" \
              "\n            p_nameserver," \
              "\n            p_databasefullpath," \
              "\n            p_username," \
@@ -618,6 +625,7 @@ def write_python_script_prop_from_gui(window, filename,
              "\n            nodemaster=p_node_master," \
              "\n            mem=p_mem," \
              "\n            encrypted_pass=p_encrypt_pass,"\
+             "\n            extraslurminfo=p_bash_extrainfo,"\
              "\n            logger=log)\n".format(regex)
 
     lines += "\n"
