@@ -1,0 +1,55 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 27-04-2023 16:23:24 ============
+
+		Command line: 
+			python gecos_analysis.py energy -d logs --hbonds --vdw --indxfile coords.ndx
+			         or
+			gecos_analysis energy -d logs --hbonds --vdw --indxfile coords.ndx
+
+			Parsing 0 log files out of 4 (27-04-2023 16:23:24)
+			Parsing 1 log files out of 4 (27-04-2023 16:23:25)
+			Parsing 2 log files out of 4 (27-04-2023 16:23:25)
+			Parsing 3 log files out of 4 (27-04-2023 16:23:26)
+
+		Internal coordinates have been written in distances.dat, angles.dat and/or dihedral.dat files.
+
+		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/16-test_grid_dihedrals
+		Directory with Log files      : logs
+
+
+		#               ID               DeltaEnergy(kcal/mol) RMSDwithHs(A) RMSDwithoutHs(A)   RotConstA(Ghz)   RotConstB(Ghz)   RotConstC(Ghz)  AngleMainPrincipalAxes(deg)  NHbonds  NvdwCont_Intermol NvdwCont_Intramol
+		# =======================================================================================================================================================================================================================
+		   dimer_13b_00000_gaussian              0.00                0.000          0.000          0.454625        0.144248         0.120126                   nan               0               0               0
+		   dimer_13b_00002_gaussian              1.02                1.063          0.822          0.458657        0.157470         0.133245                   nan               2               0               0
+		   dimer_13b_00001_gaussian              3.00                0.900          0.773          0.479300        0.151856         0.127736                   nan               1               0               0
+		   dimer_13b_00003_gaussian              3.83                0.718          0.563          0.438949        0.150297         0.136616                   nan               0               0               0
+
+		# =======================================================================================================================================================================================================================
+
+		 Job Finnished: 27-04-2023 16:23:26
+

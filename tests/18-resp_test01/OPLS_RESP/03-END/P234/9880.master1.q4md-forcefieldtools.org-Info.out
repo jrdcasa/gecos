@@ -1,0 +1,200 @@
+
+     ____  ____ ____    ____            _       _    
+    |  _ \| __ ) ___|  / ___|  ___ _ __(_)_ __ | |_  
+    | |_) |  _ \___ \  \___ \ / __| '__| | '_ \| __| 
+    |  __/| |_) |__) |  ___) | (__| |  | | |_) | |_  
+    |_|   |____/____/  |____/ \___|_|  |_| .__/ \__| 
+                                         |_|         
+
+ Let's start the PBS script...
+
+ PBS script ID:     9880.master1.q4md-forcefieldtools.org
+ MACHINE:           node7
+ NPROCS:            8
+ PrjctNmMySQL:      Molecule
+
+ OpenPBS Pro: Script version: June 30th, 2023
+ PyRED 2013-2023: Version: June 2023 - version_2023-06-06
+
+ Check for two consecutive PBS jobs in the same directory because of a network problem 1
+ No consecutive PBS job found: all is ok
+
+ unbuffer set to 1
+
+ -1- run tar jxf ArchiveFile
+     tar jxf: failed
+ -2- run tar zxf ArchiveFile
+ gzip compressed archive file detected
+ PDB input file(s) extracted with success
+
+ Archive file recognized: at least one PDB input file was detected...
+
+ Let's work on the input data of the Archive file:
+
+ Homogenize the permissions of the input files/directories of the Archive file
+
+ Check the presence of broken symbolic links in the Archive file:
+ No broken symbolic link found
+
+ Check the presence of hidden files/directories in the Archive file:
+ No hidden file/directory found
+
+ Check the presence of empty files/directories in the Archive file:
+ No empty file/directory found
+
+ Check the presence of input files with the '.txt' extension in the Archive file:
+ No file found with the '.txt' extension
+
+ Check the presence of special characters in the directory names in the Archive file:
+ No special characters found in the directory names
+
+ Check the presence of special characters in the 'pdb log out config user' input filenames in the Archive file:
+ No special characters found in the '.pdb' filename(s)
+ No special characters found in the '.log' filename(s)
+ No special characters found in the '.out' filename(s)
+ No special characters found in the '.config' filename(s)
+ No special characters found in the '.user' filename(s)
+
+ Check the presence of double extensions in the 'pdb log out config user' input filenames in the Archive file:
+ No double '.pdb' extension found for the '.pdb' filename(s)
+ No double '.log' extension found for the '.log' filename(s)
+ No double '.out' extension found for the '.out' filename(s)
+ No double '.config' extension found for the '.config' filename(s)
+ No double '.user' extension found for the '.user' filename(s)
+
+ Check the presence of the 'Project.config', 'System.config' and 'frcmod.user' files in the Archive file:
+ ./Project.config file found
+ Save ./Project.config into ./Project.config-ArchiveFile
+ ./System.config file found
+ Save ./System.config into ./System.config-ArchiveFile
+ ./frcmod.user file found
+ Save ./frcmod.user into ./frcmod.user-ArchiveFile
+
+ Check the presence of the Mol_red$n.pdb input files in the Archive file:
+ Single ./Mol_red1.pdb input file found in the working directory
+
+ Check the presence of the Mol_red$n.out/.log & Mol_red$n-$i.out/.log QM files in the Archive file:
+ WARNING: No QM Mol_red$n.out/.log & Mol_red$n-$i.out/.log QM file found
+
+ Check the presence of the Data-R.E.D.Server directory in the Archive file:
+ WARNING: No Data-R.E.D.Server directory found
+
+ The conformations in a PDB input file must have the same atom order
+ The conformations in the QM files must have the same atom order
+ The atom order in the PDB and QM files must be identical
+
+ → PDB input file: ./Mol_red1.pdb
+ Save ./Mol_red1.pdb into ./Mol_red1.pdb-ArchiveFile
+ Check the format and the ATOM, HETATM, MODEL, ENDMDL, TER & CONECT keywords of Mol_red1.pdb
+ Modify this file according to the PDB file format and remove the CRLF characters if needed
+ The number of atoms of Mol_red1.pdb is below the defined threshold (250 atoms): ok
+ Check the number of atoms for the 20 conformation(s) of Mol_red1.pdb
+ Mol_red1.pdb - Conformation No = 20 - Atoms per conformation = 50
+ • Check the Mol_red1.pdb PDB input file:
+   Check the Elements & Compare the Atom Order in the 20 conformations:
+ ◦  Elements & Atom order OK
+ • Check the QM file(s):
+   QM file = WARNING QM_file_not_found - Conf. no 1
+   QM file = WARNING QM_file_not_found - Conf. no 2
+   QM file = WARNING QM_file_not_found - Conf. no 3
+   QM file = WARNING QM_file_not_found - Conf. no 4
+   QM file = WARNING QM_file_not_found - Conf. no 5
+   QM file = WARNING QM_file_not_found - Conf. no 6
+   QM file = WARNING QM_file_not_found - Conf. no 7
+   QM file = WARNING QM_file_not_found - Conf. no 8
+   QM file = WARNING QM_file_not_found - Conf. no 9
+   QM file = WARNING QM_file_not_found - Conf. no 10
+   QM file = WARNING QM_file_not_found - Conf. no 11
+   QM file = WARNING QM_file_not_found - Conf. no 12
+   QM file = WARNING QM_file_not_found - Conf. no 13
+   QM file = WARNING QM_file_not_found - Conf. no 14
+   QM file = WARNING QM_file_not_found - Conf. no 15
+   QM file = WARNING QM_file_not_found - Conf. no 16
+   QM file = WARNING QM_file_not_found - Conf. no 17
+   QM file = WARNING QM_file_not_found - Conf. no 18
+   QM file = WARNING QM_file_not_found - Conf. no 19
+   QM file = WARNING QM_file_not_found - Conf. no 20
+   No atom comparison is done
+
+ List the PDB file(s) found in the working directory:
+ ./Mol_red1.pdb
+ 1 PDB file(s) found in the working directory
+ ./Mol_red1.pdb
+ 1 Mol_red$n.pdb PDB file(s) found in the working directory
+ ./Mol_red1.pdb
+ 1 consecutive Mol_red$n.pdb PDB input file(s) found in the working directory
+
+ The Mol_red$n.pdb PDB file number & consecutive PDB input file number are identical:
+   The Mol_red1.pdb file is the only PDB input file used in this job
+
+ The number of atoms of the Mol_red1.pdb input file is below the defined threshold (250 atoms): ok
+
+ Check and correct the keywords in the 'Project.config' and 'System.config' files:
+ . 'System.config' file found in the working directory:
+ Remove empty lines and CRLF, special & missplaced space characters, homogenize the comments, and format the file
+ . 'Project.config' file found in the working directory:
+ Remove empty lines and CRLF, special & missplaced space characters, homogenize the comments, and format the file
+ Check and correct the 'frcmod.user' file:
+ Remove the CRLF characters, replace a tabulation by space characters, remove lines that start by the '# !' character
+
+ Add keywords chosen by the user during the submission procedure or defined by the PBS script in the System.config file
+
+ Analysis of the 'System.config' file used in the current PyRED job:
+ Default option: OPT_Calc = ON - The geometry optimization step is carried out with default criteria
+ Default option: MEPCHR_Calc = ON - The MEP computation and charge derivation/force field generation steps are carried out
+ Default option: Freq_Calc = OFF - The frequencies computation step is not requested
+   (This step is useful to determine the nature of the stationary point found during the geometry optimization step)
+ Default option: Re_Fit = OFF - The re-generation of the force field from QM data is not requested
+
+ The geometry optimization step is requested in the System.config file
+ Correct PDB input file(s) found with compatible atom orders
+ 20 QM file(s) is/are missing
+ Let's run PyRED as the QM file(s) is/are not demanded...
+
+ A WARNING message is only informative for the user: the PyRED job is executed
+ When an ERROR message is generated the PyRED job is not executed
+
+ Version of Python = 2.7.5
+
+ resppg = resp-2.41-64 - pol = not-used
+ resp 2.41 is selected...
+ See https://upjv.q4md-forcefieldtools.org/Tutorial/Tutorial-4.php#VI
+
+ PBS Job name:      P234
+ PBS_JOBID:         Check OK
+ PBS_JOBID_MOD:     Check OK
+ PBS queue:         Check OK
+ Working directory: Check OK
+
+ Mirror site info:  UPJV /usr/local g16C01-legacy-userred
+ List of cores used: Check OK
+ This job has allocated 8 cores
+
+ GAUSSIAN16 Gaussian16_C.01 Scratch directory:  Check OK
+
+ PyRED job started on:   2023-07-08__14:19:52 (Paris time)
+  Execution of PyRED version_2023-06-06
+ PyRED job ended on:   2023-07-08__22:25:23 
+
+ Generate the HTML interface with the Jmol applets for the PyRED job
+ PyRED input file(s)
+ Optimized geometry(ies)
+ RESP fitting file(s)
+ Charge value correction and comparison
+ Force field library(ies)
+ Force field parameter files and LEaP script
+ Download the whole project
+ HTML interface generated for the PyRED job
+
+ Entering in the system checking for the PyRED job:
+ No problem detected concerning the geometry optimization, MEP computation and charge fitting steps
+ Check the presence of hydrogen atoms
+ Check the file format of PDB input file(s) if the PyRED job starts/stops
+ Exiting the system checking for the PyRED job
+
+ Check for two consecutive PBS jobs in the same directory because of a network problem 2
+ No consecutive PBS job found: all is ok
+
+ Create the P234.tar.bz2 compressed archive file
+
+ The PBS job is now terminated.

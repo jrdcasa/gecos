@@ -117,6 +117,7 @@ systematicgrid_dict_options['-SG_NDIHEDRALS-'] = 0
 systematicgrid_dict_options['-SG_DIH_STEPS-'] = []
 systematicgrid_dict_options['-SG_MM_OPTIMIZATION-'] = True
 systematicgrid_dict_options['-SG_MM_MAX_ITER-'] = 1000
+systematicgrid_dict_options['-SG_ADD_QM-'] = True
 
 cluster_qmrmsd_dict_options = defaultdict()
 cluster_qmrmsd_dict_options['-CUTOFF_RMSD_QM-'] = 0.0
@@ -389,9 +390,6 @@ def waiting_for_events(window, event, values):
     for item in keys_input_int_labels:
         window[item].bind("<Return>", "_Enter")
         window[item].bind("<Tab>", "_Enter")
-    #cJ for item in keys_input_conformer_keywords:
-    #cJ     window[item].bind("<Return>", "_Enter")
-    #cJ     window[item].bind("<Tab>", "_Enter")
     window["-CONFPACK-"].bind("<Return>", "_Enter")
     window["-CONFPACK-"].bind("<Tab>", "_Enter")
 
@@ -543,7 +541,12 @@ def waiting_for_events(window, event, values):
         elif window['-CONFPACK-'].get().upper() == 'EXTRACT FROM MD FRAME':
             open_advance_window_extractmd(newloc, extractmd_dict_options)
         elif window['-CONFPACK-'].get().upper() == 'SYSTEMATIC GRID':
-            open_advance_window_systematicgrid(newloc, systematicgrid_dict_options)
+            send_to_qm_freeze = open_advance_window_systematicgrid(newloc, systematicgrid_dict_options)
+            if send_to_qm_freeze:
+                line = ""
+                for item in systematicgrid_dict_options['-SG_DIH_STEPS-']:
+                    line += "D {} {} {} {} F\n".format(item[0], item[1], item[2], item[3])
+                window['-GAUSSIAN16_EXTRAINFO-'].update(value=line)
 
     if event == '-BUTTONCLUSTERADVANCE-':
         loc = window.current_location()
@@ -555,16 +558,8 @@ def waiting_for_events(window, event, values):
     if event == '-CONFPACK-' or event == '-CONFPACK-_Enter':
         if window['-CONFPACK-'].get().upper() == 'EXTRACT FROM MD FRAME' or \
            window['-CONFPACK-'].get().upper() == 'SYSTEMATIC GRID':
-            #cJ window['-NCONF-'].update(disabled=True, text_color='grey', )
-            #cJ window['-MIN_ITER_MM-'].update(disabled=True, text_color='grey')
-            #cJ window['-CUTOFF_RMSD_QM-'].update(value=1.0, disabled=False)
-            #cJ window['-CUTOFF_ENERGY_QM-'].update(value=1.0, disabled=False)
             window['-BUTTONCHECK-'].update(disabled=False)
         else:
-            #cJ window['-NCONF-'].update(disabled=False, text_color='black')
-            #cJ window['-MIN_ITER_MM-'].update(disabled=False, text_color='black')
-            #cJ window['-CUTOFF_RMSD_QM-'].update(disabled=False, text_color='black')
-            #cJ window['-CUTOFF_ENERGY_QM-'].update(value=99999.0, disabled=False)
             window['-BUTTONCHECK-'].update(disabled=False)
 
     if event == '-ENV_COMBO-':
@@ -681,13 +676,6 @@ def waiting_for_events(window, event, values):
         window['-BUTTONRUN-'].update(disabled=True)
         window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
         window['-INFORUN_TEXT-'].update("Advice: Check keywords")
-
-    #cJ if event in keys_input_conformer_keywords_enter:
-    #cJ     window['-BUTTONCHECK-'].update(disabled=False)
-    #cJ     window['-BUTTONEXPORTPYTHON-'].update(disabled=False)
-    #cJ     window['-BUTTONRUN-'].update(disabled=True)
-    #cJ     window['-STATUS_TEXT-'].update("Status: Data introduced by the user")
-    #cJ     window['-INFORUN_TEXT-'].update("Advice: Check keywords")
 
     # ============= URL Events =============
     if event == "-DOCK_URL-":

@@ -83,7 +83,7 @@ class GecosExtractNeighbors(object):
     # =========================================================================
     def extract_conformers(self, localdir, calc_com=True, method="sphere", extract_type="monomer",
                            write_gaussian=True, g16_key="#p 6-31g* mp2",
-                           g16_mem=4000,
+                           g16_mem=4000, g16_extra_info="",
                            g16_nproc=4, pattern="conformers", charge=0, multiplicity=1,
                            isclustering=True, debug_flag=False, onlydifferentmols=False):
         """
@@ -102,6 +102,8 @@ class GecosExtractNeighbors(object):
         :param isclustering:
         :param debug_flag:
         :param onlydifferentmols
+        :param g16_extra_info (str):
+
         :return:
         """
 
@@ -159,10 +161,12 @@ class GecosExtractNeighbors(object):
         if method.upper() == "SPHERE_COM":
             self._find_sphere_com(radius=self._radius, write_gaussian=write_gaussian, g16_key=g16_key,
                                   g16_mem=g16_mem, g16_nproc=g16_nproc, pattern=pattern,
+                                  g16_extra_info=g16_extra_info,
                                   charge=charge, multiplicity=multiplicity, onlydifferentmols=onlydifferentmols)
         elif method.upper() == "SPHERE_MINATOM":
             self._find_sphere_minatom(radius=self._radius, write_gaussian=write_gaussian, g16_key=g16_key,
                                       g16_mem=g16_mem, g16_nproc=g16_nproc, pattern=pattern,
+                                      g16_extra_info=g16_extra_info,
                                       charge=charge, multiplicity=multiplicity, onlydifferentmols=onlydifferentmols)
         else:
             m = "\t\t Method to extract {} is not allowed.".format(method.upper())
@@ -294,6 +298,7 @@ class GecosExtractNeighbors(object):
     def _find_sphere_com(self, radius=None,
                          write_gaussian=True, g16_key="#p 6-31g* mp2",
                          g16_mem=4000, g16_nproc=4, pattern="conformers",
+                         g16_extra_info="",
                          charge=0, multiplicity=1, onlydifferentmols=False):
 
         """
@@ -316,6 +321,7 @@ class GecosExtractNeighbors(object):
             print(m) if self._logger is None else self._logger.info(m)
             self._extract_monomers(write_gaussian=write_gaussian, g16_key=g16_key,
                                    g16_mem=g16_mem, g16_nproc=g16_nproc, pattern=pattern,
+                                   g16_extra_info=g16_extra_info,
                                    charge=charge, multiplicity=multiplicity)
 
         elif self._extract_pair:
@@ -326,7 +332,9 @@ class GecosExtractNeighbors(object):
             print(m) if self._logger is None else self._logger.info(m)
             self._extract_pairs_sphere_com(self._radius, write_gaussian=write_gaussian, g16_key=g16_key,
                                            g16_mem=g16_mem, g16_nproc=g16_nproc, pattern=pattern,
-                                           charge=charge, multiplicity=multiplicity, onlydifferentmols=onlydifferentmols)
+                                           charge=charge, multiplicity=multiplicity,
+                                           g16_extra_info=g16_extra_info,
+                                           onlydifferentmols=onlydifferentmols)
             m = "\t\t        Number of pairs created = {}".format(self._npairs)
             print(m) if self._logger is None else self._logger.info(m)
         elif self._extract_trimer:
@@ -340,6 +348,7 @@ class GecosExtractNeighbors(object):
     def _find_sphere_minatom(self, radius=None,
                              write_gaussian=True, g16_key="#p 6-31g* mp2",
                              g16_mem=4000, g16_nproc=4, pattern="conformers",
+                             g16_extra_info="",
                              charge=0, multiplicity=1, onlydifferentmols=False):
 
         """
@@ -385,7 +394,7 @@ class GecosExtractNeighbors(object):
 
     # #######################################################################
     def _extract_monomers(self, write_gaussian=True, g16_key="#p 6-31g* mp2",
-                          g16_mem=4000, g16_nproc=4, pattern="conformers",
+                          g16_mem=4000, g16_nproc=4, pattern="conformers", g16_extra_info="",
                           charge=0, multiplicity=1):
 
         # Write Monomoners
@@ -413,14 +422,17 @@ class GecosExtractNeighbors(object):
         outformat = 'mol2'
         obconversion.SetOutFormat(outformat)
         optimized_strings_mols = []
-
+        formula_string_mols = []
         for iconf in range(self._nmonomers):
             optimized_strings_mols.append(obconversion.WriteString(tmp_ob_nmols[iconf]))
+            formula_string_mols.append(tmp_ob_nmols[iconf].GetFormula())
+        # for iconf in range(self._nmonomers):
+        #     optimized_strings_mols.append(obconversion.WriteString(tmp_ob_nmols[iconf]))
 
         # Write Gaussian
         if write_gaussian:
-            self._write_gaussian(localdir, optimized_strings_mols, "conformers",
-                                 pattern=pattern, g16_key=g16_key,
+            self._write_gaussian(localdir, optimized_strings_mols, formula_string_mols, "conformers",
+                                 pattern=pattern, g16_key=g16_key, g16_extra_info=g16_extra_info,
                                  g16_mem=g16_mem, g16_nproc=g16_nproc,
                                  charge=charge, multiplicity=multiplicity)
         pass
@@ -490,7 +502,7 @@ class GecosExtractNeighbors(object):
         # Write Gaussian
         if write_gaussian:
             self._write_gaussian(localdir, optimized_strings_mols, "conformers",
-                                 pattern=pattern, g16_key=g16_key,
+                                 pattern=pattern, g16_key=g16_key, g16_extra_info=g16_extra_info,
                                  g16_mem=g16_mem, g16_nproc=g16_nproc,
                                  charge=charge, multiplicity=multiplicity)
 
@@ -498,7 +510,7 @@ class GecosExtractNeighbors(object):
 
     # #######################################################################
     def _extract_pairs_sphere_minatom(self, radius, write_gaussian=True, g16_key="#p 6-31g* mp2",
-                                      g16_mem=4000, g16_nproc=4, pattern="conformers",
+                                      g16_mem=4000, g16_nproc=4, pattern="conformers", g16_extra_info="",
                                       charge=0, multiplicity=1, onlydifferentmols=False):
 
         from MDAnalysis.analysis import distances
@@ -600,14 +612,14 @@ class GecosExtractNeighbors(object):
         # Write Gaussian
         if write_gaussian:
             self._write_gaussian(localdir, optimized_strings_mols, formula_string_mols, "conformers",
-                                 pattern=pattern, g16_key=g16_key,
+                                 pattern=pattern, g16_key=g16_key, g16_extra_info=g16_extra_info,
                                  g16_mem=g16_mem, g16_nproc=g16_nproc,
                                  charge=charge, multiplicity=multiplicity)
         return None
 
     # #######################################################################
     def _write_gaussian(self, localdir, optimized_strings_mols, formula_string_mol, typepair, pattern="conformers",
-                        g16_key="#p 6-31g* mp2",
+                        g16_key="#p 6-31g* mp2", g16_extra_info="",
                         g16_mem=4000, g16_nproc=4, charge=0, multiplicity=1):
 
         # Create directory for gaussian inputs
@@ -652,6 +664,12 @@ class GecosExtractNeighbors(object):
                 f.writelines("{0:1d} {1:1d}\n".format(charge, multiplicity))
                 for line in xyz_list[2:]:
                     f.writelines(line+"\n")
+
+                for item in g16_extra_info:
+                    if not item.strip() == '':
+                        f.writelines(item)
+                        f.writelines("\n")
+                f.writelines("\n")
 
     # #######################################################################
     def _write_pdb_cluster(self, path, listmols, image):

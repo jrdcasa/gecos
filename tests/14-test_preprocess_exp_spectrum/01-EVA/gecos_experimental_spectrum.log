@@ -1,0 +1,44 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 25-04-2023 09:38:23 ============
+
+		Command line: 
+			python gecos_analysis.py exp_spectrum -f Spectra/EVA.csv --resample 4 --normalize minmax
+			         or
+			gecos_analysis exp_spectrum -f Spectra/EVA.csv --resample 4 --normalize minmax
+
+		 Getting data from Spectra/EVA.csv (25-04-2023 09:38:23)
+
+		 ======== RESAMPLING THE DATA ========
+		 Original  data --> Number of points:    1701 DeltaX:       2.00
+		 Resampled data --> Number of points:     851 DeltaX:       4.00
+
+		 ======== NORMALIZING DATA ========
+		 Normalizing data using the method: Min-Max normalization (mM)
+
+		 ======== NORMALIZING DATA ========
+		 Normalizing data using the method: Min-Max normalization (mM)

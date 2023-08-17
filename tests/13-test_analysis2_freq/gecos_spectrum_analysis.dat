@@ -1,7 +1,7 @@
 
-		#                    ID                     DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaEscf(kcal/mol) 
-		# =============================================================================================================================
-		 C12H26O3_pair_004_088_allign_FREQ_g16          0.00                     -0.00               0.00               0.00
-		 C12H26O3_pair_001_018_allign_FREQ_g16          0.30                      2.21              -1.91              -1.56
-		 C12H26O3_pair_003_098_allign_FREQ_g16          0.31                      2.22              -1.91              -1.56
-		 C12H26O3_pair_037_041_allign_FREQ_g16          5.52                     -0.57               6.09               6.20
+		#                    ID                    Type   DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaH(kcal/mol) 
+		# ================================================================================================================================
+		 C12H26O3_pair_004_088_allign_FREQ_g16   Conformer        0.00                     -0.00               0.00               0.00
+		 C12H26O3_pair_001_018_allign_FREQ_g16   Conformer        0.30                      2.21              -1.91              -1.56
+		 C12H26O3_pair_003_098_allign_FREQ_g16   Identical        0.31                      2.22              -1.91              -1.56
+		 C12H26O3_pair_037_041_allign_FREQ_g16   Conformer        5.52                     -0.57               6.09               6.20

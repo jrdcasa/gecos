@@ -329,6 +329,7 @@ def write_python_script_from_gui(window, filename, rdkit_dict_options, openbabel
         lines += "v_sg_listdih = {}\n".format(systematicgrid_dict_options['-SG_DIH_STEPS-'])
         lines += "v_sg_MMoptimization = {}\n".format(systematicgrid_dict_options['-SG_MM_OPTIMIZATION-'])
         lines += "v_sg_maxMMoptiter = {}\n".format(systematicgrid_dict_options['-SG_MM_MAX_ITER-'])
+        lines += "v_sg_add_freeze_qm = {}\n".format(systematicgrid_dict_options['-SG_ADD_QM-'])
 
     lines += "\n"
     lines += "cwd = Path(__file__).parent.absolute()\n"

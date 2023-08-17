@@ -3,6 +3,7 @@ import os.path
 from collections import defaultdict
 import numpy as np
 import pandas as pd
+import scipy
 
 
 class GecosIRSpectra:
@@ -14,7 +15,7 @@ class GecosIRSpectra:
     # =========================================================================
     def __init__(self, nspectra, freqs, iractivity, temperature, deltag=None,
                  scale=None, start=0.0, end=4000.0, npoints=500, width=10.0,
-                 function="lorentzian", logger=None):
+                 function="lorentzian", similarity=True, logger=None):
 
         """
         Initialize the instance
@@ -44,6 +45,7 @@ class GecosIRSpectra:
         self._npoints = npoints
         self._width = width
         self._function = function
+        self._similarity = similarity
         self._isscaled = False
         self._nspectra = len(self._freqs_dict)
         self._scale = scale
@@ -51,6 +53,8 @@ class GecosIRSpectra:
         self._xvalues = None
         self._scaled_boltz_spectrum = None
         self._scaled_simple_spectrum = None
+        self._similarity_matrix_pearson = None
+        self._similarity_matrix_spearman = None
 
         # Scale frequencies
         if scale is not None:
@@ -115,6 +119,34 @@ class GecosIRSpectra:
 
         # Average spectrum
         self._avg_spectrum(avg)
+
+        # Similary of the spectra
+        # The spectra with lowest energy is used as template
+        self._calculate_similarity()
+
+    # =========================================================================
+    def _calculate_similarity(self):
+
+        """
+        Assesment of the similarity of the calculated QM spectra using the
+        method discussed in https://dx.doi.org/10.1021/acs.jctc.0c00126
+
+        :return:
+        """
+
+        nspectra = len(self._freqs_dict)
+        self._similarity_matrix_pearson = np.zeros([nspectra, nspectra], dtype=np.float32)
+        self._similarity_matrix_spearman = np.zeros([nspectra, nspectra], dtype=np.float32)
+        xidx = 0
+        for xkey, xvalue in self._freqs_dict.items():
+            yidx = 0
+            for ykey, yvalue in self._freqs_dict.items():
+                pearson = scipy.stats.pearsonr(xvalue, yvalue)
+                spearman = scipy.stats.spearmanr(xvalue, yvalue)
+                self._similarity_matrix_pearson[xidx, yidx] = pearson.statistic
+                self._similarity_matrix_spearman[xidx, yidx] = spearman.correlation
+                yidx += 1
+            xidx += 1
 
     # =========================================================================
     def _formula(self, name, x, peak, height, width):
@@ -199,7 +231,7 @@ class GecosIRSpectra:
                 sum_weight += boltzmann_factor * self._spectrum[ikey]
                 sum_bfactor += boltzmann_factor
 
-            self._scaled_boltz_spectrum = sum_weight  / sum_bfactor
+            self._scaled_boltz_spectrum = sum_weight / sum_bfactor
 
             filename = "boltzmann_spectrum.dat"
             title = "# Boltzmann Averaged spectrum"
@@ -235,7 +267,54 @@ class GecosIRSpectra:
                 for i in range(self._npoints):
                     line += "{} {}\n".format(self._xvalues[i], self._scaled_simple_spectrum[i])
                 fdat.writelines(line)
+
         # ===============================================
+        def gnu_template_avg(nx=1, ny=1):
+
+            tmpdict = defaultdict(list)
+            if avg == "boltzmann" and self._deltag is not None:
+                tmpdict["boltzmann"] = self._scaled_boltz_spectrum
+            elif avg == "simple":
+                tmpdict["averaged"] = self._scaled_simple_spectrum
+            else:
+                tmpdict["boltzmann"] = self._scaled_boltz_spectrum
+                tmpdict["averaged"] = self._scaled_simple_spectrum
+
+            max_intensity = 0
+            for ikey, ir in tmpdict.items():
+                if np.max(ir) > max_intensity:
+                    max_intensity = np.max(ir)
+            max_intensity += 10
+            max_intensity = np.floor(max_intensity)
+
+            linegnuplot = "reset\n"
+            linegnuplot += 'set xlabel "Freq (cm^-1)"\n'
+            linegnuplot += 'set ylabel "Intensity"\n'
+            linegnuplot += 'set grid\n'
+            linegnuplot += 'set xrange [{0:d}:{1:d}]\n'.format(int(self._start), int(self._end))
+            linegnuplot += 'set yrange [{0:d}:{1:d}]\n'.format(0, int(max_intensity))
+            linegnuplot += "# "+50*'*'+"\n"
+
+            iwxt = 1
+            iplot = 0
+            for ikey, ir_values in tmpdict.items():
+                ifilename = os.path.splitext(os.path.split(ikey)[-1])[0]+"_spectrum.dat"
+                if iplot % (nx*ny) == 0:
+                    linegnuplot += "unset multiplot\n"
+                    iheight = int(500 * ny)
+                    iwidth = int(300 * nx)
+                    linegnuplot += 'set term wxt {0:d} enhanced dashed size {1:d},{2:d} ' \
+                                   'font "Arial,8"\n'.format(iwxt, iheight, iwidth)
+                    linegnuplot += 'set multiplot layout {0:d},{1:d}\n'.format(nx, ny)
+                    iwxt += 1
+                ititle = ifilename.replace("_", "-")
+                linegnuplot += 'set title "{0:s}"\n'.format(ititle)
+                linegnuplot += 'p "./{0:s}" u 1:2 w l notitle\n'.format(ifilename)
+                iplot += 1
+
+            with open("template_avg_gnu.plot", "w") as fgnuplot:
+                fgnuplot.writelines(linegnuplot)
+
         if avg == "boltzmann" and self._deltag is not None:
             boltzmann_weight()
         elif avg == "simple":
@@ -244,4 +323,4 @@ class GecosIRSpectra:
             boltzmann_weight()
             simple_weight()
 
-
+        gnu_template_avg()

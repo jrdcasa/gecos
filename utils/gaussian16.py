@@ -498,4 +498,9 @@ def write_gaussian_from_mol2(fileproplist, dirmol2, localdir, pattern="QM",
                             line += "{0:s} {1:4.2f}\n".format(key, element_vdw_truhlar_radius[key])
                 f.writelines(line + "\n")
 
+                # Write wfn file name
+                fwfn_name = "{0:s}_{1:s}_gaussian.wfn".format(iconf_seed, pattern)
+                f.writelines(fwfn_name + "\n")
+                f.writelines("\n")
+
         idx += 1

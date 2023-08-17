@@ -145,6 +145,7 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options,
 
     var_to_dict_systematicgrid_boolean = {
         'v_sg_MMoptimization': '-SG_MM_OPTIMIZATION-',
+        'v_sg_add_freeze_qm': '-SG_ADD_QM-',
     }
 
     with open(filename, 'r') as fpython:
@@ -152,7 +153,6 @@ def import_pythonfile_to_gui(window, filename, rdkit_dict_options,
 
         for ikey in var_to_dict_str.keys():
             regex = ikey+".*="
-            print(ikey)
             if re.search(regex, data) is not None:
                 str2 = re.search(ikey+".*=.*", data).group(0)
                 # value = re.search("(?:'|\").*(?:'|\")", str2).group(0)

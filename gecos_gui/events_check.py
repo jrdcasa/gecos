@@ -236,6 +236,8 @@ def check_nodemaster(window, dict_options, server):
     err_txt = stderr.read().decode('utf8')
     if len(out_txt) > 1 or len(err_txt) > 1:
         msg = "Nodemaster {} does not exist\n in partition {}\n  ".format(nodemaster, partitionmaster)
+        msg += "\nOutput txt: {}".format(out_txt)
+        msg += "\nError  txt: {}".format(err_txt)
         popup_error(window, msg)
         return False
 
@@ -266,6 +268,7 @@ def check_remotedir(window, dict_options, server):
     err_txt = stderr.read().decode('utf8')
     if len(err_txt) > 1 or len(remotedir) == 0:
         msg = "Remotedir {} does not exist\n in server {}\n  ".format(remotedir, nameserver)
+        msg += "\nError txt: {}".format(err_txt)
         popup_error(window, msg)
         return False
 
@@ -303,6 +306,7 @@ def check_g16_stuffs(window, dict_options, server):
     err_txt = stderr.read().decode('utf8')
     if len(err_txt) > 1 or len(g16path) == 0:
         msg = "G16 path {} does not exist\n in server {}\n  ".format(g16path, nameserver)
+        msg += "\nError txt: {}".format(err_txt)
         popup_error(window, msg)
         return False
 

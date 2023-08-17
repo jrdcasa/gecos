@@ -24,25 +24,42 @@
         ***********************************************************************
 
         
-		Start Job at 13-02-2023 17:33:03 ============
+		Start Job at 17-08-2023 12:40:18 ============
 
 		Command line: 
-			python gecos_analysis.py spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian
+			python gecos_analysis.py spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian --clusterconf
 			         or
-			gecos_analysis spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian
+			gecos_analysis spectrum -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq -p g16 --scale 1.0 --start 0 --end 4000 --npoints 500 --width 10 --function lorentzian --clusterconf
+
+			 Clustering Ensemble 1 of 4 (17-08-2023 12:40:18)
+			 Clustering Ensemble 2 of 4 (17-08-2023 12:40:18)
+			 Clustering Ensemble 3 of 4 (17-08-2023 12:40:18)
+			 Clustering Ensemble 4 of 4 (17-08-2023 12:40:18)
+
+			 Conformers          : 3
+			 Rotamers            : 0
+			 Identical           : 1
+			 Others              : 0
+			 Total               : 4
+
+		Thresholds used to classify conformers are:
+		 energy_thr=0.1 kcal/mol, rot_constant_thr=0.0005 GHz,
+		 rmsd_thr=1.0 Angs window_energy=1000.0 kcal/mol rms_only_heavy=True
 
 		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/13-test_analysis2_freq
 		Directory with Log files      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/data/g16_log2_freq
 
 
-		#                    ID                     DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaEscf(kcal/mol) 
-		# =============================================================================================================================
-		 C12H26O3_pair_004_088_allign_FREQ_g16          0.00                     -0.00               0.00               0.00
-		 C12H26O3_pair_001_018_allign_FREQ_g16          0.30                      2.21              -1.91              -1.56
-		 C12H26O3_pair_003_098_allign_FREQ_g16          0.31                      2.22              -1.91              -1.56
-		 C12H26O3_pair_037_041_allign_FREQ_g16          5.52                     -0.57               6.09               6.20
+		#                    ID                    Type   DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaH(kcal/mol) 
+		# ================================================================================================================================
+		 C12H26O3_pair_004_088_allign_FREQ_g16   Conformer        0.00                     -0.00               0.00               0.00
+		 C12H26O3_pair_001_018_allign_FREQ_g16   Conformer        0.30                      2.21              -1.91              -1.56
+		 C12H26O3_pair_003_098_allign_FREQ_g16   Identical        0.31                      2.22              -1.91              -1.56
+		 C12H26O3_pair_037_041_allign_FREQ_g16   Conformer        5.52                     -0.57               6.09               6.20
+		# ================================================================================================================================
 
-		# =============================================================================================================================
+		 Job Finnished: 17-08-2023 12:40:18
 
-		 Job Finnished: 13-02-2023 17:33:03
+
+		Job  Done at 17-08-2023 12:40:18 ============
 

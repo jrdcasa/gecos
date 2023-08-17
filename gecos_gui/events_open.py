@@ -491,6 +491,7 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
                     tooltip="Generate conformers in a systematic way using "
                             "the dihedral angles below defined.")]
     maxdihedral = 6
+    send_to_qm_freeze = False
 
     # Default values if the dictionary is not empty
     default_cell = []
@@ -498,7 +499,7 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
         dftext = systematicgrid_dict_options['-SG_NDIHEDRALS-']
         for i in range(0, maxdihedral):
             default_cell.append([])
-            for j in range(0, 5):
+            for j in range(0, 6):
                 try:
                     vv = systematicgrid_dict_options['-SG_DIH_STEPS-'][i][j]
                 except IndexError:
@@ -513,11 +514,12 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
 
     dfoptimize = systematicgrid_dict_options['-SG_MM_OPTIMIZATION-']
     dfiter = systematicgrid_dict_options['-SG_MM_MAX_ITER-']
+    dfqmfreeze = systematicgrid_dict_options['-SG_ADD_QM-']
 
     layout = [[
         Sg.Text('Number of dihedrals (1 to {}):'.format(maxdihedral), size=(26, 1)),
-        Sg.Input(key='-SG_NDIHEDRALS-', enable_events=True,
-                 size=(8, 1), default_text=dftext,
+        Sg.Input(key='-SG_NDIHEDRALS-', enable_events=True, background_color='white',
+                 size=(8, 1), default_text=dftext, disabled=False,
                  tooltip='Number of dihedrals to perform systematic grid. A number between 1 to {}'
                  .format(maxdihedral))
     ],
@@ -533,9 +535,16 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
     layout.append(head)
 
     for i in range(maxdihedral):
-        row = [Sg.Input(size=(10, 1), key='-SG_CELL_{}_{}-'.format(i, j), justification='center',
-                        background_color='white', pad=(1, 1), default_text=default_cell[i][j],
-                        disabled=True) for j in range(5)]
+        row = []
+        for j in range(0, 6):
+            if j < 5:
+                row.append(Sg.Input(size=(10, 1), key='-SG_CELL_{}_{}-'.format(i, j), justification='center',
+                                    background_color='white', pad=(1, 1), default_text=default_cell[i][j],
+                                    disabled=True))
+            else:
+                row.append(Sg.Checkbox('Only Trans(180), Gauche+() and Gauche-()', size=(40, 1),
+                                       key='-SG_CELL_{}_{}-'.format(i, j),
+                                       enable_events=True, default=default_cell[i][j]))
 
         layout.append(row)
 
@@ -547,6 +556,12 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
 
     layout.append(checkboxes)
 
+    checkboxes2 = [Sg.Checkbox('Add dihdedral freeze to QM program?', key='-SG_ADD_QM-',
+                               enable_events=True, default=dfqmfreeze,
+                               tooltip="Add the dihedral angles as freeze coordiantes in the QM package.")]
+
+    layout.append(checkboxes2)
+
     row_buttons = \
         [Sg.Button('Clean Data', key='-SG_CLEAN_DATA-', disabled=False, size=(20, 1), enable_events=True),
          Sg.Button('CLOSE', key='-SG_CLOSE-', disabled=False, size=(20, 1), enable_events=True)]
@@ -554,9 +569,21 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
     layout.append(row_buttons)
 
     window2 = Sg.Window("Systematic Grid options docs", [text, layout], modal=True, location=loc,
-                        background_color='lightblue', size=(700, 100 + maxdihedral * 30 + 40))
+                        background_color='lightblue', size=(800, 180 + maxdihedral * 30 + 40))
 
     first = True
+
+    window2.read(timeout=1)
+    # Activate the cells
+    try:
+        ndihedrals = int(window2['-SG_NDIHEDRALS-'].get())
+    except ValueError:
+        ndihedrals = 0
+    for idx in range(ndihedrals):
+        window2['-SG_NDIHEDRALS-'].update(disabled=False)
+        for j in range(5):
+            window2['-SG_CELL_{}_{}-'.format(idx, j)].update(disabled=False)
+
     while True:
 
         event2, values2 = window2.read()
@@ -579,7 +606,7 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
                     systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral]
                 except IndexError:
                     systematicgrid_dict_options['-SG_DIH_STEPS-'].append([])
-                for icol in range(0, 5):
+                for icol in range(0, 6):
                     try:
                         val = int(window2['-SG_CELL_{}_{}-'.format(idihedral, icol)].get())
                         systematicgrid_dict_options['-SG_DIH_STEPS-'][idihedral][icol] = val
@@ -597,22 +624,31 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
             if success:
                 # Calculate the number of conformers to be generated
                 nconfs = 0
-                for idihedral in systematicgrid_dict_options['-SG_DIH_STEPS-']:
-                    nsteps = 360 / idihedral[4]
+                for idx in range(ndihedrals):
+                    idihedral = systematicgrid_dict_options['-SG_DIH_STEPS-'][idx]
+                    if idihedral[5] == 1:
+                        nsteps = 3
+                    else:
+                        nsteps = 360 / idihedral[4]
                     if nconfs == 0:
                         nconfs = nsteps
                     else:
                         nconfs *= nsteps
+                send_to_qm_freeze = window2['-SG_ADD_QM-'].get()
+                systematicgrid_dict_options['-SG_ADD_QM-'] = send_to_qm_freeze
+                systematicgrid_dict_options['-SG_MM_OPTIMIZATION-'] = window2['-SG_MM_OPTIMIZATION-'].get()
                 popup_window(loc, window2,
                              title='Number of conformers',
                              msg="The number of conformers to be generated are {}".format(int(nconfs)))
-            break
+
+                break
 
         elif event2 == '-SG_CLEAN_DATA-':
-            window2['-SG_NDIHEDRALS-'].update(value="", disabled=True)
+            window2['-SG_NDIHEDRALS-'].update(value="", disabled=False)
             for i in range(0, maxdihedral):
                 for j in range(0, 5):
                     window2['-SG_CELL_{}_{}-'.format(i, j)].update(value="", disabled=True)
+                    default_cell[i][j] = None
 
         # Event change ndihedrals
         elif event2 == "-SG_NDIHEDRALS-_Enter":
@@ -637,8 +673,12 @@ def open_advance_window_systematicgrid(loc, systematicgrid_dict_options):
                 else:
                     for j in range(0, 5):
                         window2['-SG_CELL_{}_{}-'.format(i, j)].update(disabled=True)
+        elif event2 == "-SG_ADD_QM-":
+            send_to_qm_freeze = window2['-SG_ADD_QM-'].get()
+            systematicgrid_dict_options['-SG_ADD_QM-'] = send_to_qm_freeze
 
     window2.close()
+    return send_to_qm_freeze
 
 
 # =============================================================================

@@ -625,14 +625,16 @@ class GecosRdkit:
                         break
 
                     if delta_energy > energy_thr:
-                        cre_dict['Conformers'] += 1
-                        continue
+                        #cJ cre_dict['Conformers'] += 1
+                        #cJ continue
+                        pass
                     else:
                         rmsd_noh = self.getconformerrms(iconf_ref, iconf_target,
                                                         atomids=list_indices_rmsd_atoms, align=True)
                         if rmsd_noh > rmsd_thr:
-                            cre_dict['Conformers'] += 1
-                            continue
+                            #cJ cre_dict['Conformers'] += 1
+                            #cJ continue
+                            pass
                         else:
                             db = [np.abs(irot_constant_ref[i] - rot_constant[i]) for i in range(0, 3)]
                             if all(i < rot_constant_thr for i in db):
@@ -651,6 +653,7 @@ class GecosRdkit:
 
                 if not found:
                     icluster += 1
+                    cre_dict['Conformers'] += 1
                     cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
                                          "nelements": 0, "elements": [], "pairs": [], "files": [], "rot_constant": []}
                     cluster[icluster]["files"].append(index)

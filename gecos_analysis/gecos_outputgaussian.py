@@ -43,6 +43,7 @@ class GaussianGecos:
         self._xyzlist = []
         self._internalcoords = defaultdict(dict)
         self._minscfenergy_ha = None
+        self._2dgrid = None
 
         if len(self._logfiles) == 0:
             m = "\n\t\t ERROR. No G16 log files in the folder\n"
@@ -52,6 +53,8 @@ class GaussianGecos:
 
         # DataFrame
         self._df = pd.DataFrame({'ID': [],
+                                 'IDCluster': [],
+                                 'Type': [],
                                  'OptEnergy(Ha)': [],
                                  'DeltaEnergy(kcal/mol)': [],
                                  'Path': [],
@@ -108,6 +111,7 @@ class GaussianGecos:
 
         # ==================== THERMOCHEMISTRY ============================
         # Parse data from gaussian logs
+        tmp_optgeometry = defaultdict(list)
         entropy_list = defaultdict()
         temperature_list = defaultdict()
         enthalpy_list = defaultdict()
@@ -125,6 +129,10 @@ class GaussianGecos:
             scf_list[ifile] = data.scfenergies[-1]
             vibfreqs_list[ifile] = data.vibfreqs
             vibirs_list[ifile] = data.vibirs
+
+            tmp_optgeometry[ifile].append(data.atomnos)
+            tmp_optgeometry[ifile].append(data.atomcoords[-1])
+            self._rotconsts[ifile].append(data.rotconsts[-1])
 
         # Ordering the structures by free energy
         self._freenergies = dict(sorted(self._freenergies.items(), key=lambda v: v[1]))
@@ -144,6 +152,10 @@ class GaussianGecos:
         delta_tentropy_list = []
         delta_enthalpy_list = []
         delta_scf_list = []
+        rotconstlist_a = []
+        rotconstlist_b = []
+        rotconstlist_c = []
+
         for ikey, ivalue in self._freenergies.items():
             delta_tentropy = entropy_list[ikey] - entropy_list[iref]
             delta_tentropy = cclib.parser.utils.convertor(delta_tentropy, 'hartree', 'kcal/mol')\
@@ -162,9 +174,17 @@ class GaussianGecos:
             self._vibirs[ikey] = vibirs_list[ikey]
             self._temperature[ikey] = temperature_list[ikey]
 
+            rotconstlist_a.append(self._rotconsts[ikey][0][0])
+            rotconstlist_b.append(self._rotconsts[ikey][0][1])
+            rotconstlist_c.append(self._rotconsts[ikey][0][2])
+            self._optgeometry[ikey] = tmp_optgeometry[ikey]
+
         self._df['Delta_-TS(kcal/mol)'] = delta_tentropy_list
         self._df['Delta_H(kcal/mol)'] = delta_enthalpy_list
         self._df['Delta_E(kcal/mol)'] = delta_scf_list
+        self._df['RotConstA(Ghz)'] = rotconstlist_a
+        self._df['RotConstB(Ghz)'] = rotconstlist_b
+        self._df['RotConstC(Ghz)'] = rotconstlist_c
 
     # =========================================================================
     def extract_energy(self):
@@ -173,10 +193,16 @@ class GaussianGecos:
         tmp_optgeometry = defaultdict(list)
         nl = len(self._logfiles)
         for idx, ifile in enumerate(self._logfiles):
-            if idx % int(nl*0.1) == 0:
+            # TODO: Error if there is only one log file. Check if this is correct
+            if nl >= 10 and idx % int(nl*0.1) == 0:
                 now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
                 m = "\t\t\tParsing {} log files out of {} ({})".format(idx, nl, now)
                 print(m) if self._logger is None else self._logger.info(m)
+            elif nl <= 10:
+                now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+                m = "\t\t\tParsing {} log files out of {} ({})".format(idx, nl, now)
+                print(m) if self._logger is None else self._logger.info(m)
+
             parser = cclib.io.ccopen(ifile)
             data = parser.parse()
             self._optscfenergies[ifile] = data.scfenergies[-1]  # in eV,
@@ -324,6 +350,7 @@ class GaussianGecos:
                             print(m) if self._logger is None else self._logger.info(m)
                             exit()
 
+        dict_2d_dih_angles = defaultdict(list)
         for key, values in self._optgeometry.items():
             for idist in distances_list:
                 m = "\t\t ERROR in {} file. " \
@@ -347,20 +374,86 @@ class GaussianGecos:
                 else:
                     label = "{}-{}-{}-{}".format(at1, at2, at3, at4)
                 self._internalcoords[key][label] = dih_angle
+                dict_2d_dih_angles[label].append(dih_angle)
 
         m = "\n\t\tInternal coordinates have been written in distances.dat, angles.dat and/or dihedral.dat files.\n"
         print(m) if self._logger is None else self._logger.info(m)
 
+        de_energy_array = np.zeros(len(self._internalcoords), dtype=np.float32)
+        idx = 0
         with open("dihedral.dat", 'w') as fdih:
             for ikey, ivalues in self._internalcoords.items():
-                line = key
+                line = ikey
                 for jkey, jvalues in ivalues.items():
                     line += " {0:.1f} ".format(jvalues)
                 ecurr = cclib.parser.utils.convertor(self._optscfenergies[ikey], 'eV', 'hartree')
                 de = ecurr - self._minscfenergy_ha
                 de_kcalmol = cclib.parser.utils.convertor(de, 'hartree', 'kcal/mol')
+                de_energy_array[idx] = de_kcalmol
                 line += "{0:.2f} ".format(de_kcalmol)
                 fdih.writelines(line+"\n")
+                idx += 1
+
+        # Output data in grid format for GNUPLOT
+        try:
+            res_grid = 1
+            half_width = 0.5*res_grid
+            npoints = int(360 / res_grid) + 1
+            mask = np.linspace(-180, 180, npoints)
+            self._2dgrid = np.full((npoints, npoints, 2), 999999, dtype=np.float32)
+
+            pair_of_angles = np.full([len(self._internalcoords), 2], -1000, dtype=np.float32)
+            icol = 0
+            for key, values in dict_2d_dih_angles.items():
+                pair_of_angles[:, icol] = np.asarray(values)
+                icol += 1
+
+            idx = 0
+            for ipair in pair_of_angles:
+                xreal = ipair[0]
+                yreal = ipair[1]
+                for ix in range(0, len(mask)):
+                    if mask[ix] < xreal < mask[ix+1]:
+                        if mask[ix]+half_width > xreal:
+                            xgrid = int(mask[ix])
+                        else:
+                            xgrid = int(mask[ix+1])
+                        break
+                for iy in range(0, len(mask)):
+                    if mask[iy] < yreal < mask[iy+1]:
+                        if mask[iy]+half_width > yreal:
+                            ygrid = int(mask[iy])
+                        else:
+                            ygrid = int(mask[iy+1])
+                        break
+
+                de_kcalmol = de_energy_array[idx]
+
+                if np.abs(self._2dgrid[xgrid, ygrid, 0] - 999999.0) < 1e-08:
+                    self._2dgrid[xgrid, ygrid, 0] = de_kcalmol
+                    self._2dgrid[xgrid, ygrid, 1] = 1
+                else:
+                    self._2dgrid[xgrid, ygrid, 0] += de_kcalmol
+                    self._2dgrid[xgrid, ygrid, 1] += 1
+                print(xreal, yreal, xgrid, ygrid, de_kcalmol)
+                idx += 1
+
+            nx, ny, _ = self._2dgrid.shape
+            line = ""
+            for ix in range(0, nx):
+                for iy in range(0, ny):
+                    if np.abs(self._2dgrid[ix, iy, 0] - 999999.0) < 1e-08:
+                        line += "{} {} {}\n".format(mask[ix], mask[iy], 1000.)
+                    else:
+                        line += "{} {} {}\n".format(mask[ix], mask[iy], self._2dgrid[ix, iy, 0] / self._2dgrid[ix, iy, 1])
+                line += "\n"
+
+            with open("dihedral_grid.dat", 'w') as fdihgrid:
+                fdihgrid.writelines(line)
+        except UnboundLocalError:
+            pass
+        except IndexError:
+            pass
 
     # =========================================================================
     def write_to_log(self, logfolder, generate_data_gnuplot=True):
@@ -373,9 +466,9 @@ class GaussianGecos:
         print(m) if self._logger is None else self._logger.info(m)
 
         # Write table
-        m = "\n\t\t{0:1s} {1:^30s} {2:^19s} {3:^8s} {4:^17s} " \
-            "{5:^16s} {6:^16s} {7:^16s} {8:^28s} {9:^8s} " \
-            "{10:^17s} {11:^17s}\n".format('#', 'ID', 'DeltaEnergy(kcal/mol)',
+        m = "\n\t\t{0:1s} {1:^30s} {2:^5s} {3:^19s} {4:^8s} {5:^17s} " \
+            "{6:^16s} {7:^16s} {8:^16s} {9:^28s} {10:^8s} " \
+            "{11:^17s} {12:^17s}\n".format('#', 'ID', 'Type', 'DeltaEnergy(kcal/mol)',
                                            'RMSDwithHs(A)', 'RMSDwithoutHs(A)',
                                            'RotConstA(Ghz)', 'RotConstB(Ghz)',
                                            'RotConstC(Ghz)', 'AngleMainPrincipalAxes(deg)',
@@ -384,9 +477,10 @@ class GaussianGecos:
         lenm = len(m)
         m += "\t\t# " + len(m) * "=" + "\n"
         for ind in df.index:
-            line = "\t\t{0:^30s} {1:>14.2f} {2:>20.3f} {3:>14.3f} {4:>17.6f}  " \
-                   "{5:>14.6f}   {6:>14.6f}  {7:>20.1f}  {8:14d}  {9:14d}  {10:14d}\n" \
+            line = "\t\t{0:^42s} {1:<9s} {2:>14.2f} {3:>20.3f} {4:>14.3f} {5:>17.6f}  " \
+                   "{6:>14.6f}   {7:>14.6f}  {8:>20.1f}  {9:14d}  {10:14d}  {11:14d}\n" \
                 .format(df['ID'][ind],
+                        str(df['Type'][ind]),
                         df['DeltaEnergy(kcal/mol)'][ind],
                         df['RMSDwithHs'][ind],
                         df['RMSDwithoutHs'][ind],
@@ -428,21 +522,33 @@ class GaussianGecos:
         print(m) if self._logger is None else self._logger.info(m)
 
         # Write table
-        m = "\n\t\t{0:1s} {1:^40s} {2:^19s} {3:^19s} {4:^17s} " \
-            "{5:^16s} \n".format('#', 'ID', 'DeltaG(kcal/mol)',
+        m = "\n\t\t{0:1s} {1:^40s} {2:5s} {3:^19s} {4:^19s} {5:^17s} " \
+            "{5:^16s} \n".format('#', 'ID', 'Type', 'DeltaG(kcal/mol)',
                                  'Delta_-TS(kcal/mol)', 'DeltaH(kcal/mol)',
                                  'DeltaEscf(kcal/mol)')
 
         lenm = len(m)
         m += "\t\t# " + len(m) * "=" + "\n"
         for ind in df.index:
-            line = "\t\t{0:^40s} {1:^18.2f} {2:>18.2f} {3:>18.2f} {4:>18.2f}\n" \
-                .format(df['ID'][ind],
-                        df['Delta_G(kcal/mol)'][ind],
-                        df['Delta_-TS(kcal/mol)'][ind],
-                        df['Delta_H(kcal/mol)'][ind],
-                        df['Delta_E(kcal/mol)'][ind])
+            try:
+                line = "\t\t{0:^40s} {1:^5s} {2:^18.2f} {3:>18.2f} {4:>18.2f} {5:>18.2f}\n" \
+                    .format(df['ID'][ind],
+                            df['Type'][ind],
+                            df['Delta_G(kcal/mol)'][ind],
+                            df['Delta_-TS(kcal/mol)'][ind],
+                            df['Delta_H(kcal/mol)'][ind],
+                            df['Delta_E(kcal/mol)'][ind])
+            except ValueError:
+                line = "\t\t{0:^40s} {1:^5s} {2:^18.2f} {3:>18.2f} {4:>18.2f} {5:>18.2f}\n" \
+                    .format(df['ID'][ind],
+                            'N/A',
+                            df['Delta_G(kcal/mol)'][ind],
+                            df['Delta_-TS(kcal/mol)'][ind],
+                            df['Delta_H(kcal/mol)'][ind],
+                            df['Delta_E(kcal/mol)'][ind])
+
             m += line
+        m = m[:-1]   # Remove last \n
         print(m) if self._logger is None else self._logger.info(m)
 
         # Job Time
@@ -459,6 +565,106 @@ class GaussianGecos:
                 basename = os.path.splitext(basename)[0]
             else:
                 basename = "gecos_thermo_analysis.dat"
+            with open(os.path.join(folder, basename + ".dat"), 'w') as fdata:
+                fdata.writelines(m)
+
+    # =========================================================================
+    def write_resp_to_log(self, logfolder, generate_data_gnuplot=True):
+
+        df = self._df
+
+        # Files
+        m = "\t\tLocaldir                      : {}\n".format(os.getcwd())
+        m += "\t\tDirectory with Log files      : {}\n".format(logfolder)
+        print(m) if self._logger is None else self._logger.info(m)
+
+        # Write table
+        m = "\n\t\t{0:1s} {1:^30s} {2:^5s} {3:^19s} {4:^8s} {5:^17s} " \
+            "{6:^16s} {7:^16s} {8:^16s} \n".format('#', 'ID', 'Type', 'DeltaEnergy(kcal/mol)',
+                                                   'RMSDwithHs(A)', 'RMSDwithoutHs(A)',
+                                                   'RotConstA(Ghz)', 'RotConstB(Ghz)',
+                                                   'RotConstC(Ghz)')
+
+        lenm = len(m)
+        m += "\t\t# " + len(m) * "=" + "\n"
+        for ind in df.index:
+            line = "\t\t{0:^42s} {1:<9s} {2:>14.2f} {3:>20.3f} {4:>14.3f} {5:>17.6f}  " \
+                   "{6:>14.6f}   {7:>14.6f}\n" \
+                .format(df['ID'][ind],
+                        str(df['Type'][ind]),
+                        df['DeltaEnergy(kcal/mol)'][ind],
+                        df['RMSDwithHs'][ind],
+                        df['RMSDwithoutHs'][ind],
+                        df['RotConstA(Ghz)'][ind],
+                        df['RotConstB(Ghz)'][ind],
+                        df['RotConstC(Ghz)'][ind])
+            m += line
+        print(m) if self._logger is None else self._logger.info(m)
+
+        # Job Time
+        m1 = "\t\t# " + lenm * "=" + "\n"
+        print(m1) if self._logger is None else self._logger.info(m1)
+        end = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        m1 = "\t\t Job Finnished: {}\n".format(end)
+        print(m1) if self._logger is None else self._logger.info(m1)
+
+        # Generate data to draw in gnuplot
+        if generate_data_gnuplot:
+            if self._logger is not None:
+                folder, basename = os.path.split(self._logger.handlers[0].baseFilename)
+                basename = os.path.splitext(basename)[0]
+            else:
+                basename = "gecos_resp_prep_analysis.dat"
+            with open(os.path.join(folder, basename + ".dat"), 'w') as fdata:
+                fdata.writelines(m)
+
+    # =========================================================================
+    def write_clustering_to_log(self, logfolder, generate_data_gnuplot=True):
+
+        df = self._df
+
+        # Files
+        m = "\t\tLocaldir                      : {}\n".format(os.getcwd())
+        m += "\t\tDirectory with Log files      : {}\n".format(logfolder)
+        print(m) if self._logger is None else self._logger.info(m)
+
+        # Write table
+        m = "\n\t\t{0:1s} {1:^30s} {2:^5s} {3:^19s} {4:^8s} {5:^17s} " \
+            "{6:^16s} {7:^16s} {8:^16s} \n".format('#', 'ID', 'Type', 'DeltaEnergy(kcal/mol)',
+                                                   'RMSDwithHs(A)', 'RMSDwithoutHs(A)',
+                                                   'RotConstA(Ghz)', 'RotConstB(Ghz)',
+                                                   'RotConstC(Ghz)')
+
+        lenm = len(m)
+        m += "\t\t# " + len(m) * "=" + "\n"
+        for ind in df.index:
+            line = "\t\t{0:^42s} {1:<9s} {2:>14.2f} {3:>20.3f} {4:>14.3f} {5:>17.6f}  " \
+                   "{6:>14.6f}   {7:>14.6f}\n" \
+                .format(df['ID'][ind],
+                        str(df['Type'][ind]),
+                        df['DeltaEnergy(kcal/mol)'][ind],
+                        df['RMSDwithHs'][ind],
+                        df['RMSDwithoutHs'][ind],
+                        df['RotConstA(Ghz)'][ind],
+                        df['RotConstB(Ghz)'][ind],
+                        df['RotConstC(Ghz)'][ind])
+            m += line
+        print(m) if self._logger is None else self._logger.info(m)
+
+        # Job Time
+        m1 = "\t\t# " + lenm * "=" + "\n"
+        print(m1) if self._logger is None else self._logger.info(m1)
+        end = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+        m1 = "\t\t Job Finnished: {}\n".format(end)
+        print(m1) if self._logger is None else self._logger.info(m1)
+
+        # Generate data to draw in gnuplot
+        if generate_data_gnuplot:
+            if self._logger is not None:
+                folder, basename = os.path.split(self._logger.handlers[0].baseFilename)
+                basename = os.path.splitext(basename)[0]
+            else:
+                basename = "gecos_resp_prep_analysis.dat"
             with open(os.path.join(folder, basename + ".dat"), 'w') as fdata:
                 fdata.writelines(m)
 
@@ -488,9 +694,13 @@ class GaussianGecos:
             # Number of fragments. Getting info from fragments
             numfrag = molob.Separate()
             if len(numfrag) != 2 and len(numfrag) != 1:
-                m = "\t\tERROR. Two fragments are expected ({} fragments found)".format(len(numfrag))
-                print(m) if self._logger is None else self._logger.error(m)
-                exit()
+                m = "\t\tTwo fragments are expected ({} fragments found.\n)".format(len(numfrag))
+                m += "\t\t\t Close contacts are not calculated.)".format(len(numfrag))
+                print(m) if self._logger is None else self._logger.warning(m)
+                self._df['NHbonds'] = len(self._xyzlist)*[0]
+                self._df['NvdwContacts_Intermol'] = len(self._xyzlist)*[0]
+                self._df['NvdwContacts_Intramol'] = len(self._xyzlist)*[0]
+                return False
 
             # For each fragment get the necessary info in idatoms_info_frag dictionary
             idatoms_info_frag = defaultdict(list)
@@ -604,3 +814,202 @@ class GaussianGecos:
             self._df["AngleMainPrincipalAxes(deg)"] = angle_list
         except ValueError:
             pass
+
+    # =========================================================================
+    def cluster_conformers(self, rmsd_only_heavy=True, energy_thr=0.1, rot_constant_thr=0.0005,
+                           rmsd_thr=1.0, window_energy=1000.0):
+
+        hartrees_to_kcalmol = 627.509391
+
+        # Get heavy atoms indexes
+        list_indices_rmsd_atoms = []
+        all_log_atoms = []
+        for key, values in self._optgeometry.items():
+            natoms = len(values[0])
+            all_log_atoms.append(natoms)
+
+        # Get heavy atoms indexes
+        list_indices_rmsd_atoms = []
+        all_log_atoms = []
+        for key, values in self._optgeometry.items():
+            natoms = len(values[0])
+            atomic_numbers_log = values[0]
+            all_log_atoms.append(natoms)
+
+        if len(set(all_log_atoms)) != 1:
+            now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+            m = "\t\t\t Logs must have the same number ot atoms to clusterize ({})".format(now)
+            print(m) if self._logger is None else self._logger.error(m)
+            exit()
+
+        for iatom in range(0, natoms):
+            if rmsd_only_heavy:
+                if atomic_numbers_log[iatom] != 1:
+                    list_indices_rmsd_atoms.append(iatom)
+            elif not rmsd_only_heavy:
+                list_indices_rmsd_atoms.append(iatom)
+
+        idx = 0
+        cluster = defaultdict(dict)
+        icluster = 0
+        n_conformers = self._df.shape[0]
+        cre_dict = dict()
+        cre_dict['Conformers'] = 0
+        cre_dict['Rotamers'] = 0
+        cre_dict['Identical'] = 0
+        cre_dict['Others'] = 0
+
+        for index in self._df.index:
+            idx += 1
+            try:
+                if index % int(n_conformers * 0.10) == 0:
+                    now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+                    m = "\t\t\t Clustering Ensemble {} of {} ({})".format(idx, n_conformers, now)
+                    print(m) if self._logger is None else self._logger.info(m)
+            except ZeroDivisionError:
+                now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+                m = "\t\t\t Clustering Ensemble {} of {} ({})".format(idx, n_conformers, now)
+                print(m) if self._logger is None else self._logger.info(m)
+
+            energy = self._df['OptEnergy(Ha)'][index] * hartrees_to_kcalmol
+            rot_constant = [self._df['RotConstA(Ghz)'][index],
+                            self._df['RotConstB(Ghz)'][index],
+                            self._df['RotConstC(Ghz)'][index]]
+
+            if icluster == 0:
+                icluster += 1
+                cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
+                                     "nelements": 0, "elements": [], "pairs": [], "files": [], "rot_constant": []}
+                cluster[icluster]["pairs"].append([0.000, energy])
+                cluster[icluster]["files"].append("")
+                cluster[icluster]["nelements"] += 1
+                cluster[icluster]["elements"].append(index)
+                cluster[icluster]["rot_constant"] = rot_constant
+                self._df.at[index, 'IDCluster'] = icluster
+                self._df.at[index, 'Type'] = "Conformer"
+                iconf_min_energy = index
+                cre_dict['Conformers'] = 1
+
+            else:
+                found = False
+                iconf_target = index
+                for idx_cluster in range(1, icluster + 1):
+                    iconf_ref = cluster[idx_cluster]["seed"]
+                    iener_ref = cluster[idx_cluster]["lowest_energy"]
+                    irot_constant_ref = cluster[idx_cluster]["rot_constant"]
+
+                    # Check rotamers in accordance of https://doi.org/10.1039/C9CP06869D
+                    #   Conditions:
+                    #      1. DE > E_thr AND DRMSD > RMSD_thr AND DB > B_thr : Conformers
+                    #      2. DE < E_thr AND DRMSD > RMSD_thr AND DB > B_thr : Rotamers
+                    #      3. DE < E_thr AND DRMSD < RMSD_thr AND DB < B_thr : Identical
+                    delta_energy = np.abs(energy - iener_ref)
+
+                    # Remove conformers with high energy difference from the lowest one
+                    if delta_energy > window_energy:
+                        found = True
+                        break
+
+                    if delta_energy > energy_thr:
+                        pass
+                    else:
+                        rmsd_noh = self.getconformeropenbabelrms(iconf_ref, iconf_target,
+                                                                 atomids=list_indices_rmsd_atoms, align=True)
+                        if rmsd_noh > rmsd_thr:
+                            pass
+                        else:
+                            db = [np.abs(irot_constant_ref[i] - rot_constant[i]) for i in range(0, 3)]
+                            if all(i < rot_constant_thr for i in db):
+                                cre_dict['Identical'] += 1
+                                self._df.at[index, 'Type'] = "Identical"
+                            else:
+                                cre_dict['Rotamers'] += 1
+                                self._df.at[index, 'Type'] = "Rotamer"
+                            cluster[idx_cluster]["pairs"].append([rmsd_noh, energy])
+                            cluster[idx_cluster]["files"].append("")
+                            cluster[idx_cluster]["highest_energy"] = energy
+                            cluster[idx_cluster]["nelements"] += 1
+                            cluster[idx_cluster]["elements"].append(index)
+                            self._df.at[index, 'IDCluster'] = idx_cluster
+                            found = True
+                            break
+
+                if not found:
+                    icluster += 1
+                    cre_dict['Conformers'] += 1
+                    self._df.at[index, 'Type'] = "Conformer"
+                    cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
+                                         "nelements": 0, "elements": [], "pairs": [], "files": [], "rot_constant": []}
+                    cluster[icluster]["files"].append(index)
+                    cluster[icluster]["nelements"] += 1
+                    cluster[icluster]["elements"].append(index)
+                    rmsd_noh = self.getconformeropenbabelrms(iconf_min_energy, iconf_target,
+                                                             atomids=list_indices_rmsd_atoms, align=True)
+                    cluster[icluster]["pairs"].append([rmsd_noh, energy])
+                    cluster[icluster]["rot_constant"] = rot_constant
+                    self._df.at[index, 'IDCluster'] = icluster
+
+        # Write Conformer/Rotamers/Identical info
+        m = "\n"
+        s = 0
+        for key, values in cre_dict.items():
+            m += "\t\t\t {0:<20s}: {1:d}\n".format(key, values)
+            s += values
+        key = "Total"
+        m += "\t\t\t {0:<20s}: {1:d}\n".format(key, s)
+        print(m) if self._logger is None else self._logger.info(m)
+
+        m = "\t\tThresholds used to classify conformers are:\n" \
+            "\t\t energy_thr={} kcal/mol, rot_constant_thr={} GHz,\n" \
+            "\t\t rmsd_thr={} Angs window_energy={} kcal/mol rms_only_heavy={}\n".\
+            format(energy_thr, rot_constant_thr, rmsd_thr, window_energy, rmsd_only_heavy)
+        print(m) if self._logger is None else self._logger.info(m)
+
+        return cluster
+
+    # =========================================================================
+    def getconformeropenbabelrms(self, iconf, jconf, atomids=None, align=True):
+
+        """
+        Calculate the rmsd between all molecules and the lowest energy molecule
+        as reference
+
+        """
+
+        rmsd_value = 0.0
+
+        igeomxyz = self._xyzlist[iconf]
+        jgeomxyz = self._xyzlist[jconf]
+
+        molref = ob.OBMol()
+        obref = ob.OBConversion()
+        obref.SetInAndOutFormats('xyz', 'xyz')
+        obref.ReadString(molref, igeomxyz)
+        namefileref = os.path.join("./", "reference_allign.xyz")
+        obref.WriteFile(molref, namefileref)
+        _, coord_ref = rmsd.get_coordinates_xyz(namefileref)
+        coord_ref = copy.deepcopy(coord_ref[atomids])
+        os.remove(namefileref)
+
+        obtarget = ob.OBConversion()
+        obtarget.SetInAndOutFormats('xyz', 'xyz')
+        moltarget = ob.OBMol()
+        obtarget.ReadString(moltarget, jgeomxyz)
+        a = ob.OBAlign(False, False)
+        a.SetRefMol(molref)
+        a.SetTargetMol(moltarget)
+        a.Align()
+        a.UpdateCoords(moltarget)
+        namefile = os.path.join("./", "target_allign.xyz")
+        obref.WriteFile(moltarget, namefile)
+        _, coord_target = rmsd.get_coordinates_xyz(namefile)
+        coord_target = copy.deepcopy(coord_target[atomids])
+        rmsd_value = rmsd.rmsd(coord_target, coord_ref)
+        os.remove(namefile)
+
+        return rmsd_value
+
+
+
+
+

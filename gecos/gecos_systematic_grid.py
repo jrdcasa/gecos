@@ -22,6 +22,7 @@ class GecosSystematicGrid(GecosRdkit):
         self._ndihedrals = 0
         self._dih_list = []     # Indices starts at zero (rdkit)
         self._dih_delta_deg = []
+        self._dih_only_ttt = []  # If 1 only trans, gauche+ and gauche- states are generated
 
     # =========================================================================
     def _cluster_fake_conformers(self, rms_threshold=1.0, energy_threshold=99999.0,
@@ -151,15 +152,20 @@ class GecosSystematicGrid(GecosRdkit):
         for item in dih_list:
             self._dih_list.append([item[0]-1, item[1]-1, item[2]-1, item[3]-1])
             self._dih_delta_deg.append(item[4])
+            self._dih_only_ttt.append(item[5])
 
         # Calculate the number of steps for each angle
         angle_steps = defaultdict(list)
         for idx_idih in range(0, self._ndihedrals):
-            nsteps = int(360./self._dih_delta_deg[idx_idih])
-            iangle = 0
-            for istep in range(0, nsteps):
-                angle_steps[idx_idih].append(iangle)     # degrees
-                iangle += self._dih_delta_deg[idx_idih]
+            if self._dih_only_ttt[idx_idih] == 0:
+                nsteps = int(360./self._dih_delta_deg[idx_idih])
+                iangle = 0
+                for istep in range(0, nsteps):
+                    angle_steps[idx_idih].append(iangle)     # degrees
+                    iangle += self._dih_delta_deg[idx_idih]
+            else:
+                nsteps = 3
+                angle_steps[idx_idih] = [60, 180, 300]
 
         # Generate the conformers
         all_lists = []

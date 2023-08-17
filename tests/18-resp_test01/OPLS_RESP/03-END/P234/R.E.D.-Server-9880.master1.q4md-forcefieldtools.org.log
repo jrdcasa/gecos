@@ -1,0 +1,1685 @@
+
+      ____        ____  _____ ____    _                 
+     |  _ \ _   _|  _ \| ____|  _ \  | |    ___   __ _  
+     | |_) | | | | |_) |  _| | | | | | |   / _ \ /  ' | 
+     |  __/| |_| |  _ <| |___| |_| | | |__| (_) | (_| | 
+     |_|    \__, |_| \_\_____|____/  |_____\___/ \__, | 
+            |___/                                |___/  
+
+Use the home directory to save the QM data of the PyRED job...
+
+Extracting the archive file before running the R.E.D. Server Dev./PyRED job: 
+You uploaded an archive file. The input files for R.E.D. Server Development were extracted with success. 
+
+
+Checking the input files before running the R.E.D. Server Dev./PyRED job: 
+The maximum number of atoms for a molecule/conformation in a PDB input file handled by R.E.D. Server Dev./PyRED is set to 250 atoms. For the reasons of this choice read http://q4md-forcefieldtools.org/REDServer-Development/faq.php#17 
+The maximal number of atoms is correct. 
+
+
+No problem to report in this R.E.D. Server Dev./PyRED job.
+
+
+   Let's start the PyRED job...
+Welcome to: PyRED version JUN-2023
+Time: Sat Jul  8 14:19:53 CEST 2023
+Hostname: node7
+Checking the configuration of the system...
+Display the system:
+Amount of memory used in QM (in MB): 61440
+Number of processor(s) used in QM: 8
+Interfaced QM program: GAUSSIAN16
+Directory name: Data-R.E.D.Server
+Geometry optimization step: ON
+Molecular electrostatic potential step: ON
+Charge re­fit and force field library re­building: OFF
+Frequency calculation: OFF
+Gaussian output stripping: ON
+Statistics module: ON
+Charge model: RESP-O1
+Rounding off accuracy for charge values: 4
+Quantum chemistry procedure: NORMAL
+Format chosen for the force file library: MOL3
+Force field chosen: AMBERFF10
+Rounding off force field parameters: ON
+Mode polariszation: NOPOLARIZT
+Limiting the number of generated fragments for INTRA-MCC: ON
+SCF convergence for MEP computation: Default
+Checking the operating system environment...
+Operating system:
+Linux node7 3.10.0-957.el7.x86_64 #1 SMP Thu Nov 8 23:39:32 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+QM program found: g16
+Cannot find iRESP in the system !
+Charge fit program RESP found: resp 2.4
+Name of project: P234
+Number of PDB input files: 1
+
+Start to check the data in the PDB input files
+Loading the Project.config file
+
+Loading the PDB input file for molecule: 1
+Unknown mark in line :  52
+Unknown mark in line :  104
+Unknown mark in line :  156
+Unknown mark in line :  208
+Unknown mark in line :  260
+Unknown mark in line :  312
+Unknown mark in line :  364
+Unknown mark in line :  416
+Unknown mark in line :  468
+Unknown mark in line :  520
+Unknown mark in line :  572
+Unknown mark in line :  624
+Unknown mark in line :  676
+Unknown mark in line :  728
+Unknown mark in line :  780
+Unknown mark in line :  832
+Unknown mark in line :  884
+Unknown mark in line :  936
+Unknown mark in line :  988
+Unknown mark in line :  1040
+Checking first conformation...
+Checking the atom :  1
+Checking the atom :  2
+Checking the atom :  3
+Checking the atom :  4
+Checking the atom :  5
+Checking the atom :  6
+Checking the atom :  7
+Checking the atom :  8
+Checking the atom :  9
+Checking the atom :  10
+Checking the atom :  11
+Checking the atom :  12
+Checking the atom :  13
+Checking the atom :  14
+Checking the atom :  15
+Checking the atom :  16
+Checking the atom :  17
+Checking the atom :  18
+Checking the atom :  19
+Checking the atom :  20
+Checking the atom :  21
+Checking the atom :  22
+Checking the atom :  23
+Checking the atom :  24
+Checking the atom :  25
+Checking the atom :  26
+Checking the atom :  27
+Checking the atom :  28
+Checking the atom :  29
+Checking the atom :  30
+Checking the atom :  31
+Checking the atom :  32
+Checking the atom :  33
+Checking the atom :  34
+Checking the atom :  35
+Checking the atom :  36
+Checking the atom :  37
+Checking the atom :  38
+Checking the atom :  39
+Checking the atom :  40
+Checking the atom :  41
+Checking the atom :  42
+Checking the atom :  43
+Checking the atom :  44
+Checking the atom :  45
+Checking the atom :  46
+Checking the atom :  47
+Checking the atom :  48
+Checking the atom :  49
+Checking the atom :  50
+Has not the conect
+Correcting the first conformation
+Conect can not be corrected or is empty
+Checking the atoms
+Name of atom has the same 1 5
+Name of atom has the same 1 9
+Name of atom has the same 1 12
+Name of atom has the same 1 16
+Name of atom has the same 1 19
+Name of atom has the same 1 23
+Name of atom has the same 1 26
+Name of atom has the same 1 30
+Name of atom has the same 1 33
+Name of atom has the same 1 37
+Name of atom has the same 1 40
+Name of atom has the same 1 44
+Name of atom has the same 1 47
+Name of atom has the same 2 3
+Name of atom has the same 2 4
+Name of atom has the same 2 6
+Name of atom has the same 2 7
+Name of atom has the same 2 10
+Name of atom has the same 2 11
+Name of atom has the same 2 13
+Name of atom has the same 2 14
+Name of atom has the same 2 17
+Name of atom has the same 2 18
+Name of atom has the same 2 20
+Name of atom has the same 2 21
+Name of atom has the same 2 24
+Name of atom has the same 2 25
+Name of atom has the same 2 27
+Name of atom has the same 2 28
+Name of atom has the same 2 31
+Name of atom has the same 2 32
+Name of atom has the same 2 34
+Name of atom has the same 2 35
+Name of atom has the same 2 38
+Name of atom has the same 2 39
+Name of atom has the same 2 41
+Name of atom has the same 2 42
+Name of atom has the same 2 45
+Name of atom has the same 2 46
+Name of atom has the same 2 48
+Name of atom has the same 2 49
+Name of atom has the same 2 50
+Name of atom has the same 3 2
+Name of atom has the same 3 4
+Name of atom has the same 3 6
+Name of atom has the same 3 7
+Name of atom has the same 3 10
+Name of atom has the same 3 11
+Name of atom has the same 3 13
+Name of atom has the same 3 14
+Name of atom has the same 3 17
+Name of atom has the same 3 18
+Name of atom has the same 3 20
+Name of atom has the same 3 21
+Name of atom has the same 3 24
+Name of atom has the same 3 25
+Name of atom has the same 3 27
+Name of atom has the same 3 28
+Name of atom has the same 3 31
+Name of atom has the same 3 32
+Name of atom has the same 3 34
+Name of atom has the same 3 35
+Name of atom has the same 3 38
+Name of atom has the same 3 39
+Name of atom has the same 3 41
+Name of atom has the same 3 42
+Name of atom has the same 3 45
+Name of atom has the same 3 46
+Name of atom has the same 3 48
+Name of atom has the same 3 49
+Name of atom has the same 3 50
+Name of atom has the same 4 2
+Name of atom has the same 4 3
+Name of atom has the same 4 6
+Name of atom has the same 4 7
+Name of atom has the same 4 10
+Name of atom has the same 4 11
+Name of atom has the same 4 13
+Name of atom has the same 4 14
+Name of atom has the same 4 17
+Name of atom has the same 4 18
+Name of atom has the same 4 20
+Name of atom has the same 4 21
+Name of atom has the same 4 24
+Name of atom has the same 4 25
+Name of atom has the same 4 27
+Name of atom has the same 4 28
+Name of atom has the same 4 31
+Name of atom has the same 4 32
+Name of atom has the same 4 34
+Name of atom has the same 4 35
+Name of atom has the same 4 38
+Name of atom has the same 4 39
+Name of atom has the same 4 41
+Name of atom has the same 4 42
+Name of atom has the same 4 45
+Name of atom has the same 4 46
+Name of atom has the same 4 48
+Name of atom has the same 4 49
+Name of atom has the same 4 50
+Name of atom has the same 5 1
+Name of atom has the same 5 9
+Name of atom has the same 5 12
+Name of atom has the same 5 16
+Name of atom has the same 5 19
+Name of atom has the same 5 23
+Name of atom has the same 5 26
+Name of atom has the same 5 30
+Name of atom has the same 5 33
+Name of atom has the same 5 37
+Name of atom has the same 5 40
+Name of atom has the same 5 44
+Name of atom has the same 5 47
+Name of atom has the same 6 2
+Name of atom has the same 6 3
+Name of atom has the same 6 4
+Name of atom has the same 6 7
+Name of atom has the same 6 10
+Name of atom has the same 6 11
+Name of atom has the same 6 13
+Name of atom has the same 6 14
+Name of atom has the same 6 17
+Name of atom has the same 6 18
+Name of atom has the same 6 20
+Name of atom has the same 6 21
+Name of atom has the same 6 24
+Name of atom has the same 6 25
+Name of atom has the same 6 27
+Name of atom has the same 6 28
+Name of atom has the same 6 31
+Name of atom has the same 6 32
+Name of atom has the same 6 34
+Name of atom has the same 6 35
+Name of atom has the same 6 38
+Name of atom has the same 6 39
+Name of atom has the same 6 41
+Name of atom has the same 6 42
+Name of atom has the same 6 45
+Name of atom has the same 6 46
+Name of atom has the same 6 48
+Name of atom has the same 6 49
+Name of atom has the same 6 50
+Name of atom has the same 7 2
+Name of atom has the same 7 3
+Name of atom has the same 7 4
+Name of atom has the same 7 6
+Name of atom has the same 7 10
+Name of atom has the same 7 11
+Name of atom has the same 7 13
+Name of atom has the same 7 14
+Name of atom has the same 7 17
+Name of atom has the same 7 18
+Name of atom has the same 7 20
+Name of atom has the same 7 21
+Name of atom has the same 7 24
+Name of atom has the same 7 25
+Name of atom has the same 7 27
+Name of atom has the same 7 28
+Name of atom has the same 7 31
+Name of atom has the same 7 32
+Name of atom has the same 7 34
+Name of atom has the same 7 35
+Name of atom has the same 7 38
+Name of atom has the same 7 39
+Name of atom has the same 7 41
+Name of atom has the same 7 42
+Name of atom has the same 7 45
+Name of atom has the same 7 46
+Name of atom has the same 7 48
+Name of atom has the same 7 49
+Name of atom has the same 7 50
+Name of atom has the same 8 15
+Name of atom has the same 8 22
+Name of atom has the same 9 1
+Name of atom has the same 9 5
+Name of atom has the same 9 12
+Name of atom has the same 9 16
+Name of atom has the same 9 19
+Name of atom has the same 9 23
+Name of atom has the same 9 26
+Name of atom has the same 9 30
+Name of atom has the same 9 33
+Name of atom has the same 9 37
+Name of atom has the same 9 40
+Name of atom has the same 9 44
+Name of atom has the same 9 47
+Name of atom has the same 10 2
+Name of atom has the same 10 3
+Name of atom has the same 10 4
+Name of atom has the same 10 6
+Name of atom has the same 10 7
+Name of atom has the same 10 11
+Name of atom has the same 10 13
+Name of atom has the same 10 14
+Name of atom has the same 10 17
+Name of atom has the same 10 18
+Name of atom has the same 10 20
+Name of atom has the same 10 21
+Name of atom has the same 10 24
+Name of atom has the same 10 25
+Name of atom has the same 10 27
+Name of atom has the same 10 28
+Name of atom has the same 10 31
+Name of atom has the same 10 32
+Name of atom has the same 10 34
+Name of atom has the same 10 35
+Name of atom has the same 10 38
+Name of atom has the same 10 39
+Name of atom has the same 10 41
+Name of atom has the same 10 42
+Name of atom has the same 10 45
+Name of atom has the same 10 46
+Name of atom has the same 10 48
+Name of atom has the same 10 49
+Name of atom has the same 10 50
+Name of atom has the same 11 2
+Name of atom has the same 11 3
+Name of atom has the same 11 4
+Name of atom has the same 11 6
+Name of atom has the same 11 7
+Name of atom has the same 11 10
+Name of atom has the same 11 13
+Name of atom has the same 11 14
+Name of atom has the same 11 17
+Name of atom has the same 11 18
+Name of atom has the same 11 20
+Name of atom has the same 11 21
+Name of atom has the same 11 24
+Name of atom has the same 11 25
+Name of atom has the same 11 27
+Name of atom has the same 11 28
+Name of atom has the same 11 31
+Name of atom has the same 11 32
+Name of atom has the same 11 34
+Name of atom has the same 11 35
+Name of atom has the same 11 38
+Name of atom has the same 11 39
+Name of atom has the same 11 41
+Name of atom has the same 11 42
+Name of atom has the same 11 45
+Name of atom has the same 11 46
+Name of atom has the same 11 48
+Name of atom has the same 11 49
+Name of atom has the same 11 50
+Name of atom has the same 12 1
+Name of atom has the same 12 5
+Name of atom has the same 12 9
+Name of atom has the same 12 16
+Name of atom has the same 12 19
+Name of atom has the same 12 23
+Name of atom has the same 12 26
+Name of atom has the same 12 30
+Name of atom has the same 12 33
+Name of atom has the same 12 37
+Name of atom has the same 12 40
+Name of atom has the same 12 44
+Name of atom has the same 12 47
+Name of atom has the same 13 2
+Name of atom has the same 13 3
+Name of atom has the same 13 4
+Name of atom has the same 13 6
+Name of atom has the same 13 7
+Name of atom has the same 13 10
+Name of atom has the same 13 11
+Name of atom has the same 13 14
+Name of atom has the same 13 17
+Name of atom has the same 13 18
+Name of atom has the same 13 20
+Name of atom has the same 13 21
+Name of atom has the same 13 24
+Name of atom has the same 13 25
+Name of atom has the same 13 27
+Name of atom has the same 13 28
+Name of atom has the same 13 31
+Name of atom has the same 13 32
+Name of atom has the same 13 34
+Name of atom has the same 13 35
+Name of atom has the same 13 38
+Name of atom has the same 13 39
+Name of atom has the same 13 41
+Name of atom has the same 13 42
+Name of atom has the same 13 45
+Name of atom has the same 13 46
+Name of atom has the same 13 48
+Name of atom has the same 13 49
+Name of atom has the same 13 50
+Name of atom has the same 14 2
+Name of atom has the same 14 3
+Name of atom has the same 14 4
+Name of atom has the same 14 6
+Name of atom has the same 14 7
+Name of atom has the same 14 10
+Name of atom has the same 14 11
+Name of atom has the same 14 13
+Name of atom has the same 14 17
+Name of atom has the same 14 18
+Name of atom has the same 14 20
+Name of atom has the same 14 21
+Name of atom has the same 14 24
+Name of atom has the same 14 25
+Name of atom has the same 14 27
+Name of atom has the same 14 28
+Name of atom has the same 14 31
+Name of atom has the same 14 32
+Name of atom has the same 14 34
+Name of atom has the same 14 35
+Name of atom has the same 14 38
+Name of atom has the same 14 39
+Name of atom has the same 14 41
+Name of atom has the same 14 42
+Name of atom has the same 14 45
+Name of atom has the same 14 46
+Name of atom has the same 14 48
+Name of atom has the same 14 49
+Name of atom has the same 14 50
+Name of atom has the same 15 8
+Name of atom has the same 15 22
+Name of atom has the same 16 1
+Name of atom has the same 16 5
+Name of atom has the same 16 9
+Name of atom has the same 16 12
+Name of atom has the same 16 19
+Name of atom has the same 16 23
+Name of atom has the same 16 26
+Name of atom has the same 16 30
+Name of atom has the same 16 33
+Name of atom has the same 16 37
+Name of atom has the same 16 40
+Name of atom has the same 16 44
+Name of atom has the same 16 47
+Name of atom has the same 17 2
+Name of atom has the same 17 3
+Name of atom has the same 17 4
+Name of atom has the same 17 6
+Name of atom has the same 17 7
+Name of atom has the same 17 10
+Name of atom has the same 17 11
+Name of atom has the same 17 13
+Name of atom has the same 17 14
+Name of atom has the same 17 18
+Name of atom has the same 17 20
+Name of atom has the same 17 21
+Name of atom has the same 17 24
+Name of atom has the same 17 25
+Name of atom has the same 17 27
+Name of atom has the same 17 28
+Name of atom has the same 17 31
+Name of atom has the same 17 32
+Name of atom has the same 17 34
+Name of atom has the same 17 35
+Name of atom has the same 17 38
+Name of atom has the same 17 39
+Name of atom has the same 17 41
+Name of atom has the same 17 42
+Name of atom has the same 17 45
+Name of atom has the same 17 46
+Name of atom has the same 17 48
+Name of atom has the same 17 49
+Name of atom has the same 17 50
+Name of atom has the same 18 2
+Name of atom has the same 18 3
+Name of atom has the same 18 4
+Name of atom has the same 18 6
+Name of atom has the same 18 7
+Name of atom has the same 18 10
+Name of atom has the same 18 11
+Name of atom has the same 18 13
+Name of atom has the same 18 14
+Name of atom has the same 18 17
+Name of atom has the same 18 20
+Name of atom has the same 18 21
+Name of atom has the same 18 24
+Name of atom has the same 18 25
+Name of atom has the same 18 27
+Name of atom has the same 18 28
+Name of atom has the same 18 31
+Name of atom has the same 18 32
+Name of atom has the same 18 34
+Name of atom has the same 18 35
+Name of atom has the same 18 38
+Name of atom has the same 18 39
+Name of atom has the same 18 41
+Name of atom has the same 18 42
+Name of atom has the same 18 45
+Name of atom has the same 18 46
+Name of atom has the same 18 48
+Name of atom has the same 18 49
+Name of atom has the same 18 50
+Name of atom has the same 19 1
+Name of atom has the same 19 5
+Name of atom has the same 19 9
+Name of atom has the same 19 12
+Name of atom has the same 19 16
+Name of atom has the same 19 23
+Name of atom has the same 19 26
+Name of atom has the same 19 30
+Name of atom has the same 19 33
+Name of atom has the same 19 37
+Name of atom has the same 19 40
+Name of atom has the same 19 44
+Name of atom has the same 19 47
+Name of atom has the same 20 2
+Name of atom has the same 20 3
+Name of atom has the same 20 4
+Name of atom has the same 20 6
+Name of atom has the same 20 7
+Name of atom has the same 20 10
+Name of atom has the same 20 11
+Name of atom has the same 20 13
+Name of atom has the same 20 14
+Name of atom has the same 20 17
+Name of atom has the same 20 18
+Name of atom has the same 20 21
+Name of atom has the same 20 24
+Name of atom has the same 20 25
+Name of atom has the same 20 27
+Name of atom has the same 20 28
+Name of atom has the same 20 31
+Name of atom has the same 20 32
+Name of atom has the same 20 34
+Name of atom has the same 20 35
+Name of atom has the same 20 38
+Name of atom has the same 20 39
+Name of atom has the same 20 41
+Name of atom has the same 20 42
+Name of atom has the same 20 45
+Name of atom has the same 20 46
+Name of atom has the same 20 48
+Name of atom has the same 20 49
+Name of atom has the same 20 50
+Name of atom has the same 21 2
+Name of atom has the same 21 3
+Name of atom has the same 21 4
+Name of atom has the same 21 6
+Name of atom has the same 21 7
+Name of atom has the same 21 10
+Name of atom has the same 21 11
+Name of atom has the same 21 13
+Name of atom has the same 21 14
+Name of atom has the same 21 17
+Name of atom has the same 21 18
+Name of atom has the same 21 20
+Name of atom has the same 21 24
+Name of atom has the same 21 25
+Name of atom has the same 21 27
+Name of atom has the same 21 28
+Name of atom has the same 21 31
+Name of atom has the same 21 32
+Name of atom has the same 21 34
+Name of atom has the same 21 35
+Name of atom has the same 21 38
+Name of atom has the same 21 39
+Name of atom has the same 21 41
+Name of atom has the same 21 42
+Name of atom has the same 21 45
+Name of atom has the same 21 46
+Name of atom has the same 21 48
+Name of atom has the same 21 49
+Name of atom has the same 21 50
+Name of atom has the same 22 8
+Name of atom has the same 22 15
+Name of atom has the same 23 1
+Name of atom has the same 23 5
+Name of atom has the same 23 9
+Name of atom has the same 23 12
+Name of atom has the same 23 16
+Name of atom has the same 23 19
+Name of atom has the same 23 26
+Name of atom has the same 23 30
+Name of atom has the same 23 33
+Name of atom has the same 23 37
+Name of atom has the same 23 40
+Name of atom has the same 23 44
+Name of atom has the same 23 47
+Name of atom has the same 24 2
+Name of atom has the same 24 3
+Name of atom has the same 24 4
+Name of atom has the same 24 6
+Name of atom has the same 24 7
+Name of atom has the same 24 10
+Name of atom has the same 24 11
+Name of atom has the same 24 13
+Name of atom has the same 24 14
+Name of atom has the same 24 17
+Name of atom has the same 24 18
+Name of atom has the same 24 20
+Name of atom has the same 24 21
+Name of atom has the same 24 25
+Name of atom has the same 24 27
+Name of atom has the same 24 28
+Name of atom has the same 24 31
+Name of atom has the same 24 32
+Name of atom has the same 24 34
+Name of atom has the same 24 35
+Name of atom has the same 24 38
+Name of atom has the same 24 39
+Name of atom has the same 24 41
+Name of atom has the same 24 42
+Name of atom has the same 24 45
+Name of atom has the same 24 46
+Name of atom has the same 24 48
+Name of atom has the same 24 49
+Name of atom has the same 24 50
+Name of atom has the same 25 2
+Name of atom has the same 25 3
+Name of atom has the same 25 4
+Name of atom has the same 25 6
+Name of atom has the same 25 7
+Name of atom has the same 25 10
+Name of atom has the same 25 11
+Name of atom has the same 25 13
+Name of atom has the same 25 14
+Name of atom has the same 25 17
+Name of atom has the same 25 18
+Name of atom has the same 25 20
+Name of atom has the same 25 21
+Name of atom has the same 25 24
+Name of atom has the same 25 27
+Name of atom has the same 25 28
+Name of atom has the same 25 31
+Name of atom has the same 25 32
+Name of atom has the same 25 34
+Name of atom has the same 25 35
+Name of atom has the same 25 38
+Name of atom has the same 25 39
+Name of atom has the same 25 41
+Name of atom has the same 25 42
+Name of atom has the same 25 45
+Name of atom has the same 25 46
+Name of atom has the same 25 48
+Name of atom has the same 25 49
+Name of atom has the same 25 50
+Name of atom has the same 26 1
+Name of atom has the same 26 5
+Name of atom has the same 26 9
+Name of atom has the same 26 12
+Name of atom has the same 26 16
+Name of atom has the same 26 19
+Name of atom has the same 26 23
+Name of atom has the same 26 30
+Name of atom has the same 26 33
+Name of atom has the same 26 37
+Name of atom has the same 26 40
+Name of atom has the same 26 44
+Name of atom has the same 26 47
+Name of atom has the same 27 2
+Name of atom has the same 27 3
+Name of atom has the same 27 4
+Name of atom has the same 27 6
+Name of atom has the same 27 7
+Name of atom has the same 27 10
+Name of atom has the same 27 11
+Name of atom has the same 27 13
+Name of atom has the same 27 14
+Name of atom has the same 27 17
+Name of atom has the same 27 18
+Name of atom has the same 27 20
+Name of atom has the same 27 21
+Name of atom has the same 27 24
+Name of atom has the same 27 25
+Name of atom has the same 27 28
+Name of atom has the same 27 31
+Name of atom has the same 27 32
+Name of atom has the same 27 34
+Name of atom has the same 27 35
+Name of atom has the same 27 38
+Name of atom has the same 27 39
+Name of atom has the same 27 41
+Name of atom has the same 27 42
+Name of atom has the same 27 45
+Name of atom has the same 27 46
+Name of atom has the same 27 48
+Name of atom has the same 27 49
+Name of atom has the same 27 50
+Name of atom has the same 28 2
+Name of atom has the same 28 3
+Name of atom has the same 28 4
+Name of atom has the same 28 6
+Name of atom has the same 28 7
+Name of atom has the same 28 10
+Name of atom has the same 28 11
+Name of atom has the same 28 13
+Name of atom has the same 28 14
+Name of atom has the same 28 17
+Name of atom has the same 28 18
+Name of atom has the same 28 20
+Name of atom has the same 28 21
+Name of atom has the same 28 24
+Name of atom has the same 28 25
+Name of atom has the same 28 27
+Name of atom has the same 28 31
+Name of atom has the same 28 32
+Name of atom has the same 28 34
+Name of atom has the same 28 35
+Name of atom has the same 28 38
+Name of atom has the same 28 39
+Name of atom has the same 28 41
+Name of atom has the same 28 42
+Name of atom has the same 28 45
+Name of atom has the same 28 46
+Name of atom has the same 28 48
+Name of atom has the same 28 49
+Name of atom has the same 28 50
+Name of atom has the same 29 36
+Name of atom has the same 29 43
+Name of atom has the same 30 1
+Name of atom has the same 30 5
+Name of atom has the same 30 9
+Name of atom has the same 30 12
+Name of atom has the same 30 16
+Name of atom has the same 30 19
+Name of atom has the same 30 23
+Name of atom has the same 30 26
+Name of atom has the same 30 33
+Name of atom has the same 30 37
+Name of atom has the same 30 40
+Name of atom has the same 30 44
+Name of atom has the same 30 47
+Name of atom has the same 31 2
+Name of atom has the same 31 3
+Name of atom has the same 31 4
+Name of atom has the same 31 6
+Name of atom has the same 31 7
+Name of atom has the same 31 10
+Name of atom has the same 31 11
+Name of atom has the same 31 13
+Name of atom has the same 31 14
+Name of atom has the same 31 17
+Name of atom has the same 31 18
+Name of atom has the same 31 20
+Name of atom has the same 31 21
+Name of atom has the same 31 24
+Name of atom has the same 31 25
+Name of atom has the same 31 27
+Name of atom has the same 31 28
+Name of atom has the same 31 32
+Name of atom has the same 31 34
+Name of atom has the same 31 35
+Name of atom has the same 31 38
+Name of atom has the same 31 39
+Name of atom has the same 31 41
+Name of atom has the same 31 42
+Name of atom has the same 31 45
+Name of atom has the same 31 46
+Name of atom has the same 31 48
+Name of atom has the same 31 49
+Name of atom has the same 31 50
+Name of atom has the same 32 2
+Name of atom has the same 32 3
+Name of atom has the same 32 4
+Name of atom has the same 32 6
+Name of atom has the same 32 7
+Name of atom has the same 32 10
+Name of atom has the same 32 11
+Name of atom has the same 32 13
+Name of atom has the same 32 14
+Name of atom has the same 32 17
+Name of atom has the same 32 18
+Name of atom has the same 32 20
+Name of atom has the same 32 21
+Name of atom has the same 32 24
+Name of atom has the same 32 25
+Name of atom has the same 32 27
+Name of atom has the same 32 28
+Name of atom has the same 32 31
+Name of atom has the same 32 34
+Name of atom has the same 32 35
+Name of atom has the same 32 38
+Name of atom has the same 32 39
+Name of atom has the same 32 41
+Name of atom has the same 32 42
+Name of atom has the same 32 45
+Name of atom has the same 32 46
+Name of atom has the same 32 48
+Name of atom has the same 32 49
+Name of atom has the same 32 50
+Name of atom has the same 33 1
+Name of atom has the same 33 5
+Name of atom has the same 33 9
+Name of atom has the same 33 12
+Name of atom has the same 33 16
+Name of atom has the same 33 19
+Name of atom has the same 33 23
+Name of atom has the same 33 26
+Name of atom has the same 33 30
+Name of atom has the same 33 37
+Name of atom has the same 33 40
+Name of atom has the same 33 44
+Name of atom has the same 33 47
+Name of atom has the same 34 2
+Name of atom has the same 34 3
+Name of atom has the same 34 4
+Name of atom has the same 34 6
+Name of atom has the same 34 7
+Name of atom has the same 34 10
+Name of atom has the same 34 11
+Name of atom has the same 34 13
+Name of atom has the same 34 14
+Name of atom has the same 34 17
+Name of atom has the same 34 18
+Name of atom has the same 34 20
+Name of atom has the same 34 21
+Name of atom has the same 34 24
+Name of atom has the same 34 25
+Name of atom has the same 34 27
+Name of atom has the same 34 28
+Name of atom has the same 34 31
+Name of atom has the same 34 32
+Name of atom has the same 34 35
+Name of atom has the same 34 38
+Name of atom has the same 34 39
+Name of atom has the same 34 41
+Name of atom has the same 34 42
+Name of atom has the same 34 45
+Name of atom has the same 34 46
+Name of atom has the same 34 48
+Name of atom has the same 34 49
+Name of atom has the same 34 50
+Name of atom has the same 35 2
+Name of atom has the same 35 3
+Name of atom has the same 35 4
+Name of atom has the same 35 6
+Name of atom has the same 35 7
+Name of atom has the same 35 10
+Name of atom has the same 35 11
+Name of atom has the same 35 13
+Name of atom has the same 35 14
+Name of atom has the same 35 17
+Name of atom has the same 35 18
+Name of atom has the same 35 20
+Name of atom has the same 35 21
+Name of atom has the same 35 24
+Name of atom has the same 35 25
+Name of atom has the same 35 27
+Name of atom has the same 35 28
+Name of atom has the same 35 31
+Name of atom has the same 35 32
+Name of atom has the same 35 34
+Name of atom has the same 35 38
+Name of atom has the same 35 39
+Name of atom has the same 35 41
+Name of atom has the same 35 42
+Name of atom has the same 35 45
+Name of atom has the same 35 46
+Name of atom has the same 35 48
+Name of atom has the same 35 49
+Name of atom has the same 35 50
+Name of atom has the same 36 29
+Name of atom has the same 36 43
+Name of atom has the same 37 1
+Name of atom has the same 37 5
+Name of atom has the same 37 9
+Name of atom has the same 37 12
+Name of atom has the same 37 16
+Name of atom has the same 37 19
+Name of atom has the same 37 23
+Name of atom has the same 37 26
+Name of atom has the same 37 30
+Name of atom has the same 37 33
+Name of atom has the same 37 40
+Name of atom has the same 37 44
+Name of atom has the same 37 47
+Name of atom has the same 38 2
+Name of atom has the same 38 3
+Name of atom has the same 38 4
+Name of atom has the same 38 6
+Name of atom has the same 38 7
+Name of atom has the same 38 10
+Name of atom has the same 38 11
+Name of atom has the same 38 13
+Name of atom has the same 38 14
+Name of atom has the same 38 17
+Name of atom has the same 38 18
+Name of atom has the same 38 20
+Name of atom has the same 38 21
+Name of atom has the same 38 24
+Name of atom has the same 38 25
+Name of atom has the same 38 27
+Name of atom has the same 38 28
+Name of atom has the same 38 31
+Name of atom has the same 38 32
+Name of atom has the same 38 34
+Name of atom has the same 38 35
+Name of atom has the same 38 39
+Name of atom has the same 38 41
+Name of atom has the same 38 42
+Name of atom has the same 38 45
+Name of atom has the same 38 46
+Name of atom has the same 38 48
+Name of atom has the same 38 49
+Name of atom has the same 38 50
+Name of atom has the same 39 2
+Name of atom has the same 39 3
+Name of atom has the same 39 4
+Name of atom has the same 39 6
+Name of atom has the same 39 7
+Name of atom has the same 39 10
+Name of atom has the same 39 11
+Name of atom has the same 39 13
+Name of atom has the same 39 14
+Name of atom has the same 39 17
+Name of atom has the same 39 18
+Name of atom has the same 39 20
+Name of atom has the same 39 21
+Name of atom has the same 39 24
+Name of atom has the same 39 25
+Name of atom has the same 39 27
+Name of atom has the same 39 28
+Name of atom has the same 39 31
+Name of atom has the same 39 32
+Name of atom has the same 39 34
+Name of atom has the same 39 35
+Name of atom has the same 39 38
+Name of atom has the same 39 41
+Name of atom has the same 39 42
+Name of atom has the same 39 45
+Name of atom has the same 39 46
+Name of atom has the same 39 48
+Name of atom has the same 39 49
+Name of atom has the same 39 50
+Name of atom has the same 40 1
+Name of atom has the same 40 5
+Name of atom has the same 40 9
+Name of atom has the same 40 12
+Name of atom has the same 40 16
+Name of atom has the same 40 19
+Name of atom has the same 40 23
+Name of atom has the same 40 26
+Name of atom has the same 40 30
+Name of atom has the same 40 33
+Name of atom has the same 40 37
+Name of atom has the same 40 44
+Name of atom has the same 40 47
+Name of atom has the same 41 2
+Name of atom has the same 41 3
+Name of atom has the same 41 4
+Name of atom has the same 41 6
+Name of atom has the same 41 7
+Name of atom has the same 41 10
+Name of atom has the same 41 11
+Name of atom has the same 41 13
+Name of atom has the same 41 14
+Name of atom has the same 41 17
+Name of atom has the same 41 18
+Name of atom has the same 41 20
+Name of atom has the same 41 21
+Name of atom has the same 41 24
+Name of atom has the same 41 25
+Name of atom has the same 41 27
+Name of atom has the same 41 28
+Name of atom has the same 41 31
+Name of atom has the same 41 32
+Name of atom has the same 41 34
+Name of atom has the same 41 35
+Name of atom has the same 41 38
+Name of atom has the same 41 39
+Name of atom has the same 41 42
+Name of atom has the same 41 45
+Name of atom has the same 41 46
+Name of atom has the same 41 48
+Name of atom has the same 41 49
+Name of atom has the same 41 50
+Name of atom has the same 42 2
+Name of atom has the same 42 3
+Name of atom has the same 42 4
+Name of atom has the same 42 6
+Name of atom has the same 42 7
+Name of atom has the same 42 10
+Name of atom has the same 42 11
+Name of atom has the same 42 13
+Name of atom has the same 42 14
+Name of atom has the same 42 17
+Name of atom has the same 42 18
+Name of atom has the same 42 20
+Name of atom has the same 42 21
+Name of atom has the same 42 24
+Name of atom has the same 42 25
+Name of atom has the same 42 27
+Name of atom has the same 42 28
+Name of atom has the same 42 31
+Name of atom has the same 42 32
+Name of atom has the same 42 34
+Name of atom has the same 42 35
+Name of atom has the same 42 38
+Name of atom has the same 42 39
+Name of atom has the same 42 41
+Name of atom has the same 42 45
+Name of atom has the same 42 46
+Name of atom has the same 42 48
+Name of atom has the same 42 49
+Name of atom has the same 42 50
+Name of atom has the same 43 29
+Name of atom has the same 43 36
+Name of atom has the same 44 1
+Name of atom has the same 44 5
+Name of atom has the same 44 9
+Name of atom has the same 44 12
+Name of atom has the same 44 16
+Name of atom has the same 44 19
+Name of atom has the same 44 23
+Name of atom has the same 44 26
+Name of atom has the same 44 30
+Name of atom has the same 44 33
+Name of atom has the same 44 37
+Name of atom has the same 44 40
+Name of atom has the same 44 47
+Name of atom has the same 45 2
+Name of atom has the same 45 3
+Name of atom has the same 45 4
+Name of atom has the same 45 6
+Name of atom has the same 45 7
+Name of atom has the same 45 10
+Name of atom has the same 45 11
+Name of atom has the same 45 13
+Name of atom has the same 45 14
+Name of atom has the same 45 17
+Name of atom has the same 45 18
+Name of atom has the same 45 20
+Name of atom has the same 45 21
+Name of atom has the same 45 24
+Name of atom has the same 45 25
+Name of atom has the same 45 27
+Name of atom has the same 45 28
+Name of atom has the same 45 31
+Name of atom has the same 45 32
+Name of atom has the same 45 34
+Name of atom has the same 45 35
+Name of atom has the same 45 38
+Name of atom has the same 45 39
+Name of atom has the same 45 41
+Name of atom has the same 45 42
+Name of atom has the same 45 46
+Name of atom has the same 45 48
+Name of atom has the same 45 49
+Name of atom has the same 45 50
+Name of atom has the same 46 2
+Name of atom has the same 46 3
+Name of atom has the same 46 4
+Name of atom has the same 46 6
+Name of atom has the same 46 7
+Name of atom has the same 46 10
+Name of atom has the same 46 11
+Name of atom has the same 46 13
+Name of atom has the same 46 14
+Name of atom has the same 46 17
+Name of atom has the same 46 18
+Name of atom has the same 46 20
+Name of atom has the same 46 21
+Name of atom has the same 46 24
+Name of atom has the same 46 25
+Name of atom has the same 46 27
+Name of atom has the same 46 28
+Name of atom has the same 46 31
+Name of atom has the same 46 32
+Name of atom has the same 46 34
+Name of atom has the same 46 35
+Name of atom has the same 46 38
+Name of atom has the same 46 39
+Name of atom has the same 46 41
+Name of atom has the same 46 42
+Name of atom has the same 46 45
+Name of atom has the same 46 48
+Name of atom has the same 46 49
+Name of atom has the same 46 50
+Name of atom has the same 47 1
+Name of atom has the same 47 5
+Name of atom has the same 47 9
+Name of atom has the same 47 12
+Name of atom has the same 47 16
+Name of atom has the same 47 19
+Name of atom has the same 47 23
+Name of atom has the same 47 26
+Name of atom has the same 47 30
+Name of atom has the same 47 33
+Name of atom has the same 47 37
+Name of atom has the same 47 40
+Name of atom has the same 47 44
+Name of atom has the same 48 2
+Name of atom has the same 48 3
+Name of atom has the same 48 4
+Name of atom has the same 48 6
+Name of atom has the same 48 7
+Name of atom has the same 48 10
+Name of atom has the same 48 11
+Name of atom has the same 48 13
+Name of atom has the same 48 14
+Name of atom has the same 48 17
+Name of atom has the same 48 18
+Name of atom has the same 48 20
+Name of atom has the same 48 21
+Name of atom has the same 48 24
+Name of atom has the same 48 25
+Name of atom has the same 48 27
+Name of atom has the same 48 28
+Name of atom has the same 48 31
+Name of atom has the same 48 32
+Name of atom has the same 48 34
+Name of atom has the same 48 35
+Name of atom has the same 48 38
+Name of atom has the same 48 39
+Name of atom has the same 48 41
+Name of atom has the same 48 42
+Name of atom has the same 48 45
+Name of atom has the same 48 46
+Name of atom has the same 48 49
+Name of atom has the same 48 50
+Name of atom has the same 49 2
+Name of atom has the same 49 3
+Name of atom has the same 49 4
+Name of atom has the same 49 6
+Name of atom has the same 49 7
+Name of atom has the same 49 10
+Name of atom has the same 49 11
+Name of atom has the same 49 13
+Name of atom has the same 49 14
+Name of atom has the same 49 17
+Name of atom has the same 49 18
+Name of atom has the same 49 20
+Name of atom has the same 49 21
+Name of atom has the same 49 24
+Name of atom has the same 49 25
+Name of atom has the same 49 27
+Name of atom has the same 49 28
+Name of atom has the same 49 31
+Name of atom has the same 49 32
+Name of atom has the same 49 34
+Name of atom has the same 49 35
+Name of atom has the same 49 38
+Name of atom has the same 49 39
+Name of atom has the same 49 41
+Name of atom has the same 49 42
+Name of atom has the same 49 45
+Name of atom has the same 49 46
+Name of atom has the same 49 48
+Name of atom has the same 49 50
+Name of atom has the same 50 2
+Name of atom has the same 50 3
+Name of atom has the same 50 4
+Name of atom has the same 50 6
+Name of atom has the same 50 7
+Name of atom has the same 50 10
+Name of atom has the same 50 11
+Name of atom has the same 50 13
+Name of atom has the same 50 14
+Name of atom has the same 50 17
+Name of atom has the same 50 18
+Name of atom has the same 50 20
+Name of atom has the same 50 21
+Name of atom has the same 50 24
+Name of atom has the same 50 25
+Name of atom has the same 50 27
+Name of atom has the same 50 28
+Name of atom has the same 50 31
+Name of atom has the same 50 32
+Name of atom has the same 50 34
+Name of atom has the same 50 35
+Name of atom has the same 50 38
+Name of atom has the same 50 39
+Name of atom has the same 50 41
+Name of atom has the same 50 42
+Name of atom has the same 50 45
+Name of atom has the same 50 46
+Name of atom has the same 50 48
+Name of atom has the same 50 49
+Checking the coordinate of conformation 2
+Checking the coordinate of conformation 3
+Checking the coordinate of conformation 4
+Checking the coordinate of conformation 5
+Checking the coordinate of conformation 6
+Checking the coordinate of conformation 7
+Checking the coordinate of conformation 8
+Checking the coordinate of conformation 9
+Checking the coordinate of conformation 10
+Checking the coordinate of conformation 11
+Checking the coordinate of conformation 12
+Checking the coordinate of conformation 13
+Checking the coordinate of conformation 14
+Checking the coordinate of conformation 15
+Checking the coordinate of conformation 16
+Checking the coordinate of conformation 17
+Checking the coordinate of conformation 18
+Checking the coordinate of conformation 19
+Checking the coordinate of conformation 20
+Checking the element of conformation 2
+Checking the element of conformation 3
+Checking the element of conformation 4
+Checking the element of conformation 5
+Checking the element of conformation 6
+Checking the element of conformation 7
+Checking the element of conformation 8
+Checking the element of conformation 9
+Checking the element of conformation 10
+Checking the element of conformation 11
+Checking the element of conformation 12
+Checking the element of conformation 13
+Checking the element of conformation 14
+Checking the element of conformation 15
+Checking the element of conformation 16
+Checking the element of conformation 17
+Checking the element of conformation 18
+Checking the element of conformation 19
+Checking the element of conformation 20
+Correcting the conformations
+Checking atom connectivities
+Miss the conect
+Atom connectivities not found: determine these connectivities
+Reordering the atoms
+Correcting the atoms
+Single residue for the input molecule
+Redundant atom name found: renaming the atom
+End of checking the data in the PDB input files: 1
+
+Checking the Project.config
+Warning: Gaussian QM outputs generated by PyRED are stripped...
+
+Geometry optimization for molecule: 1
+Input file for Gaussian: JOB1-gau_m1-1.gjf
+Input file for Gaussian: JOB1-gau_m1-2.gjf
+Input file for Gaussian: JOB1-gau_m1-3.gjf
+Input file for Gaussian: JOB1-gau_m1-4.gjf
+Input file for Gaussian: JOB1-gau_m1-5.gjf
+Input file for Gaussian: JOB1-gau_m1-6.gjf
+Input file for Gaussian: JOB1-gau_m1-7.gjf
+Input file for Gaussian: JOB1-gau_m1-8.gjf
+Input file for Gaussian: JOB1-gau_m1-9.gjf
+Input file for Gaussian: JOB1-gau_m1-10.gjf
+Input file for Gaussian: JOB1-gau_m1-11.gjf
+Input file for Gaussian: JOB1-gau_m1-12.gjf
+Input file for Gaussian: JOB1-gau_m1-13.gjf
+Input file for Gaussian: JOB1-gau_m1-14.gjf
+Input file for Gaussian: JOB1-gau_m1-15.gjf
+Input file for Gaussian: JOB1-gau_m1-16.gjf
+Input file for Gaussian: JOB1-gau_m1-17.gjf
+Input file for Gaussian: JOB1-gau_m1-18.gjf
+Input file for Gaussian: JOB1-gau_m1-19.gjf
+Input file for Gaussian: JOB1-gau_m1-20.gjf
+
+Executing Gaussian for molecule: 1
+Warning: QM job did not end correctly
+Find "Standard orientation"
+Input file for Gaussian: JOB1-gau_m1-10.gjf
+
+Checking JOB1*.log QM output file for molecule: 1
+
+Reading JOB1*.log QM output file for molecule: 1
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69613928
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.70188583
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69671965
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.68897375
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69279473
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69215273
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69035215
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.68810978
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69194032
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69168231
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69369715
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69454565
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69111522
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69384163
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69378422
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69235946
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69116702
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.69114406
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.68614902
+Find "Normal termination of Gaussian"
+Find "Stationary point found"
+Find "Standard orientation"
+Energy value :  -1964.68712942
+Two different residues cannot share two atom connectivities
+
+Molecular electrostatic potential computation for molecule: 1
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-1-1--1.chk not found 3
+Input file for Gaussian: JOB2-gau_m1-1-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-1-2--1.chk not found 3
+Input file for Gaussian: JOB2-gau_m1-1-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-2-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-2-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-2-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-2-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-3-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-3-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-3-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-3-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-4-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-4-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-4-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-4-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-5-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-5-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-5-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-5-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-6-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-6-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-6-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-6-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-7-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-7-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-7-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-7-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-8-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-8-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-8-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-8-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-9-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-9-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-9-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-9-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-10-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-10-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-10-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-10-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-11-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-11-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-11-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-11-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-12-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-12-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-12-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-12-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-13-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-13-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-13-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-13-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-14-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-14-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-14-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-14-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-15-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-15-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-15-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-15-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-16-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-16-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-16-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-16-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-17-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-17-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-17-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-17-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-18-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-18-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-18-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-18-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-19-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-19-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-19-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-19-2.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-20-1--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-20-1.gjf
+Cannot find the JOB1*.chk QM output file: JOB2-gau_m1-20-2--1.chk not found 4
+Input file for Gaussian: JOB2-gau_m1-20-2.gjf
+
+Executing Gaussian for molecule: 1
+
+Checking JOB2*.log QM output file for molecule: 1
+
+Reading JOB2*.log QM output file - Converting the electrostatic potential for molecule: 1
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-1-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-1-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-2-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-2-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-3-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-3-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-4-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-4-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-5-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-5-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-6-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-6-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-7-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-7-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-8-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-8-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-9-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-9-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-10-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-10-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-11-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-11-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-12-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-12-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-13-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-13-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-14-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-14-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-15-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-15-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-16-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-16-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-17-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-17-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-18-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-18-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-19-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-19-2.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-20-1.dat
+Find 'Normal termination of Gaussian'
+Cannot find "Standard orientation"
+Find "Input orientation"
+Output file: espot_m1-20-2.dat
+Output file: espot_m1.dat
+
+Creating RESP input(s) for molecule: 1
+Output file: input1-ia_m1.in
+Output file: input1-sm_m1.in
+Output file: input2-ia_m1.in
+Output file: input2-sm_m1.in
+
+Executing charge fitting for molecule: 1
+Reading charge fit output for molecule: 1
+Correcting charge for molecule...
+Correcting charge for entire molecule ok
+Reading charge fit output for molecule with INTRA-MCC: 1
+Too many error to correct the charge for INTRA-MCC 60 4
+In the second step, too many error to correct the charge for INTRA-MCC 60 4
+Correcting charge for INTRA-MCC failed Mol1 0.0 | 1 2 3 4
+
+Creating the Data-Default-Proj directory and corresponding files
+Creating the force field library(ies) for molecule: 1
+Output file: Mol-sm_m1-c1.mol2
+Output file: Mol-sm_m1-c2.mol2
+Output file: Mol-sm_m1-c3.mol2
+Output file: Mol-sm_m1-c4.mol2
+Output file: Mol-sm_m1-c5.mol2
+Output file: Mol-sm_m1-c6.mol2
+Output file: Mol-sm_m1-c7.mol2
+Output file: Mol-sm_m1-c8.mol2
+Output file: Mol-sm_m1-c9.mol2
+Output file: Mol-sm_m1-c10.mol2
+Output file: Mol-sm_m1-c11.mol2
+Output file: Mol-sm_m1-c12.mol2
+Output file: Mol-sm_m1-c13.mol2
+Output file: Mol-sm_m1-c14.mol2
+Output file: Mol-sm_m1-c15.mol2
+Output file: Mol-sm_m1-c16.mol2
+Output file: Mol-sm_m1-c17.mol2
+Output file: Mol-sm_m1-c18.mol2
+Output file: Mol-sm_m1-c19.mol2
+Output file: Mol-sm_m1-c20.mol2
+Creating the fragment corresponding to INTRA-MCC for molecule: 1
+Output file: Mol-ia1_m1-c1.mol2
+Output file: Mol-ia1_m1-c2.mol2
+Output file: Mol-ia1_m1-c3.mol2
+Output file: Mol-ia1_m1-c4.mol2
+Output file: Mol-ia1_m1-c5.mol2
+Output file: Mol-ia1_m1-c6.mol2
+Output file: Mol-ia1_m1-c7.mol2
+Output file: Mol-ia1_m1-c8.mol2
+Output file: Mol-ia1_m1-c9.mol2
+Output file: Mol-ia1_m1-c10.mol2
+Output file: Mol-ia1_m1-c11.mol2
+Output file: Mol-ia1_m1-c12.mol2
+Output file: Mol-ia1_m1-c13.mol2
+Output file: Mol-ia1_m1-c14.mol2
+Output file: Mol-ia1_m1-c15.mol2
+Output file: Mol-ia1_m1-c16.mol2
+Output file: Mol-ia1_m1-c17.mol2
+Output file: Mol-ia1_m1-c18.mol2
+Output file: Mol-ia1_m1-c19.mol2
+Output file: Mol-ia1_m1-c20.mol2
+Converting QM log output into out output
+Converting QM log output into out output
+Moving the files corresponding to each molecule in a specific directory
+mv: cannot stat ‘JOB1-ga?_m1-10*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-11*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-12*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-13*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-14*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-15*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-16*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-17*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-18*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-19*’: No such file or directory
+mv: cannot stat ‘JOB1-ga?_m1-20*’: No such file or directory
+End of the PyRED job
+Time: Sat Jul  8 22:25:23 CEST 2023

@@ -1,14 +1,30 @@
 import argparse
+import numpy as np
+
 import utils
 import os
+import datetime
 try:
     from gecos_analysis.gecos_outputgaussian import GaussianGecos
     from gecos_analysis.gecos_irspectra import GecosIRSpectra
     from gecos_analysis.gecos_exp_irspectra import GecosExpIRSpectra
+    from gecos_analysis.gecos_resp_analysis import GecosRespAnalysis
+    from gecos_analysis.gecos_CnnClusteringWrapper import CnnClusteringWrapper
 except ModuleNotFoundError:
     from gecos_outputgaussian import GaussianGecos
     from gecos_irspectra import GecosIRSpectra
     from gecos_exp_irspectra import GecosExpIRSpectra
+    from gecos_resp_analysis import GecosRespAnalysis
+    from gecos_CnnClusteringWrapper import CnnClusteringWrapper
+
+
+class SmartFormatter(argparse.HelpFormatter):
+
+    def _split_lines(self, text, width):
+        if text.startswith('R|'):
+            return text[2:].splitlines()
+        # this is the RawTextHelpFormatter._split_lines
+        return argparse.HelpFormatter._split_lines(self, text, width)
 
 
 # =============================================================================
@@ -17,13 +33,15 @@ def parse_arguments():
     desc = """Energy QM analysis.
     This is part of the gecos library"""
 
-    parser = argparse.ArgumentParser(description=desc)
+    parser = argparse.ArgumentParser(description=desc, formatter_class=SmartFormatter)
 
     # Subparsers
     subparser = parser.add_subparsers(dest='command', required=True)
-    energy = subparser.add_parser('energy')
-    spectrum = subparser.add_parser('spectrum')
-    exp_spectrum = subparser.add_parser('exp_spectrum')
+    energy = subparser.add_parser('energy', formatter_class=SmartFormatter)
+    spectrum = subparser.add_parser('spectrum', formatter_class=SmartFormatter)
+    exp_spectrum = subparser.add_parser('exp_spectrum', formatter_class=SmartFormatter)
+    resp_prep = subparser.add_parser('resp_prep')
+    clustering = subparser.add_parser("clustering")
 
     # Arguments for energy command
     energy.add_argument("-d", "--logfolder", dest="logfolder",
@@ -60,6 +78,22 @@ def parse_arguments():
                              "GROMACS to extract internal coordinates from the log"
                              "files.",
                         action="store", required=False, default=None)
+
+    energy.add_argument("--clusterconf", dest="clusterconf",
+                        help="Clusterize conformers",
+                        action="store_true", required=False)
+
+    energy.add_argument("--clusterparam", dest="clusterparam", nargs=5,
+                        help="R|Parameters:\n"
+                             " - Energy threshold (kcal/mol) \n"
+                             " - Difference in Rotation constants (GHz)\n"
+                             " - RMSD threshold (Angstroms).\n"
+                             " - Window energy (kcal/mol)\n"
+                             " - Only heavy atoms to calculate RMSD (True/False)\n"
+                             "For more info: DOI	https://doi.org/10.1039/C9CP06869D",
+                        action="store", required=False, default=[0.1, 0.0005, 1.0, 1000.0, True],
+                        metavar=("Energy_Thresh", "RotConst_Thresh", "RMSD_Thresh",
+                                 "Window_energy", "Only_Backbone_RMSD"))
 
     # Arguments for spectrum command
     spectrum.add_argument("-d", "--logfolder", dest="logfolder",
@@ -103,24 +137,161 @@ def parse_arguments():
                           choices=["boltzmann", "simple", "all"],
                           action="store", required=False, default=None)
 
+    spectrum.add_argument("--clusterconf", dest="clusterconf",
+                          help="Clusterize conformers",
+                          action="store_true", required=False)
+
+    spectrum.add_argument("--clusterparam", dest="clusterparam", nargs=5,
+                          help="R|Parameters:\n"
+                               " - Energy threshold (kcal/mol) \n"
+                               " - Difference in Rotation constants (GHz)\n"
+                               " - RMSD threshold (Angstroms).\n"
+                               " - Window energy (kcal/mol)\n"
+                               " - Only heavy atoms to calculate RMSD (True/False)\n"
+                               "For more info: DOI	https://doi.org/10.1039/C9CP06869D",
+                          action="store", required=False, default=[0.1, 0.0005, 1.0, 1000.0, True],
+                          metavar=("Energy_Thresh", "RotConst_Thresh", "RMSD_Thresh",
+                                   "Window_energy", "Only_Backbone_RMSD"))
+
+    spectrum.add_argument("--similarity", dest="similarity",
+                          help="R|The similarity of the calculated spectra with\n "
+                               "the reference spectra (lowest energy structure)\n"
+                               "using the Pearson’s product moment correlation coefficient\n"
+                               "and the Spearman's rank correlation coefficient"
+                               "For more info: DOI	https://dx.doi.org/10.1021/acs.jctc.0c00126",
+                          action="store_true", required=False)
+
     # Arguments for preprocesing experimental spectrum command.
-    # Quantitative Comparison of Experimental and Computed IR-Spectra
-    # Extracted from Ab Initio Molecular Dynamics
-    # Beatriz von der Esch, Laurens D. M. Peters, Lena Sauerland, and Christian Ochsenfeld*
-    # Cite This: J. Chem. Theory Comput. 2021, 17, 985−995
-    exp_spectrum.add_argument("-f", "--file", dest="expspectrum",
+    exp_spectrum.add_argument("-f", "--file", dest="fileexpspectrum", type=str,
                               help="Name of the file containing the experimental spectrum",
                               action="store", required=True)
 
-    exp_spectrum.add_argument("--log", dest="log",
+    exp_spectrum.add_argument("-r", "--resample", dest="deltax", type=float,
+                              help="Resample data each deltax values",
+                              action="store", required=False, default=None)
+
+    exp_spectrum.add_argument("--log", dest="log", type=str,
                               help="Name of the file to write logs from this command",
                               action="store", required=False, default="gecos_experimental_spectrum.log")
 
+    exp_spectrum.add_argument("-n", "--normalize", dest="normalize", choices=['minmax', 'vectornorm', '1-norm', 'snv'],
+                              help="R|Method to normalize the spectra. Methods are explained in:\n"
+                                   "  \"A preliminary study on the importance of normalization method\n"
+                                   "  in Infrared MicroSpectroscopy for biomedical applications\".\n"
+                                   "  Andrea Zancla et al.\n"
+                                   "  24th IMEKO TC4 International Symposium\n"
+                                   "  22nd International Workshop on ADC and DAC Modelling and Testing\n"
+                                   "  IMEKO TC-4 2020\n"
+                                   "  Palermo, Italy, September 14-16, 2020\n",
+                              action="store", required=False, default=None)
+
+    exp_spectrum.add_argument("-b", "--baseline", dest="baseline",
+                              choices=['ASLS', 'Mixture_Model', 'Optimize_extended_range', '2021Munich'],
+                              help="R|Baseline correction of the spectrum.\n"
+                                    " - ASLS (Asymmetric Least Squares) as implemented in pybaselines library " 
+                                    "(Analytical Chemistry, 2003, 75(14), 3631-3636) \n"
+                                    " - Mixture_Model as implemented in pybaselines library " 
+                                    "(Chemometric and Intelligent Laboratory Systems, 2012, 117, 56-60) \n"
+                                    " - Optimize_extended_range as implemented in pybaselines library " 
+                                    "(Journal of Raman Spectroscopy, 2012, 43(12), 1884-1894) \n"
+                                    " - 2021Muchich (J.Chem.TheoryComp.2021,17,985)",
+                                    action="store",
+                              required=False, default=None)
+
+    exp_spectrum.add_argument("--baselineparams", dest="baselineparams", nargs='+',
+                              help="R|Baseline correction parameters:\n"
+                                   " - ASLS. Smoothing parameter (lambda) and penalizing weigth (p)"
+                                   " factor. Recommended values: 1e6, 1e-2\n"
+                                   "   https://pybaselines.readthedocs.io/en/latest/api/pybaselines"
+                                   "/api/index.html#pybaselines.api.Baseline.asls\n"
+                                   " - Mixture_Model. Smoothing parameter (lambda) and penalizing weigth (p)"
+                                   " factor. Recommended values: 1e5, 1e-2\n"
+                                   "   https://pybaselines.readthedocs.io/en/latest/api/pybaselines"
+                                   "/api/index.html#pybaselines.api.Baseline.mixture_model\n"
+                                   " - Adaptative_Min_Max. No parameters are required.\n"
+                                   "   https://pybaselines.readthedocs.io/en/latest/api/pybaselines"
+                                   "/api/index.html#pybaselines.api.Baseline.optimize_extended_range\n"
+                                   " - Munich2021 method. Cutoff value of the diff. Recommended value: 0.006\n"
+                                   "   https://pubs.acs.org/doi/10.1021/acs.jctc.0c01279?ref=pdf\n",
+                              action="store",
+                              required=False, default=None)
+
+    exp_spectrum.add_argument("-s", "--smoothpeak", dest="smoothpeak", choices=['SG'],
+                              help="R|Smooth peaks.\n"
+                                    " - SG: Savitzky-Golay filter (Analytical Chemistry 36. p. 1627-1639)",
+                              action="store",
+                              required=False, default=None)
+
+    exp_spectrum.add_argument("--smoothSGparam", dest="smoothSGparam", nargs=2, type=int,
+                              help="R|Parameters:\n"
+                                   " - Window_length \n"
+                                   " - Polyorder\n" 
+                                   "   (polyorder must be less than window_length).\n"
+                                   "  See parameters for the Savitzky-Golay method:\n"
+                                   "     https://docs.scipy.org/doc/scipy/reference/"
+                                   "generated/scipy.signal.savgol_filter.html",
+                              action="store",
+                              required=False, default=None)
+
+    # # Arguments for resp_prep command
+    # resp_prep.add_argument("--")
+    resp_prep.add_argument("--log", dest="log", type=str,
+                           help="Name of the file to write logs from this command",
+                           action="store", required=False, default="gecos_resp_prep.log")
+
+    resp_prep.add_argument("-p", "--package", dest="qmpackage", choices=['g16'],
+                           help="QM package to analyse (Default: Gaussian16).\n ",
+                           action="store", required=False, default="g16")
+
+    resp_prep.add_argument("-d", "--logfolder", dest="logfolder",
+                           help="Folder containing the QM outputs.\n ",
+                           action="store", required=True, default=None)
+
+    resp_prep.add_argument("--clusterconf", dest="clusterconf",
+                           help="Clusterize conformers",
+                           action="store_true", required=False, default=True)
+
+    resp_prep.add_argument("--clusterparam", dest="clusterparam", nargs=5,
+                           help="R|Parameters:\n"
+                                " - Energy threshold (kcal/mol) \n"
+                                " - Difference in Rotation constants (GHz)\n"
+                                " - RMSD threshold (Angstroms).\n"
+                                " - Window energy (kcal/mol)\n"
+                                " - Only heavy atoms to calculate RMSD (True/False)"
+                                "For more info: DOI	https://doi.org/10.1039/C9CP06869D",
+                           action="store", required=False, default=[0.1, 0.0005, 1.0, 1000.0, True],
+                           metavar=("Energy_Thresh", "RotConst_Thresh", "RMSD_Thresh",
+                                    "Window_energy", "Only_Backbone_RMSD"))
+
+    resp_prep.add_argument("--deltaenethresh", dest="deltaenethresh",
+                           help="Delta energy threshold to select conformers in kcal/mol",
+                           action="store", required=False, default=99999)
+
+    # Arguments for clustering command
+    clustering.add_argument("--log", dest="log", type=str,
+                            help="Name of the file to write logs from this command",
+                            action="store", required=False, default="gecos_clustering.log")
+
+    clustering.add_argument("-p", "--package", dest="qmpackage", choices=['g16'],
+                            help="QM package to analyse (Default: Gaussian16).\n ",
+                            action="store", required=False, default="g16")
+
+    clustering.add_argument("-d", "--logfolder", dest="logfolder",
+                            help="Folder containing the QM outputs.\n ",
+                            action="store", required=True, default=None)
+
+    clustering.add_argument("--indxfile", dest="indxfile",
+                            help="A file using the ndx format from "
+                            "GROMACS to extract internal coordinates from the log"
+                            "files.",
+                            action="store", required=False, default=None)
+
     args = parser.parse_args()
 
-    if args.command == "spectrum":
+    if args.command == "spectrum" or args.command == "clustering":
         if not os.path.isdir(args.logfolder):
-            print("\nERROR: Directory {} does not exist\n".format(args.logfolder))
+            msg = "\nERROR: Directory {} does not exist\n".format(args.logfolder)
+            parser.error(msg)
             exit()
 
     # Default values for cutoffs in the hydrogen bond
@@ -135,18 +306,60 @@ def parse_arguments():
 
         if args.indxfile is not None:
             if not os.path.isfile(args.indxfile):
-                print("ERROR: If you required extract internal coordinates a ndx file is needed.")
-                print("ERROR: The file {} does not exist in the current directory.".format(args.indxfile))
+                msg = "ERROR: If you required extract internal coordinates a ndx file is needed.\n"
+                msg += "ERROR: The file {} does not exist in the current directory.".format(args.indxfile)
+                parser.error(msg)
                 exit()
 
-    return args
+    if args.command == "exp_spectrum":
+        if not os.path.isfile(args.fileexpspectrum):
+            msg = "ERROR: The file {} does not exist in the current directory.".format(args.fileexpspectrum)
+            parser.error(msg)
+            exit()
+
+        if args.smoothpeak.upper() == "SG":
+            if not args.smoothSGparam:
+                msg = "ERROR: SG is invoked. The smoothSG option must be present"
+                parser.error(msg)
+                exit()
+
+        if args.baseline is not None:
+
+            if args.baseline.upper() == "ASLS":
+                if not args.baselineparams:
+                    msg = "ERROR: Baseline ASLS method is invoked. The baselineparams option must be present"
+                    parser.error(msg)
+                    exit()
+                elif len(args.baselineparams) != 2:
+                    msg = "ERROR: Baseline ASLS method is invoked. The baselineparams option must have two values"
+                    parser.error(msg)
+                    exit()
+
+            if args.baseline.upper() == "MIXTURE_MODEL":
+                if not args.baselineparams:
+                    msg = "ERROR: Baseline MIXTURE_MODEL method is invoked. The baselineparams option must be present"
+                    parser.error(msg)
+                    exit()
+                elif len(args.baselineparams) != 2:
+                    msg = "ERROR: Baseline MIXTURE_MODEL method is invoked. " \
+                          "The baselineparams option must have two values"
+                    parser.error(msg)
+                    exit()
+
+            if args.baseline.upper() == "2021MUNICH":
+                if not args.baselineparams:
+                    msg = "ERROR: Baseline 2021Munich method is invoked. The baselineparams option must be present"
+                    parser.error(msg)
+                    exit()
+
+    return args, parser
 
 
 # =============================================================================
 def main_app():
 
     # Parse arguments
-    args = parse_arguments()
+    args, parser = parse_arguments()
 
     # Setup log file
     log = utils.init_logger(
@@ -157,20 +370,35 @@ def main_app():
     # Print header
     utils.print_header_analysis(logger=log)
 
-    if args.command in ["energy", "spectrum"]:
+    if args.command in ["energy", "spectrum", "resp_prep", "clustering"]:
         if args.qmpackage == "g16":
             workdir = args.logfolder
             g16 = GaussianGecos(workdir, ext="log", logger=log)
+
             if args.command == "energy":
                 g16.extract_energy()
                 g16.extract_rmsd()
+                if args.clusterconf:
+                    g16.cluster_conformers(energy_thr=float(args.clusterparam[0]),
+                                           rot_constant_thr=float(args.clusterparam[1]),
+                                           rmsd_thr=float(args.clusterparam[2]),
+                                           window_energy=float(args.clusterparam[3]),
+                                           rmsd_only_heavy=bool(args.clusterparam[4]))
                 g16.close_contacts(args)
                 g16.moment_of_inertia()
                 if args.indxfile is not None:
                     g16.extract_internalcoords(args)
                 g16.write_to_log(workdir, generate_data_gnuplot=True)
+
             elif args.command == "spectrum":
                 g16.extract_vibrational_ir()
+                g16.extract_rmsd()
+                if args.clusterconf:
+                    g16.cluster_conformers(energy_thr=float(args.clusterparam[0]),
+                                           rot_constant_thr=float(args.clusterparam[1]),
+                                           rmsd_thr=float(args.clusterparam[2]),
+                                           window_energy=float(args.clusterparam[3]),
+                                           rmsd_only_heavy=bool(args.clusterparam[4]))
                 g16.write_vib_to_log(workdir, generate_data_gnuplot=True)
                 vf = g16.getvibfreqs()
                 vi = g16.getvibirs()
@@ -183,15 +411,66 @@ def main_app():
                                             end=args.end,
                                             npoints=args.npoints,
                                             width=args.width,
-                                            function=args.function)
+                                            function=args.function,
+                                            similarity=args.similarity)
                 spectra_ir.calculate_spectrum(avg=args.averaged)
-    elif args.command in ["exp_spectrum"]:
-        exp_spectra = GecosExpIRSpectra(args.expspectrum)
 
-    else:
-        exit()
-    # else:
-    #     exit()
+            elif args.command == "resp_prep":
+                g16.extract_energy()
+                g16.extract_rmsd()
+                if args.clusterconf:
+                    g16.cluster_conformers(energy_thr=float(args.clusterparam[0]),
+                                           rot_constant_thr=float(args.clusterparam[1]),
+                                           rmsd_thr=float(args.clusterparam[2]),
+                                           window_energy=float(args.clusterparam[3]),
+                                           rmsd_only_heavy=bool(args.clusterparam[4]))
+                g16.write_resp_to_log(workdir, generate_data_gnuplot=True)
+                is_prepareinputs = True
+                GecosRespAnalysis(g16, is_prepareinputs, float(args.deltaenethresh))
+                
+            elif args.command == "clustering":
+                g16.extract_energy()
+                g16.extract_rmsd()
+                if args.indxfile is not None:
+                    if not os.path.isfile(args.indxfile):
+                        msg = "ERROR: If you required extract internal coordinates a ndx file is needed.\n"
+                        msg += "ERROR: The file {} does not exist in the current directory.".format(args.indxfile)
+                        parser.error(msg)
+                        exit()
+                    g16.extract_internalcoords(args)
+
+                data = np.array([g16._df['RMSDwithoutHs'], g16._df['DeltaEnergy(kcal/mol)']]).transpose()
+                cnnclustering = CnnClusteringWrapper(data, logger=log)
+                cnnclustering.withdata(radius_cutoff=0.5, similarity_cutoff=0, isdraw="png")
+
+                # distances = pairwise_distances(data)
+                # print(distances)
+                #
+                #
+                #
+                #
+                #
+                # #clustering = cluster.Clustering(data)
+                # clustering = cluster.Clustering(distances, recipe="distances")
+                # print(clustering.fit(radius_cutoff=2.0, similarity_cutoff=2))
+
+
+
+                g16.write_clustering_to_log(workdir)
+
+    elif args.command in ["exp_spectrum"]:
+        _ = GecosExpIRSpectra(args.fileexpspectrum,
+                              delta_x=args.deltax,
+                              normalize=args.normalize,
+                              baseline=args.baseline,
+                              baselineparam=args.baselineparams,
+                              peaksmoothing=args.smoothpeak,
+                              peaksmoothingparam=args.smoothSGparam,
+                              logger=log)
+
+    now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
+    m = "\n\t\tJob  Done at {} ============\n".format(now)
+    print(m) if log is None else log.info(m)
 
 
 # =============================================================================

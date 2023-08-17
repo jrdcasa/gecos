@@ -1,0 +1,53 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 07-08-2023 21:57:09 ============
+
+		Command line: 
+			python gecos_analysis.py clustering -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/18-resp_test01/g16_logs_short
+			         or
+			gecos_analysis clustering -d /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/18-resp_test01/g16_logs_short
+
+			Parsing 0 log files out of 3 (07-08-2023 21:57:09)
+			Parsing 1 log files out of 3 (07-08-2023 21:57:09)
+			Parsing 2 log files out of 3 (07-08-2023 21:57:10)
+		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/18-resp_test01
+		Directory with Log files      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/18-resp_test01/g16_logs_short
+
+
+		#               ID               Type  DeltaEnergy(kcal/mol) RMSDwithHs(A) RMSDwithoutHs(A)   RotConstA(Ghz)   RotConstB(Ghz)   RotConstC(Ghz)  
+		# ====================================================================================================================================================
+		        DVE-DMSD_1_00018_gaussian          nan                 0.00                0.000          0.000          0.415097        0.098224         0.085560
+		        DVE-DMSD_1_00004_gaussian          nan                 1.21                4.047          3.657          0.859389        0.044063         0.042992
+		        DVE-DMSD_1_00012_gaussian          nan                 1.81                4.311          3.676          0.562292        0.047887         0.046720
+
+		# ====================================================================================================================================================
+
+		 Job Finnished: 07-08-2023 21:57:10
+
+
+		Job  Done at 07-08-2023 21:57:10 ============
+

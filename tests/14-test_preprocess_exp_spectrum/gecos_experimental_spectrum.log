@@ -24,10 +24,24 @@
         ***********************************************************************
 
         
-		Start Job at 13-02-2023 17:34:19 ============
+		Start Job at 03-05-2023 18:40:06 ============
 
 		Command line: 
-			python gecos_analysis.py exp_spectrum -f fdd
+			python gecos_analysis.py exp_spectrum -f Spectra/EVOH-EVA_exp.dat -n minmax -s SG --smoothSGparam 4 2
 			         or
-			gecos_analysis exp_spectrum -f fdd
+			gecos_analysis exp_spectrum -f Spectra/EVOH-EVA_exp.dat -n minmax -s SG --smoothSGparam 4 2
+
+
+		 ======== GETTING DATA ======== (03-05-2023 18:40:06)
+		 Getting data from Spectra/EVOH-EVA_exp.dat
+
+		 ======== NORMALIZING DATA ======== (03-05-2023 18:40:06)
+		 Normalizing data using the method: Min-Max normalization (mM)
+
+		 ======== GNU TEMPLATE ======== (03-05-2023 18:40:06)
+		 A gnuplot template has been generated:
+			 To visualize run the following command:
+			     gnuplot -p 99-template_expIR.gnuplot
+
+		Job  Done at 03-05-2023 18:40:06 ============
 

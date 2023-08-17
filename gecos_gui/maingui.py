@@ -31,6 +31,8 @@ def main_gui_app():
     window['-GAUSSIAN16_URL-'].bind('<Leave>', '+MOUSE AWAY+')
     window['-GAUSSIAN16_EXTRAINFO_URL-'].bind('<Enter>', '+MOUSE OVER+')
     window['-GAUSSIAN16_EXTRAINFO_URL-'].bind('<Leave>', '+MOUSE AWAY+')
+    window['-GAUSSIAN16_EXTRAINFO-'].bind('<Enter>', '+MOUSE OVER+')
+    window['-GAUSSIAN16_EXTRAINFO-'].bind('<Leave>', '+MOUSE AWAY+')
     window['-INPUT_OTHERSOLV_PROP-'].bind('<Enter>', '+MOUSE OVER+')
     window['-INPUT_OTHERSOLV_PROP-'].bind('<Leave>', '+MOUSE AWAY+')
 
