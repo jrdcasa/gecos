@@ -1,6 +1,6 @@
 
 	***************** START Gecos rdkit TEST *****************
-		Starting: 	 12-07-2021 23:02:53
+		Starting: 	 17-08-2023 19:20:32
 
 	Test_01: The class GecosRdkit is correctly imported
 		Test_01: --> SUCCESS
@@ -35,12 +35,14 @@
                      
         
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
-
 		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
-
-		PDB file seed  : ../../data/nitrobenzene.pdb
-		Bond Perception: True
-
+		Molecular file seed  : ../../data/nitrobenzene.pdb
+		Bond Perception  = True
+		Formula          = C6H5NO2
+		Number of atoms  = 14
+		Molecular weight = 123.03 g/mol
+		Rotable bonds    = 1 (include CH3 groups)
+		Number of rings  = 1
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
 
 
@@ -73,40 +75,87 @@
                      
         
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
-
 		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
-
-		PDB file seed  : ../../data/IsoP.pdb
-		Bond Perception: True
-
+		Molecular file seed  : ../../data/IsoP.pdb
+		Bond Perception  = True
+		Formula          = C10H18
+		Number of atoms  = 28
+		Molecular weight = 138.14 g/mol
+		Rotable bonds    = 7 (include CH3 groups)
+		Number of rings  = 0
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
 
 
 		**************** GENERATE CONFORMERS ***************
-		 1. Generating 50 conformers (12-07-2021 23:02:53)
-		 2. Minimizing 50 conformers. Max_iters = 3000, threshold = 2.0 A (12-07-2021 23:02:53)
+		 1. Generating 50 conformers (17-08-2023 19:20:32)
+		 2. Minimizing 50 conformers. Max_iters = 3000, threshold = 1.0 A (17-08-2023 19:20:32)
 			 Using MMFF forcefield
-		 3. Cluster Conformers (12-07-2021 23:02:54)
-			50 conformers generated grouped in 8 clusters (rmsd_threshold= 2.0 angstroms)
-		 4. Get structure of minimum energy for each cluster (12-07-2021 23:02:54)
-		 5. Write Conformers to PDB (12-07-2021 23:02:54)
-			Filename: ./IsoP_conf_min_trj.pdb
-		 6. Write Conformers to Gaussian16 (12-07-2021 23:02:54)
-			Inputfiles in IsoP_g16_conformers/ directory
+		 3. Cluster Conformers (17-08-2023 19:20:32) using None based method
+			50 conformers generated grouped in 50 clusters (rmsd_threshold= 1.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (17-08-2023 19:20:32)
+		 5. Write Conformers to PDB (17-08-2023 19:20:32)
+			Filename: ./IsoP_cluster_rdkit_optMM_trj.pdb
+		 6. Write Conformers to Gaussian16 inputs (17-08-2023 19:20:32)
+			Inputfiles in IsoP_g16_results/ directory
 		**************** GENERATE CONFORMERS ***************
 
-
 		**************** CONFORMER MM ENERGIES ***************
-			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
-			--------------------------------------------------------------------
-			   1         14          23.24                0.00          
-			   2         5           23.24                0.00          
-			   3         21          23.71                0.47          
-			   4         42          23.76                0.52          
-			   5         48          23.69                0.45          
-			   6         43          24.63                1.39          
-			   7         20          23.24                0.00          
-			   8         9           23.49                0.24          
+		Energies in kcal/mol, RMSD in angstroms.
+		RMSD threshold = 1.000 angstroms.
+		Number of clusters =   50
+		Cluster Conformer_ID  MMFF_energy  Relative_energy Highest_energy    RMSD   nelements
+		----------------------------------------------------------------------------------------
+		   1         20          23.24          0.00          23.24         0.000       1   
+		   2         14          23.24          0.00          23.24         0.690       1   
+		   3         33          23.24          0.00          23.24         0.000       1   
+		   4         4           23.24          0.00          23.24         0.000       1   
+		   5         5           23.24          0.00          23.24         1.127       1   
+		   6         47          23.29          0.05          23.29         1.186       1   
+		   7         17          23.29          0.05          23.29         1.186       1   
+		   8         12          23.29          0.05          23.29         1.111       1   
+		   9         37          23.29          0.05          23.29         1.186       1   
+		  10         16          23.29          0.05          23.29         1.381       1   
+		  11         15          23.29          0.05          23.29         1.381       1   
+		  12         34          23.29          0.05          23.29         1.111       1   
+		  13         11          23.29          0.05          23.29         1.381       1   
+		  14         35          23.29          0.05          23.29         1.210       1   
+		  15         19          23.49          0.24          23.49         0.731       1   
+		  16         8           23.49          0.24          23.49         0.731       1   
+		  17         9           23.49          0.24          23.49         1.185       1   
+		  18         48          23.69          0.45          23.69         1.299       1   
+		  19         10          23.71          0.47          23.71         1.461       1   
+		  20         1           23.71          0.47          23.71         1.473       1   
+		  21         21          23.71          0.47          23.71         1.388       1   
+		  22         6           23.71          0.47          23.71         1.473       1   
+		  23         39          23.71          0.47          23.71         1.538       1   
+		  24         22          23.71          0.47          23.71         1.388       1   
+		  25         40          23.71          0.47          23.71         1.538       1   
+		  26         29          23.71          0.47          23.71         1.461       1   
+		  27         27          23.71          0.47          23.71         1.473       1   
+		  28         41          23.71          0.47          23.71         1.388       1   
+		  29         7           23.76          0.52          23.76         0.944       1   
+		  30         31          23.76          0.52          23.76         0.944       1   
+		  31         42          23.76          0.52          23.76         1.299       1   
+		  32         49          23.76          0.52          23.76         0.944       1   
+		  33         26          23.76          0.52          23.76         1.299       1   
+		  34         3           23.76          0.52          23.76         1.284       1   
+		  35         45          23.76          0.52          23.76         0.642       1   
+		  36         32          23.76          0.52          23.76         1.299       1   
+		  37         25          23.87          0.62          23.87         0.775       1   
+		  38         46          23.96          0.72          23.96         1.187       1   
+		  39         2           24.03          0.79          24.03         1.542       1   
+		  40         0           24.03          0.79          24.03         1.287       1   
+		  41         30          24.54          1.30          24.54         1.024       1   
+		  42         23          24.54          1.30          24.54         1.024       1   
+		  43         13          24.54          1.30          24.54         1.304       1   
+		  44         18          24.54          1.30          24.54         1.466       1   
+		  45         36          24.54          1.30          24.54         1.466       1   
+		  46         38          24.63          1.39          24.63         1.561       1   
+		  47         43          24.63          1.39          24.63         1.561       1   
+		  48         24          24.85          1.60          24.85         1.560       1   
+		  49         44          25.40          2.16          25.40         1.113       1   
+		  50         28          25.49          2.25          25.49         1.038       1   
+		----------------------------------------------------------------------------------------
 		**************** CONFORMER MM ENERGIES ***************
 
 
@@ -135,33 +184,87 @@
                      
         
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
-
 		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
-
-		PDB file seed  : ../../data/nitrobenzene.pdb
-		Bond Perception: True
-
+		Molecular file seed  : ../../data/nitrobenzene.pdb
+		Bond Perception  = True
+		Formula          = C6H5NO2
+		Number of atoms  = 14
+		Molecular weight = 123.03 g/mol
+		Rotable bonds    = 1 (include CH3 groups)
+		Number of rings  = 1
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
 
 
 		**************** GENERATE CONFORMERS ***************
-		 1. Generating 50 conformers (12-07-2021 23:02:54)
-		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 2.0 A (12-07-2021 23:02:54)
+		 1. Generating 50 conformers (17-08-2023 19:20:32)
+		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 1.0 A (17-08-2023 19:20:32)
 			 Using MMFF forcefield
-		 3. Cluster Conformers (12-07-2021 23:02:54)
-			50 conformers generated grouped in 1 clusters (rmsd_threshold= 2.0 angstroms)
-		 4. Get structure of minimum energy for each cluster (12-07-2021 23:02:54)
-		 5. Write Conformers to PDB (12-07-2021 23:02:54)
-			Filename: ./nitrobenzene_conf_min_trj.pdb
-		 6. Write Conformers to Gaussian16 (12-07-2021 23:02:54)
-			Inputfiles in nitrobenzene_g16_conformers/ directory
+		 3. Cluster Conformers (17-08-2023 19:20:32) using None based method
+			50 conformers generated grouped in 50 clusters (rmsd_threshold= 1.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (17-08-2023 19:20:32)
+		 5. Write Conformers to PDB (17-08-2023 19:20:32)
+			Filename: ./nitrobenzene_cluster_rdkit_optMM_trj.pdb
+		 6. Write Conformers to Gaussian16 inputs (17-08-2023 19:20:32)
+			Inputfiles in nitrobenzene_g16_results/ directory
 		**************** GENERATE CONFORMERS ***************
 
-
 		**************** CONFORMER MM ENERGIES ***************
-			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
-			--------------------------------------------------------------------
-			   1         4           49.47                0.00          
+		Energies in kcal/mol, RMSD in angstroms.
+		RMSD threshold = 1.000 angstroms.
+		Number of clusters =   50
+		Cluster Conformer_ID  MMFF_energy  Relative_energy Highest_energy    RMSD   nelements
+		----------------------------------------------------------------------------------------
+		   1         4           49.47          0.00          49.47         0.000       1   
+		   2         34          49.47          0.00          49.47         1.034       1   
+		   3         49          49.47          0.00          49.47         0.000       1   
+		   4         15          49.47          0.00          49.47         0.000       1   
+		   5         18          49.47          0.00          49.47         0.000       1   
+		   6         40          49.47          0.00          49.47         1.034       1   
+		   7         11          49.47          0.00          49.47         1.034       1   
+		   8         19          49.47          0.00          49.47         1.034       1   
+		   9         32          49.47          0.00          49.47         1.034       1   
+		  10         36          49.47          0.00          49.47         0.000       1   
+		  11         29          49.47          0.00          49.47         0.000       1   
+		  12         14          49.47          0.00          49.47         1.034       1   
+		  13         31          49.47          0.00          49.47         0.000       1   
+		  14         13          49.47          0.00          49.47         0.000       1   
+		  15         6           49.47          0.00          49.47         1.034       1   
+		  16         42          49.47          0.00          49.47         1.034       1   
+		  17         23          49.47          0.00          49.47         0.000       1   
+		  18         21          49.47          0.00          49.47         1.034       1   
+		  19         22          49.47          0.00          49.47         0.000       1   
+		  20         17          49.47          0.00          49.47         0.000       1   
+		  21         46          49.47          0.00          49.47         1.034       1   
+		  22         3           49.47          0.00          49.47         1.034       1   
+		  23         41          49.47          0.00          49.47         0.000       1   
+		  24         35          49.47          0.00          49.47         1.034       1   
+		  25         39          49.47          0.00          49.47         0.000       1   
+		  26         16          49.47          0.00          49.47         0.000       1   
+		  27         38          49.47          0.00          49.47         0.000       1   
+		  28         47          49.47          0.00          49.47         1.034       1   
+		  29         5           49.47          0.00          49.47         1.034       1   
+		  30         1           49.47          0.00          49.47         1.034       1   
+		  31         37          49.47          0.00          49.47         1.034       1   
+		  32         27          49.47          0.00          49.47         0.000       1   
+		  33         9           49.47          0.00          49.47         0.000       1   
+		  34         44          49.47          0.00          49.47         1.034       1   
+		  35         33          49.47          0.00          49.47         0.000       1   
+		  36         10          49.47          0.00          49.47         1.034       1   
+		  37         48          49.47          0.00          49.47         1.034       1   
+		  38         12          49.47          0.00          49.47         1.034       1   
+		  39         28          49.47          0.00          49.47         1.034       1   
+		  40         2           49.47          0.00          49.47         0.000       1   
+		  41         0           49.47          0.00          49.47         0.000       1   
+		  42         7           49.47          0.00          49.47         0.000       1   
+		  43         30          49.47          0.00          49.47         0.000       1   
+		  44         8           49.47          0.00          49.47         0.000       1   
+		  45         20          49.47          0.00          49.47         0.000       1   
+		  46         24          49.47          0.00          49.47         0.000       1   
+		  47         25          49.47          0.00          49.47         1.034       1   
+		  48         45          49.47          0.00          49.47         0.000       1   
+		  49         26          49.47          0.00          49.47         0.000       1   
+		  50         43          49.47          0.00          49.47         0.000       1   
+		----------------------------------------------------------------------------------------
 		**************** CONFORMER MM ENERGIES ***************
 
 
@@ -190,32 +293,86 @@
                      
         
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
-
 		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
-
-		PDB file seed  : ../../data/nitrobenzene.sdf
-		Bond Perception: False
+		Molecular file seed  : ../../data/nitrobenzene.sdf
+		Bond Perception  = False		Formula          = C6H5NO2
+		Number of atoms  = 9
+		Molecular weight = 123.03 g/mol
+		Rotable bonds    = 1 (include CH3 groups)
+		Number of rings  = 1
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
 
 
 		**************** GENERATE CONFORMERS ***************
-		 1. Generating 50 conformers (12-07-2021 23:02:54)
-		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 2.0 A (12-07-2021 23:02:54)
+		 1. Generating 50 conformers (17-08-2023 19:20:32)
+		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 1.0 A (17-08-2023 19:20:32)
 			 Using MMFF forcefield
-		 3. Cluster Conformers (12-07-2021 23:02:54)
-			50 conformers generated grouped in 1 clusters (rmsd_threshold= 2.0 angstroms)
-		 4. Get structure of minimum energy for each cluster (12-07-2021 23:02:54)
-		 5. Write Conformers to PDB (12-07-2021 23:02:54)
-			Filename: ./nitrobenzene_sdf_conf_min_trj.pdb
-		 6. Write Conformers to Gaussian16 (12-07-2021 23:02:54)
-			Inputfiles in nitrobenzene_sdf_g16_conformers/ directory
+		 3. Cluster Conformers (17-08-2023 19:20:32) using None based method
+			50 conformers generated grouped in 50 clusters (rmsd_threshold= 1.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (17-08-2023 19:20:32)
+		 5. Write Conformers to PDB (17-08-2023 19:20:32)
+			Filename: ./nitrobenzene_sdf_cluster_rdkit_optMM_trj.pdb
+		 6. Write Conformers to Gaussian16 inputs (17-08-2023 19:20:32)
+			Inputfiles in nitrobenzene_sdf_g16_results/ directory
 		**************** GENERATE CONFORMERS ***************
 
-
 		**************** CONFORMER MM ENERGIES ***************
-			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
-			--------------------------------------------------------------------
-			   1         20          49.47                0.00          
+		Energies in kcal/mol, RMSD in angstroms.
+		RMSD threshold = 1.000 angstroms.
+		Number of clusters =   50
+		Cluster Conformer_ID  MMFF_energy  Relative_energy Highest_energy    RMSD   nelements
+		----------------------------------------------------------------------------------------
+		   1         10          21.62          0.00          21.62         0.000       1   
+		   2         19          21.62          0.00          21.62         0.000       1   
+		   3         40          21.62          0.00          21.62         0.000       1   
+		   4         49          21.62          0.00          21.62         1.035       1   
+		   5         6           21.62          0.00          21.62         1.035       1   
+		   6         27          21.62          0.00          21.62         1.035       1   
+		   7         12          21.62          0.00          21.62         0.000       1   
+		   8         35          21.62          0.00          21.62         1.035       1   
+		   9         25          21.62          0.00          21.62         0.000       1   
+		  10         22          21.62          0.00          21.62         0.000       1   
+		  11         30          21.62          0.00          21.62         0.000       1   
+		  12         11          21.62          0.00          21.62         1.035       1   
+		  13         41          21.62          0.00          21.62         1.035       1   
+		  14         9           21.62          0.00          21.62         1.035       1   
+		  15         1           21.62          0.00          21.62         0.000       1   
+		  16         0           21.62          0.00          21.62         0.000       1   
+		  17         13          21.62          0.00          21.62         0.000       1   
+		  18         47          21.62          0.00          21.62         0.000       1   
+		  19         28          21.62          0.00          21.62         1.035       1   
+		  20         26          21.62          0.00          21.62         1.035       1   
+		  21         3           21.62          0.00          21.62         0.000       1   
+		  22         46          21.62          0.00          21.62         0.000       1   
+		  23         20          21.62          0.00          21.62         1.035       1   
+		  24         42          21.62          0.00          21.62         1.035       1   
+		  25         38          21.62          0.00          21.62         1.035       1   
+		  26         16          21.62          0.00          21.62         0.000       1   
+		  27         37          21.62          0.00          21.62         0.000       1   
+		  28         21          21.62          0.00          21.62         0.000       1   
+		  29         44          21.62          0.00          21.62         0.000       1   
+		  30         48          21.62          0.00          21.62         0.000       1   
+		  31         45          21.62          0.00          21.62         0.000       1   
+		  32         39          21.62          0.00          21.62         0.000       1   
+		  33         29          21.62          0.00          21.62         0.000       1   
+		  34         36          21.62          0.00          21.62         1.035       1   
+		  35         2           21.62          0.00          21.62         0.000       1   
+		  36         43          21.62          0.00          21.62         0.000       1   
+		  37         5           21.62          0.00          21.62         1.035       1   
+		  38         7           21.62          0.00          21.62         1.035       1   
+		  39         4           21.62          0.00          21.62         0.000       1   
+		  40         15          21.62          0.00          21.62         0.000       1   
+		  41         18          21.62          0.00          21.62         1.035       1   
+		  42         23          21.62          0.00          21.62         1.035       1   
+		  43         31          21.62          0.00          21.62         0.000       1   
+		  44         32          21.62          0.00          21.62         1.035       1   
+		  45         24          21.62          0.00          21.62         0.000       1   
+		  46         33          21.62          0.00          21.62         1.035       1   
+		  47         17          21.62          0.00          21.62         0.000       1   
+		  48         34          21.62          0.00          21.62         0.000       1   
+		  49         8           21.62          0.00          21.62         0.000       1   
+		  50         14          21.62          0.00          21.62         1.035       1   
+		----------------------------------------------------------------------------------------
 		**************** CONFORMER MM ENERGIES ***************
 
 
@@ -244,46 +401,91 @@
                      
         
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
-
 		Conformers will be generated with RdKit library (https://www.rdkit.org/docs/GettingStartedInPython.html)
-
-		PDB file seed  : ../../data/PET.pdb
-		Bond Perception: True
-
+		Molecular file seed  : ../../data/PET.pdb
+		Bond Perception  = True
+		Formula          = C20H18O8
+		Number of atoms  = 46
+		Molecular weight = 386.10 g/mol
+		Rotable bonds    = 9 (include CH3 groups)
+		Number of rings  = 2
 		******** CREATION OF THE GECOS RDKIT OBJECT ********
 
 
 		**************** GENERATE CONFORMERS ***************
-		 1. Generating 50 conformers (12-07-2021 23:02:54)
-		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 2.0 A (12-07-2021 23:02:56)
+		 1. Generating 50 conformers (17-08-2023 19:20:33)
+		 2. Minimizing 50 conformers. Max_iters = 2000, threshold = 1.0 A (17-08-2023 19:20:34)
 			 Using MMFF forcefield
-		 3. Cluster Conformers (12-07-2021 23:02:58)
-			50 conformers generated grouped in 10 clusters (rmsd_threshold= 2.0 angstroms)
-		 4. Get structure of minimum energy for each cluster (12-07-2021 23:02:59)
-		 5. Write Conformers to PDB (12-07-2021 23:02:59)
-			Filename: ./PET_conf_min_trj.pdb
-		 6. Write Conformers to Gaussian16 (12-07-2021 23:02:59)
-			Inputfiles in PET_g16_conformers/ directory
+		 3. Cluster Conformers (17-08-2023 19:20:35) using None based method
+			50 conformers generated grouped in 50 clusters (rmsd_threshold= 1.0 angstroms)
+		 4. Get structure of minimum energy for each cluster (17-08-2023 19:20:35)
+		 5. Write Conformers to PDB (17-08-2023 19:20:35)
+			Filename: ./PET_cluster_rdkit_optMM_trj.pdb
+		 6. Write Conformers to Gaussian16 inputs (17-08-2023 19:20:35)
+			Inputfiles in PET_g16_results/ directory
 		**************** GENERATE CONFORMERS ***************
 
-
 		**************** CONFORMER MM ENERGIES ***************
-			Cluster Conformer_ID  MMFF_energy(kcal/mol)  Relative_energy(kcal/mol)
-			--------------------------------------------------------------------
-			   1         14          72.12                0.89          
-			   2         49          71.72                0.50          
-			   3         43          71.67                0.44          
-			   4         41          74.38                3.15          
-			   5         40          72.59                1.37          
-			   6         34          71.27                0.05          
-			   7         33          72.01                0.79          
-			   8         31          73.12                1.90          
-			   9         26          72.88                1.65          
-			  10         7           71.22                0.00          
+		Energies in kcal/mol, RMSD in angstroms.
+		RMSD threshold = 1.000 angstroms.
+		Number of clusters =   50
+		Cluster Conformer_ID  MMFF_energy  Relative_energy Highest_energy    RMSD   nelements
+		----------------------------------------------------------------------------------------
+		   1         19          72.12          0.00          72.12         0.000       1   
+		   2         27          72.12          0.00          72.12         0.646       1   
+		   3         44          72.15          0.03          72.15         1.483       1   
+		   4         22          72.17          0.05          72.17         3.237       1   
+		   5         49          72.20          0.08          72.20         3.544       1   
+		   6         5           72.53          0.41          72.53         1.143       1   
+		   7         7           72.53          0.41          72.53         1.232       1   
+		   8         1           72.53          0.41          72.53         0.695       1   
+		   9         2           72.56          0.44          72.56         1.207       1   
+		  10         34          72.56          0.44          72.56         1.483       1   
+		  11         28          72.56          0.44          72.56         0.659       1   
+		  12         30          72.56          0.44          72.56         0.355       1   
+		  13         36          72.59          0.48          72.59         1.240       1   
+		  14         29          72.61          0.49          72.61         1.011       1   
+		  15         17          72.61          0.49          72.61         1.011       1   
+		  16         15          72.61          0.49          72.61         1.363       1   
+		  17         18          72.98          0.86          72.98         0.976       1   
+		  18         12          73.05          0.93          73.05         1.079       1   
+		  19         10          73.06          0.94          73.06         1.074       1   
+		  20         48          73.20          1.08          73.20         1.340       1   
+		  21         6           73.20          1.08          73.20         1.483       1   
+		  22         20          73.42          1.30          73.42         1.098       1   
+		  23         16          73.42          1.30          73.42         1.018       1   
+		  24         47          73.47          1.36          73.47         1.030       1   
+		  25         43          73.49          1.38          73.49         1.231       1   
+		  26         31          73.49          1.38          73.49         0.782       1   
+		  27         39          73.49          1.38          73.49         1.056       1   
+		  28         41          73.49          1.38          73.49         0.964       1   
+		  29         14          73.50          1.38          73.50         1.043       1   
+		  30         25          73.50          1.38          73.50         1.228       1   
+		  31         46          73.50          1.38          73.50         1.228       1   
+		  32         8           73.57          1.45          73.57         1.228       1   
+		  33         45          73.57          1.45          73.57         1.217       1   
+		  34         0           73.57          1.45          73.57         1.609       1   
+		  35         23          73.64          1.52          73.64         1.304       1   
+		  36         9           73.64          1.52          73.64         0.958       1   
+		  37         37          73.65          1.53          73.65         1.414       1   
+		  38         40          73.65          1.53          73.65         1.362       1   
+		  39         35          73.65          1.53          73.65         1.199       1   
+		  40         11          74.08          1.96          74.08         1.338       1   
+		  41         4           74.18          2.06          74.18         1.272       1   
+		  42         42          74.18          2.06          74.18         1.300       1   
+		  43         24          74.18          2.06          74.18         1.155       1   
+		  44         32          74.18          2.06          74.18         1.425       1   
+		  45         21          74.27          2.15          74.27         1.537       1   
+		  46         26          74.27          2.15          74.27         1.481       1   
+		  47         13          74.38          2.26          74.38         1.141       1   
+		  48         38          74.38          2.26          74.38         1.351       1   
+		  49         3           74.38          2.26          74.38         1.059       1   
+		  50         33          74.38          2.26          74.38         1.515       1   
+		----------------------------------------------------------------------------------------
 		**************** CONFORMER MM ENERGIES ***************
 
 	Test_06: Convert PDB to SDF file
 
 	***************** END Gecos rdkit TEST *****************
-		Finishing: 	 12-07-2021 23:02:59
+		Finishing: 	 17-08-2023 19:20:35
 

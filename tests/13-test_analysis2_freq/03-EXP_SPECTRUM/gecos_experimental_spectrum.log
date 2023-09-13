@@ -1,0 +1,55 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 06-09-2023 09:31:42 ============
+
+		Command line: 
+			python gecos_analysis exp_spectrum -f EVOH_exp.dat -r 400 4000 500 -n minmax -b ASLS --baselineparams 1e06 1e-02 -s SG --smoothSGparam 4 2
+			         or
+			gecos_analysis exp_spectrum -f EVOH_exp.dat -r 400 4000 500 -n minmax -b ASLS --baselineparams 1e06 1e-02 -s SG --smoothSGparam 4 2
+
+
+		 ======== GETTING DATA ======== (06-09-2023 09:31:42)
+		 Getting data from EVOH_exp.dat
+
+		 ======== RESAMPLING THE DATA ======== (06-09-2023 09:31:42)
+		 Original  data --> Number of points:    1764 DeltaX:       2.27
+		 Resampled data --> Number of points:     500 DeltaX:       7.20
+
+		 ======== NORMALIZING DATA ======== (06-09-2023 09:31:42)
+		 Normalizing data using the method: Min-Max normalization (mM)
+
+		 ======== BASELINE CORRECTION ======== (06-09-2023 09:31:42)
+		 Baseline correction using the method: ASLS. 
+		(https://pybaselines.readthedocs.io/en/latest/api/pybaselines/api/index.html#pybaselines.api.Baseline.asls)
+
+		 ======== GNU TEMPLATE ======== (06-09-2023 09:31:42)
+		 A gnuplot template has been generated:
+			 To visualize run the following command:
+			     gnuplot -p 99-template_expIR.gnuplot
+
+		Job  Done at 06-09-2023 09:31:42 ============
+

@@ -1,0 +1,595 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 04-09-2023 13:00:58 ============
+
+		Command line: 
+			python gecos_analysis.py spectrum -d /home/jramos/Documentos/___MIS_PETICIONES_PROYECTOS___/2019-Proyecto-PN-GenCon/13-Resultados/2022-Spectra_IR/16-EVOH-ETH_extractMD/01-FREQ/FREQ_g16_results -p g16 --start 400 --end 4000 --npoints 500 --width 40 --avg all --similarity --normalize minmax --clusterconf --scale 0.97
+			         or
+			gecos_analysis spectrum -d /home/jramos/Documentos/___MIS_PETICIONES_PROYECTOS___/2019-Proyecto-PN-GenCon/13-Resultados/2022-Spectra_IR/16-EVOH-ETH_extractMD/01-FREQ/FREQ_g16_results -p g16 --start 400 --end 4000 --npoints 500 --width 40 --avg all --similarity --normalize minmax --clusterconf --scale 0.97
+
+			 Clustering Ensemble 1 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 26 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 51 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 76 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 101 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 126 of 255 (04-09-2023 13:01:07)
+			 Clustering Ensemble 151 of 255 (04-09-2023 13:01:08)
+			 Clustering Ensemble 176 of 255 (04-09-2023 13:01:08)
+			 Clustering Ensemble 201 of 255 (04-09-2023 13:01:08)
+			 Clustering Ensemble 226 of 255 (04-09-2023 13:01:08)
+			 Clustering Ensemble 251 of 255 (04-09-2023 13:01:08)
+
+			 Conformers          : 195
+			 Rotamers            : 54
+			 Identical           : 6
+			 Others              : 0
+			 Total               : 255
+
+		Thresholds used to classify conformers are:
+		 energy_thr=0.1 kcal/mol, rot_constant_thr=0.0005 GHz,
+		 rmsd_thr=1.0 Angs window_energy=1000.0 kcal/mol rms_only_heavy=True
+
+
+		 ======== NORMALIZING DATA ======== (04-09-2023 13:01:08)
+		 Normalizing data using the method: minmax
+		Localdir                      : /home/jramos/Programacion/GITHUB_REPO_DIR/gecos2/tests/13-test_analysis2_freq/02-SPECTRUM_EVOH_ETH
+		Directory with Log files      : /home/jramos/Documentos/___MIS_PETICIONES_PROYECTOS___/2019-Proyecto-PN-GenCon/13-Resultados/2022-Spectra_IR/16-EVOH-ETH_extractMD/01-FREQ/FREQ_g16_results
+
+
+		#                        ID                        Type        DeltaG(kcal/mol)   Delta_-TS(kcal/mol) DeltaH(kcal/mol)  DeltaH(kcal/mol) 
+		# =============================================================================================================================================
+		     0   C10H24O_pair_024_061_allign_FREQ_g16   Conformer             0.00                     -0.00               0.00               0.00
+		     1   C10H24O_pair_072_086_allign_FREQ_g16   Conformer             0.11                      1.47              -1.36              -1.41
+		     2   C10H24O_pair_018_087_allign_FREQ_g16   Conformer             0.22                      1.92              -1.70              -1.72
+		     3   C10H24O_pair_052_098_allign_FREQ_g16   Rotamer_2             0.23                      1.91              -1.68              -1.72
+		     4   C10H24O_pair_001_052_allign_FREQ_g16   Conformer             0.27                      0.97              -0.70              -0.75
+		     5   C10H24O_pair_013_018_allign_FREQ_g16   Rotamer_2             0.28                      1.25              -0.97              -1.02
+		     6   C10H24O_pair_022_070_allign_FREQ_g16   Conformer             0.39                      1.48              -1.09              -1.04
+		     7   C10H24O_pair_096_098_allign_FREQ_g16   Conformer             0.39                      1.97              -1.57              -1.62
+		     8   C10H24O_pair_056_072_allign_FREQ_g16   Conformer             0.40                      1.49              -1.09              -1.04
+		     9   C10H24O_pair_065_071_allign_FREQ_g16   Conformer             0.42                      1.14              -0.72              -0.80
+		    10   C10H24O_pair_066_093_allign_FREQ_g16   Rotamer_6             0.48                      1.57              -1.09              -1.10
+		    11   C10H24O_pair_019_058_allign_FREQ_g16   Conformer             0.55                      1.50              -0.95              -0.98
+		    12   C10H24O_pair_046_078_allign_FREQ_g16   Conformer             0.56                      2.46              -1.89              -1.94
+		    13   C10H24O_pair_038_049_allign_FREQ_g16   Conformer             0.58                      1.04              -0.46              -0.47
+		    14   C10H24O_pair_071_078_allign_FREQ_g16   Conformer             0.60                      2.30              -1.70              -1.71
+		    15   C10H24O_pair_073_092_allign_FREQ_g16   Identical_14          0.60                      2.31              -1.71              -1.71
+		    16   C10H24O_pair_042_068_allign_FREQ_g16   Identical_14          0.61                      2.31              -1.71              -1.71
+		    17   C10H24O_pair_022_025_allign_FREQ_g16   Conformer             0.61                      2.04              -1.43              -1.45
+		    18   C10H24O_pair_052_085_allign_FREQ_g16   Conformer             0.61                      2.32              -1.71              -1.71
+		    19   C10H24O_pair_070_086_allign_FREQ_g16   Rotamer_14            0.62                      0.70              -0.09              -0.11
+		    20   C10H24O_pair_009_056_allign_FREQ_g16   Conformer             0.67                      2.15              -1.48              -1.51
+		    21   C10H24O_pair_035_088_allign_FREQ_g16   Conformer             0.69                      0.84              -0.15              -0.14
+		    22   C10H24O_pair_049_063_allign_FREQ_g16   Conformer             0.69                      2.18              -1.48              -1.51
+		    23   C10H24O_pair_019_049_allign_FREQ_g16   Conformer             0.72                      1.28              -0.56              -0.58
+		    24   C10H24O_pair_028_087_allign_FREQ_g16   Conformer             0.77                      0.47               0.31               0.37
+		    25   C10H24O_pair_049_085_allign_FREQ_g16   Rotamer_23            0.79                      2.51              -1.71              -1.79
+		    26   C10H24O_pair_025_086_allign_FREQ_g16   Conformer             0.87                     -0.14               1.01               1.03
+		    27   C10H24O_pair_055_073_allign_FREQ_g16   Conformer             0.93                      1.23              -0.29              -0.32
+		    28   C10H24O_pair_028_088_allign_FREQ_g16   Conformer             0.93                      0.73               0.20               0.25
+		    29   C10H24O_pair_078_090_allign_FREQ_g16   Conformer             0.94                      1.57              -0.63              -0.69
+		    30   C10H24O_pair_056_066_allign_FREQ_g16   Rotamer_29            0.95                      2.36              -1.41              -1.48
+		    31   C10H24O_pair_003_084_allign_FREQ_g16   Conformer             0.96                      1.94              -0.98              -1.06
+		    32   C10H24O_pair_035_061_allign_FREQ_g16   Rotamer_29            0.96                      2.37              -1.41              -1.48
+		    33   C10H24O_pair_068_087_allign_FREQ_g16   Conformer             1.00                     -1.89               2.89               3.08
+		    34   C10H24O_pair_037_082_allign_FREQ_g16   Conformer             1.01                     -1.19               2.19               2.32
+		    35   C10H24O_pair_042_048_allign_FREQ_g16   Conformer             1.02                      0.57               0.46               0.49
+		    36   C10H24O_pair_025_053_allign_FREQ_g16   Conformer             1.04                      2.01              -0.97              -1.16
+		    37   C10H24O_pair_051_056_allign_FREQ_g16   Conformer             1.05                      1.90              -0.84              -0.87
+		    38   C10H24O_pair_073_099_allign_FREQ_g16   Conformer             1.09                      1.01               0.08              -0.04
+		    39   C10H24O_pair_021_070_allign_FREQ_g16   Conformer             1.09                      1.37              -0.28              -0.35
+		    40   C10H24O_pair_026_054_allign_FREQ_g16   Conformer             1.12                     -0.72               1.84               1.90
+		    41   C10H24O_pair_021_050_allign_FREQ_g16   Conformer             1.15                      0.99               0.16               0.09
+		    42   C10H24O_pair_003_098_allign_FREQ_g16   Rotamer_37            1.15                      1.73              -0.58              -0.65
+		    43   C10H24O_pair_052_079_allign_FREQ_g16   Conformer             1.18                     -0.43               1.61               1.64
+		    44   C10H24O_pair_000_028_allign_FREQ_g16   Conformer             1.21                      0.98               0.24               0.17
+		    45   C10H24O_pair_025_079_allign_FREQ_g16   Conformer             1.22                     -0.49               1.71               1.76
+		    46   C10H24O_pair_049_098_allign_FREQ_g16   Conformer             1.24                      2.18              -0.94              -0.99
+		    47   C10H24O_pair_012_068_allign_FREQ_g16   Identical_46          1.26                      2.19              -0.94              -0.99
+		    48   C10H24O_pair_002_031_allign_FREQ_g16   Conformer             1.28                      1.43              -0.15              -0.36
+		    49   C10H24O_pair_056_089_allign_FREQ_g16   Conformer             1.29                      1.13               0.15               0.10
+		    50   C10H24O_pair_079_091_allign_FREQ_g16   Rotamer_46            1.31                      1.73              -0.42              -0.55
+		    51   C10H24O_pair_019_023_allign_FREQ_g16   Rotamer_46            1.33                      1.75              -0.42              -0.55
+		    52   C10H24O_pair_026_038_allign_FREQ_g16   Conformer             1.33                      0.22               1.11               1.18
+		    53   C10H24O_pair_016_026_allign_FREQ_g16   Rotamer_48            1.36                      2.12              -0.75              -0.91
+		    54   C10H24O_pair_019_032_allign_FREQ_g16   Conformer             1.38                      2.46              -1.07              -1.25
+		    55   C10H24O_pair_086_096_allign_FREQ_g16   Rotamer_49            1.38                      2.57              -1.18              -1.35
+		    56   C10H24O_pair_010_076_allign_FREQ_g16   Conformer             1.40                      1.60              -0.20              -0.21
+		    57   C10H24O_pair_023_092_allign_FREQ_g16   Conformer             1.42                      2.29              -0.86              -0.92
+		    58   C10H24O_pair_026_060_allign_FREQ_g16   Conformer             1.43                      1.47              -0.04              -0.24
+		    59   C10H24O_pair_067_092_allign_FREQ_g16   Conformer             1.44                      1.65              -0.21              -0.26
+		    60   C10H24O_pair_074_088_allign_FREQ_g16   Conformer             1.45                      1.99              -0.54              -0.56
+		    61   C10H24O_pair_066_095_allign_FREQ_g16   Rotamer_59            1.46                      1.59              -0.12              -0.14
+		    62   C10H24O_pair_005_056_allign_FREQ_g16   Conformer             1.46                      1.04               0.42               0.45
+		    63   C10H24O_pair_025_098_allign_FREQ_g16   Conformer             1.48                      0.05               1.42               1.49
+		    64   C10H24O_pair_008_013_allign_FREQ_g16   Conformer             1.48                      1.58              -0.10              -0.12
+		    65   C10H24O_pair_027_087_allign_FREQ_g16   Conformer             1.48                      1.90              -0.42              -0.47
+		    66   C10H24O_pair_013_091_allign_FREQ_g16   Conformer             1.50                     -1.94               3.44               3.59
+		    67   C10H24O_pair_011_068_allign_FREQ_g16   Rotamer_60            1.50                      2.26              -0.76              -0.92
+		    68   C10H24O_pair_047_088_allign_FREQ_g16   Conformer             1.50                      2.13              -0.63              -0.75
+		    69   C10H24O_pair_050_078_allign_FREQ_g16   Conformer             1.50                      2.50              -1.00              -1.13
+		    70   C10H24O_pair_037_074_allign_FREQ_g16   Rotamer_57            1.51                      2.38              -0.88              -0.96
+		    71   C10H24O_pair_006_019_allign_FREQ_g16   Conformer             1.51                      1.37               0.13               0.12
+		    72   C10H24O_pair_018_059_allign_FREQ_g16   Rotamer_59            1.51                      1.74              -0.23              -0.32
+		    73   C10H24O_pair_068_094_allign_FREQ_g16   Rotamer_60            1.52                      2.28              -0.76              -0.92
+		    74   C10H24O_pair_024_042_allign_FREQ_g16   Rotamer_69            1.53                      2.03              -0.50              -0.62
+		    75   C10H24O_pair_024_041_allign_FREQ_g16   Rotamer_69            1.54                      2.04              -0.50              -0.62
+		    76   C10H24O_pair_054_071_allign_FREQ_g16   Conformer             1.55                      2.10              -0.55              -0.63
+		    77   C10H24O_pair_074_081_allign_FREQ_g16   Conformer             1.55                      0.27               1.28               1.13
+		    78   C10H24O_pair_032_078_allign_FREQ_g16   Conformer             1.56                      2.06              -0.50              -0.61
+		    79   C10H24O_pair_042_051_allign_FREQ_g16   Conformer             1.56                     -0.60               2.15               2.28
+		    80   C10H24O_pair_016_031_allign_FREQ_g16   Conformer             1.57                      2.37              -0.80              -0.93
+		    81   C10H24O_pair_063_074_allign_FREQ_g16   Conformer             1.60                      2.10              -0.51              -0.54
+		    82   C10H24O_pair_007_042_allign_FREQ_g16   Rotamer_76            1.63                      2.01              -0.37              -0.43
+		    83   C10H24O_pair_020_026_allign_FREQ_g16   Conformer             1.64                      0.50               1.14               1.13
+		    84   C10H24O_pair_053_070_allign_FREQ_g16   Conformer             1.66                      2.18              -0.52              -0.61
+		    85   C10H24O_pair_068_095_allign_FREQ_g16   Conformer             1.67                      2.61              -0.94              -1.06
+		    86   C10H24O_pair_073_095_allign_FREQ_g16   Conformer             1.67                      2.63              -0.95              -1.05
+		    87   C10H24O_pair_021_024_allign_FREQ_g16   Conformer             1.67                      1.57               0.11               0.01
+		    88   C10H24O_pair_070_084_allign_FREQ_g16   Conformer             1.67                      0.27               1.41               1.47
+		    89   C10H24O_pair_001_049_allign_FREQ_g16   Rotamer_88            1.69                      1.31               0.38               0.33
+		    90   C10H24O_pair_070_076_allign_FREQ_g16   Rotamer_86            1.69                      0.28               1.41               1.47
+		    91   C10H24O_pair_074_093_allign_FREQ_g16   Conformer             1.69                      1.64               0.05              -0.05
+		    92   C10H24O_pair_040_042_allign_FREQ_g16   Conformer             1.71                      1.49               0.22               0.22
+		    93   C10H24O_pair_020_062_allign_FREQ_g16   Rotamer_86            1.73                      0.94               0.79               0.82
+		    94   C10H24O_pair_073_080_allign_FREQ_g16   Conformer             1.74                     -0.03               1.78               1.77
+		    95   C10H24O_pair_032_079_allign_FREQ_g16   Conformer             1.76                      2.09              -0.33              -0.50
+		    96   C10H24O_pair_006_037_allign_FREQ_g16   Conformer             1.76                      0.51               1.26               1.24
+		    97   C10H24O_pair_038_074_allign_FREQ_g16   Conformer             1.77                      1.60               0.17               0.16
+		    98   C10H24O_pair_066_076_allign_FREQ_g16   Rotamer_86            1.77                      0.36               1.42               1.47
+		    99   C10H24O_pair_011_073_allign_FREQ_g16   Conformer             1.77                      1.35               0.43               0.30
+		   100   C10H24O_pair_028_086_allign_FREQ_g16   Conformer             1.77                      2.25              -0.48              -0.58
+		   101   C10H24O_pair_045_070_allign_FREQ_g16   Conformer             1.79                      1.97              -0.18              -0.38
+		   102   C10H24O_pair_037_047_allign_FREQ_g16   Conformer             1.79                     -0.36               2.15               2.19
+		   103   C10H24O_pair_064_069_allign_FREQ_g16   Rotamer_100           1.80                      2.43              -0.63              -0.74
+		   104   C10H24O_pair_082_093_allign_FREQ_g16   Rotamer_95            1.81                      1.47               0.35               0.28
+		   105   C10H24O_pair_032_065_allign_FREQ_g16   Conformer             1.82                      1.77               0.05              -0.06
+		   106   C10H24O_pair_017_051_allign_FREQ_g16   Conformer             1.82                      1.81               0.01              -0.13
+		   107   C10H24O_pair_009_095_allign_FREQ_g16   Conformer             1.85                      1.24               0.62               0.59
+		   108   C10H24O_pair_066_077_allign_FREQ_g16   Conformer             1.86                      1.00               0.86               0.90
+		   109   C10H24O_pair_006_038_allign_FREQ_g16   Rotamer_96            1.86                      1.55               0.30               0.22
+		   110   C10H24O_pair_010_013_allign_FREQ_g16   Rotamer_108           1.88                      2.63              -0.75              -0.84
+		   111   C10H24O_pair_072_095_allign_FREQ_g16   Rotamer_106           1.89                      1.74               0.15               0.11
+		   112   C10H24O_pair_063_071_allign_FREQ_g16   Rotamer_108           1.91                      1.05               0.86               0.89
+		   113   C10H24O_pair_005_086_allign_FREQ_g16   Conformer             1.91                      1.63               0.28               0.16
+		   114   C10H24O_pair_034_053_allign_FREQ_g16   Rotamer_105           1.91                      2.03              -0.11              -0.32
+		   115   C10H24O_pair_006_063_allign_FREQ_g16   Conformer             1.96                     -1.42               3.38               3.53
+		   116   C10H24O_pair_015_075_allign_FREQ_g16   Conformer             1.96                      0.69               1.27               1.21
+		   117   C10H24O_pair_076_089_allign_FREQ_g16   Conformer             1.96                     -0.43               2.39               2.46
+		   118   C10H24O_pair_013_035_allign_FREQ_g16   Conformer             1.96                      1.71               0.25               0.26
+		   119   C10H24O_pair_046_077_allign_FREQ_g16   Conformer             1.96                      1.16               0.80               0.83
+		   120   C10H24O_pair_002_058_allign_FREQ_g16   Conformer             1.98                      2.25              -0.26              -0.47
+		   121   C10H24O_pair_003_081_allign_FREQ_g16   Conformer             2.00                      0.80               1.20               1.09
+		   122   C10H24O_pair_075_077_allign_FREQ_g16   Conformer             2.03                      0.84               1.19               1.28
+		   123   C10H24O_pair_064_074_allign_FREQ_g16   Conformer             2.04                      0.92               1.12               1.04
+		   124   C10H24O_pair_030_092_allign_FREQ_g16   Conformer             2.04                      2.18              -0.14              -0.24
+		   125   C10H24O_pair_046_079_allign_FREQ_g16   Conformer             2.05                      2.03               0.02              -0.07
+		   126   C10H24O_pair_013_030_allign_FREQ_g16   Conformer             2.07                      0.83               1.24               1.19
+		   127   C10H24O_pair_034_059_allign_FREQ_g16   Conformer             2.07                      1.02               1.05               0.97
+		   128   C10H24O_pair_023_065_allign_FREQ_g16   Conformer             2.09                      1.41               0.68               0.56
+		   129   C10H24O_pair_088_096_allign_FREQ_g16   Conformer             2.09                      2.15              -0.06              -0.08
+		   130   C10H24O_pair_055_075_allign_FREQ_g16   Conformer             2.11                      0.20               1.91               1.98
+		   131   C10H24O_pair_007_053_allign_FREQ_g16   Conformer             2.12                      1.93               0.19               0.02
+		   132   C10H24O_pair_016_062_allign_FREQ_g16   Conformer             2.12                      1.98               0.14              -0.06
+		   133   C10H24O_pair_052_092_allign_FREQ_g16   Rotamer_125           2.12                      1.29               0.83               0.85
+		   134   C10H24O_pair_031_099_allign_FREQ_g16   Conformer             2.15                      2.59              -0.43              -0.53
+		   135   C10H24O_pair_000_097_allign_FREQ_g16   Rotamer_132           2.16                      1.57               0.60               0.49
+		   136   C10H24O_pair_013_036_allign_FREQ_g16   Conformer             2.18                      0.65               1.53               1.53
+		   137   C10H24O_pair_038_083_allign_FREQ_g16   Conformer             2.19                      1.40               0.79               0.72
+		   138   C10H24O_pair_041_082_allign_FREQ_g16   Rotamer_136           2.20                      1.52               0.68               0.70
+		   139   C10H24O_pair_013_096_allign_FREQ_g16   Conformer             2.21                      2.18               0.03               0.01
+		   140   C10H24O_pair_029_050_allign_FREQ_g16   Conformer             2.21                      2.27              -0.06              -0.23
+		   141   C10H24O_pair_027_081_allign_FREQ_g16   Conformer             2.22                      1.35               0.87               0.71
+		   142   C10H24O_pair_057_069_allign_FREQ_g16   Conformer             2.22                      1.95               0.26               0.10
+		   143   C10H24O_pair_022_072_allign_FREQ_g16   Identical_139         2.22                      2.19               0.03               0.01
+		   144   C10H24O_pair_041_048_allign_FREQ_g16   Conformer             2.23                      0.59               1.64               1.67
+		   145   C10H24O_pair_018_061_allign_FREQ_g16   Rotamer_136           2.26                      2.24               0.02              -0.01
+		   146   C10H24O_pair_028_041_allign_FREQ_g16   Rotamer_136           2.27                      2.25               0.02              -0.01
+		   147   C10H24O_pair_001_083_allign_FREQ_g16   Rotamer_137           2.29                      1.81               0.48               0.29
+		   148   C10H24O_pair_045_068_allign_FREQ_g16   Conformer             2.29                      2.24               0.05              -0.18
+		   149   C10H24O_pair_058_060_allign_FREQ_g16   Conformer             2.32                      1.18               1.15               0.99
+		   150   C10H24O_pair_008_029_allign_FREQ_g16   Conformer             2.37                      1.61               0.76               0.66
+		   151   C10H24O_pair_077_083_allign_FREQ_g16   Conformer             2.37                      2.77              -0.40              -0.57
+		   152   C10H24O_pair_024_059_allign_FREQ_g16   Conformer             2.39                      0.36               2.03               1.96
+		   153   C10H24O_pair_003_064_allign_FREQ_g16   Conformer             2.40                      1.01               1.40               1.34
+		   154   C10H24O_pair_075_095_allign_FREQ_g16   Conformer             2.40                      1.10               1.31               1.25
+		   155   C10H24O_pair_053_089_allign_FREQ_g16   Conformer             2.41                      2.19               0.22               0.06
+		   156   C10H24O_pair_014_069_allign_FREQ_g16   Conformer             2.42                      1.58               0.84               0.65
+		   157   C10H24O_pair_043_049_allign_FREQ_g16   Conformer             2.43                      1.56               0.87               0.64
+		   158   C10H24O_pair_044_083_allign_FREQ_g16   Conformer             2.43                      1.60               0.83               0.66
+		   159   C10H24O_pair_017_025_allign_FREQ_g16   Conformer             2.44                      1.65               0.79               0.60
+		   160   C10H24O_pair_004_086_allign_FREQ_g16   Conformer             2.45                      2.19               0.26               0.15
+		   161   C10H24O_pair_019_091_allign_FREQ_g16   Identical_160         2.45                      2.19               0.26               0.15
+		   162   C10H24O_pair_019_067_allign_FREQ_g16   Conformer             2.45                      1.41               1.04               0.98
+		   163   C10H24O_pair_047_086_allign_FREQ_g16   Rotamer_153           2.47                      0.61               1.86               1.84
+		   164   C10H24O_pair_010_022_allign_FREQ_g16   Conformer             2.49                      0.52               1.97               2.01
+		   165   C10H24O_pair_038_047_allign_FREQ_g16   Conformer             2.51                      0.12               2.39               2.45
+		   166   C10H24O_pair_010_064_allign_FREQ_g16   Conformer             2.54                      1.18               1.36               1.29
+		   167   C10H24O_pair_023_057_allign_FREQ_g16   Conformer             2.54                      2.18               0.36               0.15
+		   168   C10H24O_pair_064_097_allign_FREQ_g16   Conformer             2.55                      1.67               0.88               0.79
+		   169   C10H24O_pair_000_069_allign_FREQ_g16   Conformer             2.56                     -0.97               3.53               3.60
+		   170   C10H24O_pair_023_080_allign_FREQ_g16   Conformer             2.59                      1.91               0.68               0.53
+		   171   C10H24O_pair_044_075_allign_FREQ_g16   Conformer             2.60                      1.14               1.46               1.47
+		   172   C10H24O_pair_010_021_allign_FREQ_g16   Rotamer_166           2.61                      1.49               1.12               1.02
+		   173   C10H24O_pair_005_015_allign_FREQ_g16   Conformer             2.62                      1.62               1.00               0.92
+		   174   C10H24O_pair_011_027_allign_FREQ_g16   Rotamer_173           2.62                      1.92               0.70               0.56
+		   175   C10H24O_pair_059_062_allign_FREQ_g16   Rotamer_173           2.63                      1.75               0.88               0.74
+		   176   C10H24O_pair_089_095_allign_FREQ_g16   Conformer             2.63                      1.24               1.39               1.32
+		   177   C10H24O_pair_033_095_allign_FREQ_g16   Conformer             2.64                      1.28               1.36               1.34
+		   178   C10H24O_pair_018_094_allign_FREQ_g16   Conformer             2.69                      1.62               1.08               0.95
+		   179   C10H24O_pair_006_054_allign_FREQ_g16   Conformer             2.71                      1.00               1.71               1.65
+		   180   C10H24O_pair_017_034_allign_FREQ_g16   Conformer             2.71                      1.30               1.41               1.22
+		   181   C10H24O_pair_029_069_allign_FREQ_g16   Conformer             2.73                      1.01               1.72               1.68
+		   182   C10H24O_pair_015_051_allign_FREQ_g16   Rotamer_181           2.76                      1.46               1.29               1.26
+		   183   C10H24O_pair_007_017_allign_FREQ_g16   Conformer             2.77                      0.94               1.83               1.63
+		   184   C10H24O_pair_055_082_allign_FREQ_g16   Conformer             2.77                      1.47               1.29               1.26
+		   185   C10H24O_pair_002_073_allign_FREQ_g16   Conformer             2.80                      2.72               0.08              -0.10
+		   186   C10H24O_pair_083_088_allign_FREQ_g16   Conformer             2.82                      0.71               2.11               2.08
+		   187   C10H24O_pair_003_092_allign_FREQ_g16   Conformer             2.83                      1.25               1.59               1.60
+		   188   C10H24O_pair_042_090_allign_FREQ_g16   Conformer             2.85                      1.10               1.74               1.73
+		   189   C10H24O_pair_012_024_allign_FREQ_g16   Conformer             2.85                      2.08               0.77               0.74
+		   190   C10H24O_pair_010_084_allign_FREQ_g16   Conformer             2.85                      1.04               1.81               1.84
+		   191   C10H24O_pair_048_056_allign_FREQ_g16   Identical_189         2.86                      2.09               0.77               0.74
+		   192   C10H24O_pair_007_041_allign_FREQ_g16   Conformer             2.90                      1.33               1.57               1.56
+		   193   C10H24O_pair_005_044_allign_FREQ_g16   Rotamer_188           2.93                      0.06               2.86               2.87
+		   194   C10H24O_pair_000_082_allign_FREQ_g16   Conformer             2.94                      0.58               2.36               2.35
+		   195   C10H24O_pair_047_094_allign_FREQ_g16   Conformer             2.95                      1.13               1.82               1.63
+		   196   C10H24O_pair_016_040_allign_FREQ_g16   Conformer             2.97                      0.97               1.99               1.92
+		   197   C10H24O_pair_026_094_allign_FREQ_g16   Rotamer_196           3.00                      1.64               1.36               1.24
+		   198   C10H24O_pair_049_060_allign_FREQ_g16   Conformer             3.02                      0.37               2.65               2.57
+		   199   C10H24O_pair_039_095_allign_FREQ_g16   Conformer             3.03                      0.63               2.40               2.36
+		   200   C10H24O_pair_027_057_allign_FREQ_g16   Conformer             3.09                      2.11               0.98               0.72
+		   201   C10H24O_pair_035_099_allign_FREQ_g16   Conformer             3.09                      0.92               2.17               2.10
+		   202   C10H24O_pair_006_043_allign_FREQ_g16   Rotamer_200           3.11                      2.01               1.10               0.88
+		   203   C10H24O_pair_028_045_allign_FREQ_g16   Conformer             3.13                      1.30               1.83               1.67
+		   204   C10H24O_pair_052_080_allign_FREQ_g16   Rotamer_203           3.14                      2.05               1.09               1.02
+		   205   C10H24O_pair_000_009_allign_FREQ_g16   Conformer             3.17                      0.69               2.48               2.45
+		   206   C10H24O_pair_039_099_allign_FREQ_g16   Rotamer_205           3.18                      0.40               2.78               2.73
+		   207   C10H24O_pair_045_082_allign_FREQ_g16   Conformer             3.21                      0.80               2.41               2.27
+		   208   C10H24O_pair_019_030_allign_FREQ_g16   Conformer             3.23                      1.22               2.01               1.89
+		   209   C10H24O_pair_004_081_allign_FREQ_g16   Conformer             3.24                      1.09               2.16               1.98
+		   210   C10H24O_pair_017_047_allign_FREQ_g16   Conformer             3.30                      2.56               0.74               0.52
+		   211   C10H24O_pair_003_085_allign_FREQ_g16   Conformer             3.30                      2.37               0.93               0.85
+		   212   C10H24O_pair_066_080_allign_FREQ_g16   Conformer             3.35                      1.16               2.19               2.14
+		   213   C10H24O_pair_083_092_allign_FREQ_g16   Conformer             3.36                      0.74               2.62               2.59
+		   214   C10H24O_pair_006_029_allign_FREQ_g16   Conformer             3.40                      0.45               2.95               2.90
+		   215   C10H24O_pair_004_099_allign_FREQ_g16   Rotamer_214           3.41                      1.49               1.92               1.80
+		   216   C10H24O_pair_018_081_allign_FREQ_g16   Conformer             3.44                      3.04               0.40               0.88
+		   217   C10H24O_pair_054_058_allign_FREQ_g16   Rotamer_214           3.47                      2.07               1.40               1.32
+		   218   C10H24O_pair_002_023_allign_FREQ_g16   Conformer             3.49                      2.02               1.47               1.22
+		   219   C10H24O_pair_023_054_allign_FREQ_g16   Conformer             3.52                      0.49               3.03               3.01
+		   220   C10H24O_pair_020_047_allign_FREQ_g16   Conformer             3.53                      0.80               2.74               2.71
+		   221   C10H24O_pair_075_099_allign_FREQ_g16   Conformer             3.55                      1.29               2.26               2.13
+		   222   C10H24O_pair_067_080_allign_FREQ_g16   Conformer             3.58                      0.23               3.35               3.28
+		   223   C10H24O_pair_083_085_allign_FREQ_g16   Conformer             3.58                      1.02               2.55               2.48
+		   224   C10H24O_pair_027_054_allign_FREQ_g16   Conformer             3.61                      1.08               2.53               2.49
+		   225   C10H24O_pair_036_059_allign_FREQ_g16   Conformer             3.64                      1.87               1.78               1.61
+		   226   C10H24O_pair_043_071_allign_FREQ_g16   Conformer             3.66                      1.68               1.98               1.78
+		   227   C10H24O_pair_008_059_allign_FREQ_g16   Conformer             3.67                      0.93               2.74               2.63
+		   228   C10H24O_pair_027_094_allign_FREQ_g16   Rotamer_225           3.68                      1.95               1.73               1.54
+		   229   C10H24O_pair_010_098_allign_FREQ_g16   Conformer             3.71                      1.10               2.61               3.31
+		   230   C10H24O_pair_009_057_allign_FREQ_g16   Conformer             3.72                      1.90               1.82               1.66
+		   231   C10H24O_pair_043_066_allign_FREQ_g16   Conformer             3.74                      1.57               2.17               2.00
+		   232   C10H24O_pair_011_023_allign_FREQ_g16   Conformer             3.76                      1.30               2.46               2.31
+		   233   C10H24O_pair_020_083_allign_FREQ_g16   Conformer             3.77                      0.68               3.09               3.02
+		   234   C10H24O_pair_015_048_allign_FREQ_g16   Conformer             3.82                      1.55               2.27               2.16
+		   235   C10H24O_pair_050_059_allign_FREQ_g16   Conformer             3.82                      1.06               2.76               2.69
+		   236   C10H24O_pair_009_045_allign_FREQ_g16   Conformer             3.82                      1.05               2.78               2.67
+		   237   C10H24O_pair_043_050_allign_FREQ_g16   Conformer             3.83                     -0.51               4.34               4.21
+		   238   C10H24O_pair_029_097_allign_FREQ_g16   Rotamer_236           3.89                      1.08               2.81               2.74
+		   239   C10H24O_pair_067_095_allign_FREQ_g16   Rotamer_234           3.89                      1.35               2.53               2.46
+		   240   C10H24O_pair_005_020_allign_FREQ_g16   Conformer             3.98                      1.53               2.45               2.37
+		   241   C10H24O_pair_017_062_allign_FREQ_g16   Conformer             4.15                      0.59               3.56               3.43
+		   242   C10H24O_pair_034_043_allign_FREQ_g16   Conformer             4.15                      1.09               3.07               2.87
+		   243   C10H24O_pair_029_030_allign_FREQ_g16   Conformer             4.18                      0.44               3.73               3.63
+		   244   C10H24O_pair_014_032_allign_FREQ_g16   Conformer             4.30                      1.60               2.71               2.55
+		   245   C10H24O_pair_014_023_allign_FREQ_g16   Conformer             4.39                      1.14               3.25               3.07
+		   246   C10H24O_pair_008_017_allign_FREQ_g16   Conformer             4.40                      1.36               3.04               2.88
+		   247   C10H24O_pair_002_003_allign_FREQ_g16   Conformer             4.40                      1.51               2.89               2.71
+		   248   C10H24O_pair_014_050_allign_FREQ_g16   Conformer             4.42                      1.52               2.89               2.71
+		   249   C10H24O_pair_043_089_allign_FREQ_g16   Conformer             4.45                      1.01               3.43               3.25
+		   250   C10H24O_pair_083_099_allign_FREQ_g16   Conformer             4.49                      1.35               3.14               2.95
+		   251   C10H24O_pair_017_036_allign_FREQ_g16   Conformer             4.53                      1.88               2.65               2.47
+		   252   C10H24O_pair_014_024_allign_FREQ_g16   Rotamer_251           4.54                      1.56               2.97               2.75
+		   253   C10H24O_pair_014_067_allign_FREQ_g16   Rotamer_250           4.57                      1.65               2.92               2.74
+		   254   C10H24O_pair_002_030_allign_FREQ_g16   Conformer             5.30                      1.65               3.65               3.39
+		# =============================================================================================================================================
+
+		 Job Finnished: 04-09-2023 13:01:53
+
+
+		#                    ID                     Pearson correlation    Spearman correlation 
+		# ============================================================================================
+		  C10H24O_pair_024_061_allign_FREQ_g16            1.000000                1.000000      
+		  C10H24O_pair_072_086_allign_FREQ_g16            0.986104                0.968888      
+		  C10H24O_pair_018_087_allign_FREQ_g16            0.994134                0.986317      
+		  C10H24O_pair_052_098_allign_FREQ_g16            0.994673                0.985707      
+		  C10H24O_pair_001_052_allign_FREQ_g16            0.982664                0.980980      
+		  C10H24O_pair_013_018_allign_FREQ_g16            0.994316                0.983716      
+		  C10H24O_pair_022_070_allign_FREQ_g16            0.997749                0.997588      
+		  C10H24O_pair_096_098_allign_FREQ_g16            0.995455                0.990330      
+		  C10H24O_pair_056_072_allign_FREQ_g16            0.997800                0.997628      
+		  C10H24O_pair_065_071_allign_FREQ_g16            0.993824                0.988060      
+		  C10H24O_pair_066_093_allign_FREQ_g16            0.990007                0.964907      
+		  C10H24O_pair_019_058_allign_FREQ_g16            0.990060                0.973790      
+		  C10H24O_pair_046_078_allign_FREQ_g16            0.997111                0.996358      
+		  C10H24O_pair_038_049_allign_FREQ_g16            0.994718                0.989181      
+		  C10H24O_pair_071_078_allign_FREQ_g16            0.991656                0.996090      
+		  C10H24O_pair_073_092_allign_FREQ_g16            0.991737                0.996099      
+		  C10H24O_pair_042_068_allign_FREQ_g16            0.991738                0.996050      
+		  C10H24O_pair_022_025_allign_FREQ_g16            0.997232                0.996707      
+		  C10H24O_pair_052_085_allign_FREQ_g16            0.991699                0.996139      
+		  C10H24O_pair_070_086_allign_FREQ_g16            0.984603                0.979812      
+		  C10H24O_pair_009_056_allign_FREQ_g16            0.997274                0.997509      
+		  C10H24O_pair_035_088_allign_FREQ_g16            0.992630                0.995563      
+		  C10H24O_pair_049_063_allign_FREQ_g16            0.997273                0.997613      
+		  C10H24O_pair_019_049_allign_FREQ_g16            0.977797                0.952394      
+		  C10H24O_pair_028_087_allign_FREQ_g16            0.994692                0.997325      
+		  C10H24O_pair_049_085_allign_FREQ_g16            0.996416                0.996426      
+		  C10H24O_pair_025_086_allign_FREQ_g16            0.982226                0.970482      
+		  C10H24O_pair_055_073_allign_FREQ_g16            0.995917                0.995983      
+		  C10H24O_pair_028_088_allign_FREQ_g16            0.995849                0.998360      
+		  C10H24O_pair_078_090_allign_FREQ_g16            0.993115                0.987884      
+		  C10H24O_pair_056_066_allign_FREQ_g16            0.995891                0.993024      
+		  C10H24O_pair_003_084_allign_FREQ_g16            0.991854                0.997090      
+		  C10H24O_pair_035_061_allign_FREQ_g16            0.995849                0.993022      
+		  C10H24O_pair_068_087_allign_FREQ_g16            0.996727                0.997631      
+		  C10H24O_pair_037_082_allign_FREQ_g16            0.997346                0.996234      
+		  C10H24O_pair_042_048_allign_FREQ_g16            0.997103                0.996738      
+		  C10H24O_pair_025_053_allign_FREQ_g16            0.989879                0.981828      
+		  C10H24O_pair_051_056_allign_FREQ_g16            0.994921                0.996079      
+		  C10H24O_pair_073_099_allign_FREQ_g16            0.991157                0.974615      
+		  C10H24O_pair_021_070_allign_FREQ_g16            0.980929                0.970861      
+		  C10H24O_pair_026_054_allign_FREQ_g16            0.994968                0.992797      
+		  C10H24O_pair_021_050_allign_FREQ_g16            0.984154                0.968816      
+		  C10H24O_pair_003_098_allign_FREQ_g16            0.986149                0.994997      
+		  C10H24O_pair_052_079_allign_FREQ_g16            0.989505                0.977704      
+		  C10H24O_pair_000_028_allign_FREQ_g16            0.996054                0.990313      
+		  C10H24O_pair_025_079_allign_FREQ_g16            0.988377                0.974458      
+		  C10H24O_pair_049_098_allign_FREQ_g16            0.994680                0.995218      
+		  C10H24O_pair_012_068_allign_FREQ_g16            0.994647                0.995324      
+		  C10H24O_pair_002_031_allign_FREQ_g16            0.992424                0.988558      
+		  C10H24O_pair_056_089_allign_FREQ_g16            0.995915                0.996404      
+		  C10H24O_pair_079_091_allign_FREQ_g16            0.984739                0.969935      
+		  C10H24O_pair_019_023_allign_FREQ_g16            0.984846                0.969930      
+		  C10H24O_pair_026_038_allign_FREQ_g16            0.996374                0.997688      
+		  C10H24O_pair_016_026_allign_FREQ_g16            0.991875                0.981960      
+		  C10H24O_pair_019_032_allign_FREQ_g16            0.988623                0.977603      
+		  C10H24O_pair_086_096_allign_FREQ_g16            0.979520                0.978505      
+		  C10H24O_pair_010_076_allign_FREQ_g16            0.989286                0.986735      
+		  C10H24O_pair_023_092_allign_FREQ_g16            0.990117                0.979705      
+		  C10H24O_pair_026_060_allign_FREQ_g16            0.986808                0.978312      
+		  C10H24O_pair_067_092_allign_FREQ_g16            0.993360                0.996429      
+		  C10H24O_pair_074_088_allign_FREQ_g16            0.998153                0.998424      
+		  C10H24O_pair_066_095_allign_FREQ_g16            0.992326                0.992686      
+		  C10H24O_pair_005_056_allign_FREQ_g16            0.995773                0.998655      
+		  C10H24O_pair_025_098_allign_FREQ_g16            0.996850                0.996925      
+		  C10H24O_pair_008_013_allign_FREQ_g16            0.997833                0.999198      
+		  C10H24O_pair_027_087_allign_FREQ_g16            0.997221                0.996693      
+		  C10H24O_pair_013_091_allign_FREQ_g16            0.996404                0.997648      
+		  C10H24O_pair_011_068_allign_FREQ_g16            0.989276                0.982835      
+		  C10H24O_pair_047_088_allign_FREQ_g16            0.990310                0.997006      
+		  C10H24O_pair_050_078_allign_FREQ_g16            0.990404                0.965225      
+		  C10H24O_pair_037_074_allign_FREQ_g16            0.990906                0.997363      
+		  C10H24O_pair_006_019_allign_FREQ_g16            0.981789                0.959132      
+		  C10H24O_pair_018_059_allign_FREQ_g16            0.987636                0.988016      
+		  C10H24O_pair_068_094_allign_FREQ_g16            0.989168                0.982298      
+		  C10H24O_pair_024_042_allign_FREQ_g16            0.994963                0.989847      
+		  C10H24O_pair_024_041_allign_FREQ_g16            0.994953                0.989962      
+		  C10H24O_pair_054_071_allign_FREQ_g16            0.994419                0.996038      
+		  C10H24O_pair_074_081_allign_FREQ_g16            0.985320                0.980822      
+		  C10H24O_pair_032_078_allign_FREQ_g16            0.992161                0.987527      
+		  C10H24O_pair_042_051_allign_FREQ_g16            0.997117                0.997874      
+		  C10H24O_pair_016_031_allign_FREQ_g16            0.990176                0.988858      
+		  C10H24O_pair_063_074_allign_FREQ_g16            0.996977                0.997799      
+		  C10H24O_pair_007_042_allign_FREQ_g16            0.997962                0.997837      
+		  C10H24O_pair_020_026_allign_FREQ_g16            0.996025                0.995807      
+		  C10H24O_pair_053_070_allign_FREQ_g16            0.989375                0.967672      
+		  C10H24O_pair_068_095_allign_FREQ_g16            0.996130                0.995817      
+		  C10H24O_pair_073_095_allign_FREQ_g16            0.994337                0.995934      
+		  C10H24O_pair_021_024_allign_FREQ_g16            0.981618                0.973731      
+		  C10H24O_pair_070_084_allign_FREQ_g16            0.994171                0.996773      
+		  C10H24O_pair_001_049_allign_FREQ_g16            0.987667                0.972990      
+		  C10H24O_pair_070_076_allign_FREQ_g16            0.994105                0.996803      
+		  C10H24O_pair_074_093_allign_FREQ_g16            0.985503                0.971340      
+		  C10H24O_pair_040_042_allign_FREQ_g16            0.993955                0.997303      
+		  C10H24O_pair_020_062_allign_FREQ_g16            0.992874                0.996186      
+		  C10H24O_pair_073_080_allign_FREQ_g16            0.995379                0.989785      
+		  C10H24O_pair_032_079_allign_FREQ_g16            0.983079                0.977215      
+		  C10H24O_pair_006_037_allign_FREQ_g16            0.994583                0.996784      
+		  C10H24O_pair_038_074_allign_FREQ_g16            0.992648                0.998104      
+		  C10H24O_pair_066_076_allign_FREQ_g16            0.993899                0.996494      
+		  C10H24O_pair_011_073_allign_FREQ_g16            0.989285                0.985168      
+		  C10H24O_pair_028_086_allign_FREQ_g16            0.981948                0.975412      
+		  C10H24O_pair_045_070_allign_FREQ_g16            0.991874                0.988418      
+		  C10H24O_pair_037_047_allign_FREQ_g16            0.995595                0.998066      
+		  C10H24O_pair_064_069_allign_FREQ_g16            0.985517                0.976511      
+		  C10H24O_pair_082_093_allign_FREQ_g16            0.986516                0.976038      
+		  C10H24O_pair_032_065_allign_FREQ_g16            0.988362                0.993151      
+		  C10H24O_pair_017_051_allign_FREQ_g16            0.994260                0.988025      
+		  C10H24O_pair_009_095_allign_FREQ_g16            0.996599                0.995744      
+		  C10H24O_pair_066_077_allign_FREQ_g16            0.996768                0.997787      
+		  C10H24O_pair_006_038_allign_FREQ_g16            0.993509                0.995970      
+		  C10H24O_pair_010_013_allign_FREQ_g16            0.995669                0.996760      
+		  C10H24O_pair_072_095_allign_FREQ_g16            0.993891                0.993601      
+		  C10H24O_pair_063_071_allign_FREQ_g16            0.997112                0.997758      
+		  C10H24O_pair_005_086_allign_FREQ_g16            0.985795                0.972618      
+		  C10H24O_pair_034_053_allign_FREQ_g16            0.988781                0.981180      
+		  C10H24O_pair_006_063_allign_FREQ_g16            0.994111                0.997586      
+		  C10H24O_pair_015_075_allign_FREQ_g16            0.994216                0.994900      
+		  C10H24O_pair_076_089_allign_FREQ_g16            0.996376                0.996747      
+		  C10H24O_pair_013_035_allign_FREQ_g16            0.992640                0.996816      
+		  C10H24O_pair_046_077_allign_FREQ_g16            0.996684                0.997888      
+		  C10H24O_pair_002_058_allign_FREQ_g16            0.993453                0.988761      
+		  C10H24O_pair_003_081_allign_FREQ_g16            0.991443                0.985538      
+		  C10H24O_pair_075_077_allign_FREQ_g16            0.998910                0.997762      
+		  C10H24O_pair_064_074_allign_FREQ_g16            0.984256                0.975054      
+		  C10H24O_pair_030_092_allign_FREQ_g16            0.985488                0.993141      
+		  C10H24O_pair_046_079_allign_FREQ_g16            0.988428                0.975836      
+		  C10H24O_pair_013_030_allign_FREQ_g16            0.996562                0.997797      
+		  C10H24O_pair_034_059_allign_FREQ_g16            0.985909                0.979610      
+		  C10H24O_pair_023_065_allign_FREQ_g16            0.991281                0.993974      
+		  C10H24O_pair_088_096_allign_FREQ_g16            0.992505                0.997011      
+		  C10H24O_pair_055_075_allign_FREQ_g16            0.992634                0.993727      
+		  C10H24O_pair_007_053_allign_FREQ_g16            0.988248                0.981413      
+		  C10H24O_pair_016_062_allign_FREQ_g16            0.987070                0.984092      
+		  C10H24O_pair_052_092_allign_FREQ_g16            0.996524                0.997643      
+		  C10H24O_pair_031_099_allign_FREQ_g16            0.992401                0.978482      
+		  C10H24O_pair_000_097_allign_FREQ_g16            0.996753                0.988704      
+		  C10H24O_pair_013_036_allign_FREQ_g16            0.995699                0.996923      
+		  C10H24O_pair_038_083_allign_FREQ_g16            0.992994                0.998290      
+		  C10H24O_pair_041_082_allign_FREQ_g16            0.996801                0.996072      
+		  C10H24O_pair_013_096_allign_FREQ_g16            0.991924                0.997210      
+		  C10H24O_pair_029_050_allign_FREQ_g16            0.993126                0.982427      
+		  C10H24O_pair_027_081_allign_FREQ_g16            0.986771                0.978100      
+		  C10H24O_pair_057_069_allign_FREQ_g16            0.993178                0.984365      
+		  C10H24O_pair_022_072_allign_FREQ_g16            0.991887                0.997271      
+		  C10H24O_pair_041_048_allign_FREQ_g16            0.995577                0.997418      
+		  C10H24O_pair_018_061_allign_FREQ_g16            0.992017                0.997260      
+		  C10H24O_pair_028_041_allign_FREQ_g16            0.991903                0.997332      
+		  C10H24O_pair_001_083_allign_FREQ_g16            0.984681                0.968496      
+		  C10H24O_pair_045_068_allign_FREQ_g16            0.996022                0.991327      
+		  C10H24O_pair_058_060_allign_FREQ_g16            0.993116                0.988150      
+		  C10H24O_pair_008_029_allign_FREQ_g16            0.994456                0.989241      
+		  C10H24O_pair_077_083_allign_FREQ_g16            0.985222                0.997481      
+		  C10H24O_pair_024_059_allign_FREQ_g16            0.986585                0.990416      
+		  C10H24O_pair_003_064_allign_FREQ_g16            0.987536                0.972918      
+		  C10H24O_pair_075_095_allign_FREQ_g16            0.995911                0.995080      
+		  C10H24O_pair_053_089_allign_FREQ_g16            0.982651                0.978213      
+		  C10H24O_pair_014_069_allign_FREQ_g16            0.989451                0.984273      
+		  C10H24O_pair_043_049_allign_FREQ_g16            0.991805                0.987183      
+		  C10H24O_pair_044_083_allign_FREQ_g16            0.994681                0.996637      
+		  C10H24O_pair_017_025_allign_FREQ_g16            0.992036                0.988173      
+		  C10H24O_pair_004_086_allign_FREQ_g16            0.983163                0.975540      
+		  C10H24O_pair_019_091_allign_FREQ_g16            0.983066                0.975923      
+		  C10H24O_pair_019_067_allign_FREQ_g16            0.983280                0.974903      
+		  C10H24O_pair_047_086_allign_FREQ_g16            0.985436                0.973863      
+		  C10H24O_pair_010_022_allign_FREQ_g16            0.996864                0.997568      
+		  C10H24O_pair_038_047_allign_FREQ_g16            0.997029                0.998017      
+		  C10H24O_pair_010_064_allign_FREQ_g16            0.984494                0.972214      
+		  C10H24O_pair_023_057_allign_FREQ_g16            0.989866                0.986403      
+		  C10H24O_pair_064_097_allign_FREQ_g16            0.980750                0.974292      
+		  C10H24O_pair_000_069_allign_FREQ_g16            0.995959                0.988054      
+		  C10H24O_pair_023_080_allign_FREQ_g16            0.995823                0.988871      
+		  C10H24O_pair_044_075_allign_FREQ_g16            0.994989                0.994817      
+		  C10H24O_pair_010_021_allign_FREQ_g16            0.985483                0.974305      
+		  C10H24O_pair_005_015_allign_FREQ_g16            0.992331                0.992859      
+		  C10H24O_pair_011_027_allign_FREQ_g16            0.986258                0.977321      
+		  C10H24O_pair_059_062_allign_FREQ_g16            0.989674                0.991120      
+		  C10H24O_pair_089_095_allign_FREQ_g16            0.995703                0.996621      
+		  C10H24O_pair_033_095_allign_FREQ_g16            0.989769                0.995992      
+		  C10H24O_pair_018_094_allign_FREQ_g16            0.983592                0.983994      
+		  C10H24O_pair_006_054_allign_FREQ_g16            0.994452                0.993065      
+		  C10H24O_pair_017_034_allign_FREQ_g16            0.989120                0.985390      
+		  C10H24O_pair_029_069_allign_FREQ_g16            0.994431                0.987675      
+		  C10H24O_pair_015_051_allign_FREQ_g16            0.993200                0.994568      
+		  C10H24O_pair_007_017_allign_FREQ_g16            0.992640                0.989056      
+		  C10H24O_pair_055_082_allign_FREQ_g16            0.993397                0.994486      
+		  C10H24O_pair_002_073_allign_FREQ_g16            0.994144                0.978203      
+		  C10H24O_pair_083_088_allign_FREQ_g16            0.993965                0.996827      
+		  C10H24O_pair_003_092_allign_FREQ_g16            0.993641                0.996668      
+		  C10H24O_pair_042_090_allign_FREQ_g16            0.994061                0.997140      
+		  C10H24O_pair_012_024_allign_FREQ_g16            0.992773                0.997356      
+		  C10H24O_pair_010_084_allign_FREQ_g16            0.995552                0.997736      
+		  C10H24O_pair_048_056_allign_FREQ_g16            0.992796                0.997338      
+		  C10H24O_pair_007_041_allign_FREQ_g16            0.994671                0.996703      
+		  C10H24O_pair_005_044_allign_FREQ_g16            0.992733                0.995247      
+		  C10H24O_pair_000_082_allign_FREQ_g16            0.996999                0.986585      
+		  C10H24O_pair_047_094_allign_FREQ_g16            0.988722                0.980198      
+		  C10H24O_pair_016_040_allign_FREQ_g16            0.988401                0.990291      
+		  C10H24O_pair_026_094_allign_FREQ_g16            0.986450                0.982594      
+		  C10H24O_pair_049_060_allign_FREQ_g16            0.992286                0.986851      
+		  C10H24O_pair_039_095_allign_FREQ_g16            0.989778                0.995948      
+		  C10H24O_pair_027_057_allign_FREQ_g16            0.989482                0.990380      
+		  C10H24O_pair_035_099_allign_FREQ_g16            0.996572                0.991217      
+		  C10H24O_pair_006_043_allign_FREQ_g16            0.987336                0.971383      
+		  C10H24O_pair_028_045_allign_FREQ_g16            0.992359                0.986471      
+		  C10H24O_pair_052_080_allign_FREQ_g16            0.992624                0.986838      
+		  C10H24O_pair_000_009_allign_FREQ_g16            0.994492                0.987440      
+		  C10H24O_pair_039_099_allign_FREQ_g16            0.995105                0.987132      
+		  C10H24O_pair_045_082_allign_FREQ_g16            0.992780                0.986074      
+		  C10H24O_pair_019_030_allign_FREQ_g16            0.985753                0.975107      
+		  C10H24O_pair_004_081_allign_FREQ_g16            0.988495                0.982669      
+		  C10H24O_pair_017_047_allign_FREQ_g16            0.996315                0.988463      
+		  C10H24O_pair_003_085_allign_FREQ_g16            0.993998                0.996306      
+		  C10H24O_pair_066_080_allign_FREQ_g16            0.995848                0.986661      
+		  C10H24O_pair_083_092_allign_FREQ_g16            0.995096                0.997408      
+		  C10H24O_pair_006_029_allign_FREQ_g16            0.994674                0.987315      
+		  C10H24O_pair_004_099_allign_FREQ_g16            0.989896                0.992427      
+		  C10H24O_pair_018_081_allign_FREQ_g16            0.987136                0.968859      
+		  C10H24O_pair_054_058_allign_FREQ_g16            0.990600                0.996437      
+		  C10H24O_pair_002_023_allign_FREQ_g16            0.994147                0.991225      
+		  C10H24O_pair_023_054_allign_FREQ_g16            0.991762                0.995447      
+		  C10H24O_pair_020_047_allign_FREQ_g16            0.991507                0.995770      
+		  C10H24O_pair_075_099_allign_FREQ_g16            0.993977                0.992344      
+		  C10H24O_pair_067_080_allign_FREQ_g16            0.992192                0.985930      
+		  C10H24O_pair_083_085_allign_FREQ_g16            0.995474                0.997709      
+		  C10H24O_pair_027_054_allign_FREQ_g16            0.992079                0.994022      
+		  C10H24O_pair_036_059_allign_FREQ_g16            0.989642                0.992127      
+		  C10H24O_pair_043_071_allign_FREQ_g16            0.982874                0.982073      
+		  C10H24O_pair_008_059_allign_FREQ_g16            0.986470                0.990326      
+		  C10H24O_pair_027_094_allign_FREQ_g16            0.978328                0.983447      
+		  C10H24O_pair_010_098_allign_FREQ_g16            0.997925                0.997862      
+		  C10H24O_pair_009_057_allign_FREQ_g16            0.991314                0.987740      
+		  C10H24O_pair_043_066_allign_FREQ_g16            0.982857                0.983376      
+		  C10H24O_pair_011_023_allign_FREQ_g16            0.986669                0.981823      
+		  C10H24O_pair_020_083_allign_FREQ_g16            0.990871                0.994099      
+		  C10H24O_pair_015_048_allign_FREQ_g16            0.991704                0.993582      
+		  C10H24O_pair_050_059_allign_FREQ_g16            0.992042                0.991153      
+		  C10H24O_pair_009_045_allign_FREQ_g16            0.994152                0.985941      
+		  C10H24O_pair_043_050_allign_FREQ_g16            0.985773                0.983267      
+		  C10H24O_pair_029_097_allign_FREQ_g16            0.992703                0.987693      
+		  C10H24O_pair_067_095_allign_FREQ_g16            0.993344                0.996311      
+		  C10H24O_pair_005_020_allign_FREQ_g16            0.988856                0.995143      
+		  C10H24O_pair_017_062_allign_FREQ_g16            0.989150                0.986502      
+		  C10H24O_pair_034_043_allign_FREQ_g16            0.985092                0.982809      
+		  C10H24O_pair_029_030_allign_FREQ_g16            0.989190                0.986505      
+		  C10H24O_pair_014_032_allign_FREQ_g16            0.988741                0.987795      
+		  C10H24O_pair_014_023_allign_FREQ_g16            0.992812                0.986521      
+		  C10H24O_pair_008_017_allign_FREQ_g16            0.986730                0.986987      
+		  C10H24O_pair_002_003_allign_FREQ_g16            0.989684                0.986666      
+		  C10H24O_pair_014_050_allign_FREQ_g16            0.989848                0.986871      
+		  C10H24O_pair_043_089_allign_FREQ_g16            0.983751                0.983263      
+		  C10H24O_pair_083_099_allign_FREQ_g16            0.990680                0.991428      
+		  C10H24O_pair_017_036_allign_FREQ_g16            0.988566                0.984611      
+		  C10H24O_pair_014_024_allign_FREQ_g16            0.989146                0.987475      
+		  C10H24O_pair_014_067_allign_FREQ_g16            0.989218                0.987417      
+		  C10H24O_pair_002_030_allign_FREQ_g16            0.986647                0.985017      
+		# ============================================================================================
+
+		# -----------------------------------------------------------------------------------------------
+		 Pearson and Spearman coefficients between Boltzmman and Lowest energy  = 0.996863  0.994654 
+		 Pearson and Spearman coefficients between Simple and Lowest energy     = 0.996406  0.996045 
+		 Pearson and Spearman coefficients between Boltzmman and Simple average = 0.999544  0.998415 
+		 Pearson and Spearman coefficients between Similarity and Boltzmman     = 0.996863  0.994654 
+		 Pearson and Spearman coefficients between Similarity and Simple avg.   = 0.996406  0.996045 
+		 Pearson and Spearman coefficients between Similarity and Lowest energy = 1.000000  1.000000 
+		# -----------------------------------------------------------------------------------------------
+
+
+		Job  Done at 04-09-2023 13:01:53 ============
+

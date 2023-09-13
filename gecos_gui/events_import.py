@@ -545,7 +545,7 @@ def import_pythonfileprops_to_gui(window, filename):
         window['-COMBO_MODELSOLVENT_PROP-'].update(value=solvent_model)
         window['-COMBO_SOLVENT_PROP-'].update(value=solvent)
 
-        if tokens_str.count("freq") == 1:
+        if tokens_str.count("freq") == 1 and tokens_str.count("wfn") == 0:
             window['-RADIO_FREQ-'].update(True)
             if tokens_str.count("scale") == 1:
                 v = float([string for string in tokens if "scale" in string][0].split("=")[-1])

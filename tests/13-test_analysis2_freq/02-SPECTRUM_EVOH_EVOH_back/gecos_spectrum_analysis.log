@@ -1,0 +1,58 @@
+
+        ***********************************************************************
+                           Generation of Conformers (GeCoS)
+                                       Analysis
+                         -----------------------------------
+
+                                    Version 0.1
+
+                                  Dr. Javier Ramos
+                          Macromolecular Physics Department
+                    Instituto de Estructura de la Materia (IEM-CSIC)
+                                   Madrid (Spain)
+
+                GeCoS is an open-source python library to quickly generate
+                conformers of small molecules or polymer segments 
+                using RdKit and OpenBabel libraries. Once, the
+                conformers are generated, QM optimizations and subsequent 
+                clustering can be done.
+
+                This software is distributed under the terms of the
+                GNU General Public License v3.0 (GNU GPLv3). A copy of 
+                the license (LICENSE.txt) is included with this distribution. 
+
+        ***********************************************************************
+
+        
+		Start Job at 03-09-2023 18:10:54 ============
+
+		Command line: 
+			python gecos_analysis.py spectrum -d /home/jramos/Documentos/___MIS_PETICIONES_PROYECTOS___/2019-Proyecto-PN-GenCon/13-Resultados/2022-Spectra_IR/12-EVOH-EVOH_extractMD/01-FREQ/FREQ_g16_results -p g16 --scale 1.0 --start 400 --end 4000 --npoints 500 --width 40 --avg all --scale 1.0 --similarity --normalize minmax --clusterconf
+			         or
+			gecos_analysis spectrum -d /home/jramos/Documentos/___MIS_PETICIONES_PROYECTOS___/2019-Proyecto-PN-GenCon/13-Resultados/2022-Spectra_IR/12-EVOH-EVOH_extractMD/01-FREQ/FREQ_g16_results -p g16 --scale 1.0 --start 400 --end 4000 --npoints 500 --width 40 --avg all --scale 1.0 --similarity --normalize minmax --clusterconf
+
+			 Clustering Ensemble 1 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 21 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 41 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 61 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 81 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 101 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 121 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 141 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 161 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 181 of 203 (03-09-2023 18:11:51)
+			 Clustering Ensemble 201 of 203 (03-09-2023 18:11:51)
+
+			 Conformers          : 185
+			 Rotamers            : 15
+			 Identical           : 3
+			 Others              : 0
+			 Total               : 203
+
+		Thresholds used to classify conformers are:
+		 energy_thr=0.1 kcal/mol, rot_constant_thr=0.0005 GHz,
+		 rmsd_thr=1.0 Angs window_energy=1000.0 kcal/mol rms_only_heavy=True
+
+
+		 ======== NORMALIZING DATA ======== (03-09-2023 18:11:51)
+		 Normalizing data using the method: minmax

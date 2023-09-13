@@ -10,12 +10,14 @@ try:
     from gecos_analysis.gecos_exp_irspectra import GecosExpIRSpectra
     from gecos_analysis.gecos_resp_analysis import GecosRespAnalysis
     from gecos_analysis.gecos_CnnClusteringWrapper import CnnClusteringWrapper
+    from gecos_analysis.gecos_compare_spectrum import GecosCompareSpectrum
 except ModuleNotFoundError:
     from gecos_outputgaussian import GaussianGecos
     from gecos_irspectra import GecosIRSpectra
     from gecos_exp_irspectra import GecosExpIRSpectra
     from gecos_resp_analysis import GecosRespAnalysis
     from gecos_CnnClusteringWrapper import CnnClusteringWrapper
+    from gecos_compare_spectrum import GecosCompareSpectrum
 
 
 class SmartFormatter(argparse.HelpFormatter):
@@ -42,6 +44,7 @@ def parse_arguments():
     exp_spectrum = subparser.add_parser('exp_spectrum', formatter_class=SmartFormatter)
     resp_prep = subparser.add_parser('resp_prep')
     clustering = subparser.add_parser("clustering")
+    similarity = subparser.add_parser("similarity")
 
     # Arguments for energy command
     energy.add_argument("-d", "--logfolder", dest="logfolder",
@@ -161,14 +164,29 @@ def parse_arguments():
                                "For more info: DOI	https://dx.doi.org/10.1021/acs.jctc.0c00126",
                           action="store_true", required=False)
 
+    spectrum.add_argument("-n", "--normalize", dest="normalize", choices=['minmax', 'vectornorm', '1-norm', 'snv'],
+                          help="R|Method to normalize the spectra. Methods are explained in:\n"
+                               "  \"A preliminary study on the importance of normalization method\n"
+                               "  in Infrared MicroSpectroscopy for biomedical applications\".\n"
+                               "  Andrea Zancla et al.\n"
+                               "  24th IMEKO TC4 International Symposium\n"
+                               "  22nd International Workshop on ADC and DAC Modelling and Testing\n"
+                               "  IMEKO TC-4 2020\n"
+                               "  Palermo, Italy, September 14-16, 2020\n",
+                          action="store", required=False, default=None)
+
     # Arguments for preprocesing experimental spectrum command.
     exp_spectrum.add_argument("-f", "--file", dest="fileexpspectrum", type=str,
                               help="Name of the file containing the experimental spectrum",
                               action="store", required=True)
 
-    exp_spectrum.add_argument("-r", "--resample", dest="deltax", type=float,
-                              help="Resample data each deltax values",
-                              action="store", required=False, default=None)
+    exp_spectrum.add_argument("-r", "--resample", dest="resample_list", nargs=3, type=float,
+                              help="R|Resample data from start to end with npoints.\n"
+                                   "Paramters:\n"
+                                   "  - start: First frecuency (cm^-1)\n"
+                                   "  - end: Last frecuency (cm^-1)\n"
+                                   "  - npoints: Number of points to resanmple",
+                              action="store", metavar=["START", "END", "NPOINTS"], required=False, default=None)
 
     exp_spectrum.add_argument("--log", dest="log", type=str,
                               help="Name of the file to write logs from this command",
@@ -233,6 +251,7 @@ def parse_arguments():
                               action="store",
                               required=False, default=None)
 
+
     # # Arguments for resp_prep command
     # resp_prep.add_argument("--")
     resp_prep.add_argument("--log", dest="log", type=str,
@@ -286,6 +305,19 @@ def parse_arguments():
                             "files.",
                             action="store", required=False, default=None)
 
+    # Arguments for similarity command
+    similarity.add_argument("--log", dest="log", type=str,
+                            help="Name of the file to write logs from this command",
+                            action="store", required=False, default="gecos_similarity.log")
+
+    similarity.add_argument("-r", "--ref", dest="reference", type=str,
+                            help="File name of the spestrum to be used as reference.",
+                            action="store", required=True, default=None)
+
+    similarity.add_argument("-t", "--target", dest="target", type=str,
+                            help="File name(s) of the spestrum to be compared with the reference.",
+                            action="store", required=True, default=None)
+
     args = parser.parse_args()
 
     if args.command == "spectrum" or args.command == "clustering":
@@ -317,11 +349,12 @@ def parse_arguments():
             parser.error(msg)
             exit()
 
-        if args.smoothpeak.upper() == "SG":
-            if not args.smoothSGparam:
-                msg = "ERROR: SG is invoked. The smoothSG option must be present"
-                parser.error(msg)
-                exit()
+        if args.smoothpeak is not None:
+            if args.smoothpeak.upper() == "SG":
+                if not args.smoothSGparam:
+                    msg = "ERROR: SG is invoked. The smoothSG option must be present"
+                    parser.error(msg)
+                    exit()
 
         if args.baseline is not None:
 
@@ -351,6 +384,12 @@ def parse_arguments():
                     msg = "ERROR: Baseline 2021Munich method is invoked. The baselineparams option must be present"
                     parser.error(msg)
                     exit()
+
+    if args.command == "similarity":
+        if not os.path.isfile(args.reference):
+            msg = "ERROR: The file {} does not exist in the current directory.".format(args.reference)
+            parser.error(msg)
+            exit()
 
     return args, parser
 
@@ -394,12 +433,13 @@ def main_app():
                 g16.extract_vibrational_ir()
                 g16.extract_rmsd()
                 if args.clusterconf:
-                    g16.cluster_conformers(energy_thr=float(args.clusterparam[0]),
-                                           rot_constant_thr=float(args.clusterparam[1]),
-                                           rmsd_thr=float(args.clusterparam[2]),
-                                           window_energy=float(args.clusterparam[3]),
-                                           rmsd_only_heavy=bool(args.clusterparam[4]))
-                g16.write_vib_to_log(workdir, generate_data_gnuplot=True)
+                    _, conftype = g16.cluster_conformers(energy_thr=float(args.clusterparam[0]),
+                                                         rot_constant_thr=float(args.clusterparam[1]),
+                                                         rmsd_thr=float(args.clusterparam[2]),
+                                                         window_energy=float(args.clusterparam[3]),
+                                                         rmsd_only_heavy=bool(args.clusterparam[4]))
+                else:
+                    conftype = None
                 vf = g16.getvibfreqs()
                 vi = g16.getvibirs()
                 temp = g16.gettemperature()
@@ -412,8 +452,12 @@ def main_app():
                                             npoints=args.npoints,
                                             width=args.width,
                                             function=args.function,
-                                            similarity=args.similarity)
-                spectra_ir.calculate_spectrum(avg=args.averaged)
+                                            similarity=args.similarity,
+                                            normalize=args.normalize,
+                                            logger=log)
+                spectra_ir.calculate_spectrum(conftype=conftype, avg=args.averaged)
+                g16.write_vib_to_log(workdir, generate_data_gnuplot=True)
+                spectra_ir._write_similarity_to_log()
 
             elif args.command == "resp_prep":
                 g16.extract_energy()
@@ -427,7 +471,7 @@ def main_app():
                 g16.write_resp_to_log(workdir, generate_data_gnuplot=True)
                 is_prepareinputs = True
                 GecosRespAnalysis(g16, is_prepareinputs, float(args.deltaenethresh))
-                
+
             elif args.command == "clustering":
                 g16.extract_energy()
                 g16.extract_rmsd()
@@ -460,13 +504,18 @@ def main_app():
 
     elif args.command in ["exp_spectrum"]:
         _ = GecosExpIRSpectra(args.fileexpspectrum,
-                              delta_x=args.deltax,
+                              resample_list=args.resample_list,
                               normalize=args.normalize,
                               baseline=args.baseline,
                               baselineparam=args.baselineparams,
                               peaksmoothing=args.smoothpeak,
                               peaksmoothingparam=args.smoothSGparam,
                               logger=log)
+
+    elif args.command in ["similarity"]:
+        GecosCompareSpectrum(args.reference,
+                             args.target,
+                             logger=log)
 
     now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
     m = "\n\t\tJob  Done at {} ============\n".format(now)

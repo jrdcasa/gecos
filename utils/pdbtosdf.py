@@ -88,7 +88,9 @@ def pdbtosdf(filepdbname):
             break
 
     # write SDF
-    filenamesdf = os.path.splitext(filepdbname)[0]+"_frompdb.sdf"
+    path = os.path.split(filepdbname)[0]
+    fileext = os.path.split(filepdbname)[1]
+    filenamesdf = os.path.splitext(fileext)[0]+"_frompdb.sdf"
     with open(filenamesdf, 'w') as fout:
         fout.writelines("{}".format(filenamesdf))
         fout.writelines("\n\n\n".format(filenamesdf))

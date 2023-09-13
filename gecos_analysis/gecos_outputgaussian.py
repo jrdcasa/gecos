@@ -44,6 +44,9 @@ class GaussianGecos:
         self._internalcoords = defaultdict(dict)
         self._minscfenergy_ha = None
         self._2dgrid = None
+        self._nameID_to_idx = defaultdict()
+        self._idx_to_nameID = defaultdict()
+        self._cre_dict = dict()
 
         if len(self._logfiles) == 0:
             m = "\n\t\t ERROR. No G16 log files in the folder\n"
@@ -122,12 +125,12 @@ class GaussianGecos:
             ifile = os.path.splitext(os.path.split(ipath)[-1])[0]
             parser = cclib.io.ccopen(ipath)
             data = parser.parse()
-            self._freenergies[ifile] = data.freeenergy
-            entropy_list[ifile] = data.entropy
-            enthalpy_list[ifile] = data.enthalpy
-            temperature_list[ifile] = data.temperature
-            scf_list[ifile] = data.scfenergies[-1]
-            vibfreqs_list[ifile] = data.vibfreqs
+            self._freenergies[ifile] = data.freeenergy  # hartrees
+            entropy_list[ifile] = data.entropy   # hartree/K
+            enthalpy_list[ifile] = data.enthalpy  # hartrees
+            temperature_list[ifile] = data.temperature  # K
+            scf_list[ifile] = data.scfenergies[-1]  # in eV
+            vibfreqs_list[ifile] = data.vibfreqs  # cm-1
             vibirs_list[ifile] = data.vibirs
 
             tmp_optgeometry[ifile].append(data.atomnos)
@@ -179,12 +182,14 @@ class GaussianGecos:
             rotconstlist_c.append(self._rotconsts[ikey][0][2])
             self._optgeometry[ikey] = tmp_optgeometry[ikey]
 
-        self._df['Delta_-TS(kcal/mol)'] = delta_tentropy_list
-        self._df['Delta_H(kcal/mol)'] = delta_enthalpy_list
-        self._df['Delta_E(kcal/mol)'] = delta_scf_list
+        self._df['Delta_-TS(kcal/mol)'] = delta_tentropy_list   # kcal/mol
+        self._df['Delta_H(kcal/mol)'] = delta_enthalpy_list  # kcal/mol
+        self._df['Delta_E(kcal/mol)'] = delta_scf_list  # kcal/mol
         self._df['RotConstA(Ghz)'] = rotconstlist_a
         self._df['RotConstB(Ghz)'] = rotconstlist_b
         self._df['RotConstC(Ghz)'] = rotconstlist_c
+        # Hartrees, In this case, the free energy instead of the scf one is used in this case
+        self._df['OptEnergy(Ha)'] = freeenergylist
 
     # =========================================================================
     def extract_energy(self):
@@ -466,9 +471,9 @@ class GaussianGecos:
         print(m) if self._logger is None else self._logger.info(m)
 
         # Write table
-        m = "\n\t\t{0:1s} {1:^30s} {2:^5s} {3:^19s} {4:^8s} {5:^17s} " \
+        m = "\n\t\t{0:1s} {1:^48s} {2:^14s} {3:^19s} {4:^10s} {5:^17s} " \
             "{6:^16s} {7:^16s} {8:^16s} {9:^28s} {10:^8s} " \
-            "{11:^17s} {12:^17s}\n".format('#', 'ID', 'Type', 'DeltaEnergy(kcal/mol)',
+            "{11:^17s} {12:^17s}\n".format('#', 'ID', 'Type', 'Rel. Energy(kcal/mol)',
                                            'RMSDwithHs(A)', 'RMSDwithoutHs(A)',
                                            'RotConstA(Ghz)', 'RotConstB(Ghz)',
                                            'RotConstC(Ghz)', 'AngleMainPrincipalAxes(deg)',
@@ -477,9 +482,9 @@ class GaussianGecos:
         lenm = len(m)
         m += "\t\t# " + len(m) * "=" + "\n"
         for ind in df.index:
-            line = "\t\t{0:^42s} {1:<9s} {2:>14.2f} {3:>20.3f} {4:>14.3f} {5:>17.6f}  " \
-                   "{6:>14.6f}   {7:>14.6f}  {8:>20.1f}  {9:14d}  {10:14d}  {11:14d}\n" \
-                .format(df['ID'][ind],
+            line = "\t\t{0:6d} {1:^42s} {2:<14s} {3:>14.2f} {4:>20.3f} {5:>14.3f} {6:>17.6f}  " \
+                   "{7:>14.6f}   {8:>14.6f}  {9:>20.1f}  {10:14d}  {11:14d}  {12:14d}\n" \
+                .format(ind, df['ID'][ind],
                         str(df['Type'][ind]),
                         df['DeltaEnergy(kcal/mol)'][ind],
                         df['RMSDwithHs'][ind],
@@ -492,6 +497,11 @@ class GaussianGecos:
                         df['NvdwContacts_Intermol'][ind],
                         df['NvdwContacts_Intramol'][ind], )
             m += line
+            self._nameID_to_idx[df['ID'][ind]] = ind
+            self._idx_to_nameID[ind] = df['ID'][ind]
+
+        # Skip last carrier return
+        m = m[0:-1]
         print(m) if self._logger is None else self._logger.info(m)
 
         # Job Time
@@ -509,7 +519,14 @@ class GaussianGecos:
             else:
                 basename = "gecos_energy_analysis.dat"
             with open(os.path.join(folder, basename + ".dat"), 'w') as fdata:
-                fdata.writelines(m)
+                lines = m.split("\n")
+                for iline in lines:
+                    if iline.count("Rotamer") != 0 or iline.count("Identical") != 0:
+                        continue
+                    fdata.writelines(iline+"\n")
+
+            fname = os.path.join(folder, basename + ".dat")
+            self._gnuplot_template(fname)
 
     # =========================================================================
     def write_vib_to_log(self, logfolder, generate_data_gnuplot=True):
@@ -522,7 +539,7 @@ class GaussianGecos:
         print(m) if self._logger is None else self._logger.info(m)
 
         # Write table
-        m = "\n\t\t{0:1s} {1:^40s} {2:5s} {3:^19s} {4:^19s} {5:^17s} " \
+        m = "\n\t\t{0:1s} {1:^48s} {2:10s} {3:^19s} {4:^19s} {5:^17s} " \
             "{5:^16s} \n".format('#', 'ID', 'Type', 'DeltaG(kcal/mol)',
                                  'Delta_-TS(kcal/mol)', 'DeltaH(kcal/mol)',
                                  'DeltaEscf(kcal/mol)')
@@ -531,16 +548,16 @@ class GaussianGecos:
         m += "\t\t# " + len(m) * "=" + "\n"
         for ind in df.index:
             try:
-                line = "\t\t{0:^40s} {1:^5s} {2:^18.2f} {3:>18.2f} {4:>18.2f} {5:>18.2f}\n" \
-                    .format(df['ID'][ind],
+                line = "\t\t{0:6d} {1:^40s} {2:<14s} {3:^18.2f} {4:>18.2f} {5:>18.2f} {6:>18.2f}\n" \
+                    .format(ind, df['ID'][ind],
                             df['Type'][ind],
                             df['Delta_G(kcal/mol)'][ind],
                             df['Delta_-TS(kcal/mol)'][ind],
                             df['Delta_H(kcal/mol)'][ind],
                             df['Delta_E(kcal/mol)'][ind])
             except ValueError:
-                line = "\t\t{0:^40s} {1:^5s} {2:^18.2f} {3:>18.2f} {4:>18.2f} {5:>18.2f}\n" \
-                    .format(df['ID'][ind],
+                line = "\t\t{0:6d} {1:^40s} {2:<12s} {3:^18.2f} {4:>18.2f} {5:>18.2f} {6:>18.2f}\n" \
+                    .format(ind, df['ID'][ind],
                             'N/A',
                             df['Delta_G(kcal/mol)'][ind],
                             df['Delta_-TS(kcal/mol)'][ind],
@@ -566,7 +583,11 @@ class GaussianGecos:
             else:
                 basename = "gecos_thermo_analysis.dat"
             with open(os.path.join(folder, basename + ".dat"), 'w') as fdata:
-                fdata.writelines(m)
+                lines = m.split("\n")
+                for iline in lines:
+                    if iline.count("Rotamer") != 0 or iline.count("Identical") != 0:
+                        continue
+                    fdata.writelines(iline+"\n")
 
     # =========================================================================
     def write_resp_to_log(self, logfolder, generate_data_gnuplot=True):
@@ -755,7 +776,7 @@ class GaussianGecos:
 
             nhbonds_list.append(len(contacts._hbond_list[self._df['ID'][idx]]))
             nvdwcontacts_inter.append(len(contacts._vdwcontacts_intermol[self._df['ID'][idx]]))
-            nvdwcontacts_intra.append(len(contacts._vdwcontacts_intermol[self._df['ID'][idx]]))
+            nvdwcontacts_intra.append(len(contacts._vdwcontacts_intramol[self._df['ID'][idx]]))
 
         self._df['NHbonds'] = nhbonds_list
         self._df['NvdwContacts_Intermol'] = nvdwcontacts_inter
@@ -853,12 +874,12 @@ class GaussianGecos:
         cluster = defaultdict(dict)
         icluster = 0
         n_conformers = self._df.shape[0]
-        cre_dict = dict()
-        cre_dict['Conformers'] = 0
-        cre_dict['Rotamers'] = 0
-        cre_dict['Identical'] = 0
-        cre_dict['Others'] = 0
+        self._cre_dict['Conformers'] = 0
+        self._cre_dict['Rotamers'] = 0
+        self._cre_dict['Identical'] = 0
+        self._cre_dict['Others'] = 0
 
+        dict_conftype = defaultdict()
         for index in self._df.index:
             idx += 1
             try:
@@ -888,8 +909,8 @@ class GaussianGecos:
                 self._df.at[index, 'IDCluster'] = icluster
                 self._df.at[index, 'Type'] = "Conformer"
                 iconf_min_energy = index
-                cre_dict['Conformers'] = 1
-
+                self._cre_dict['Conformers'] = 1
+                dict_conftype[self._df.at[index, 'ID']] = "Conformer"
             else:
                 found = False
                 iconf_target = index
@@ -920,11 +941,13 @@ class GaussianGecos:
                         else:
                             db = [np.abs(irot_constant_ref[i] - rot_constant[i]) for i in range(0, 3)]
                             if all(i < rot_constant_thr for i in db):
-                                cre_dict['Identical'] += 1
-                                self._df.at[index, 'Type'] = "Identical"
+                                self._cre_dict['Identical'] += 1
+                                self._df.at[index, 'Type'] = "Identical_"+str(iconf_ref)
+                                dict_conftype[self._df.at[index, 'ID']] = "Identical_"+str(iconf_ref)
                             else:
-                                cre_dict['Rotamers'] += 1
-                                self._df.at[index, 'Type'] = "Rotamer"
+                                self._cre_dict['Rotamers'] += 1
+                                self._df.at[index, 'Type'] = "Rotamer_"+str(iconf_ref)
+                                dict_conftype[self._df.at[index, 'ID']] = "Rotamer_" + str(iconf_ref)
                             cluster[idx_cluster]["pairs"].append([rmsd_noh, energy])
                             cluster[idx_cluster]["files"].append("")
                             cluster[idx_cluster]["highest_energy"] = energy
@@ -936,8 +959,9 @@ class GaussianGecos:
 
                 if not found:
                     icluster += 1
-                    cre_dict['Conformers'] += 1
+                    self._cre_dict['Conformers'] += 1
                     self._df.at[index, 'Type'] = "Conformer"
+                    dict_conftype[self._df.at[index, 'ID']] = "Conformer"
                     cluster[icluster] = {"seed": index, "lowest_energy": energy, "highest_energy": energy,
                                          "nelements": 0, "elements": [], "pairs": [], "files": [], "rot_constant": []}
                     cluster[icluster]["files"].append(index)
@@ -952,7 +976,7 @@ class GaussianGecos:
         # Write Conformer/Rotamers/Identical info
         m = "\n"
         s = 0
-        for key, values in cre_dict.items():
+        for key, values in self._cre_dict.items():
             m += "\t\t\t {0:<20s}: {1:d}\n".format(key, values)
             s += values
         key = "Total"
@@ -965,7 +989,7 @@ class GaussianGecos:
             format(energy_thr, rot_constant_thr, rmsd_thr, window_energy, rmsd_only_heavy)
         print(m) if self._logger is None else self._logger.info(m)
 
-        return cluster
+        return cluster, dict_conftype
 
     # =========================================================================
     def getconformeropenbabelrms(self, iconf, jconf, atomids=None, align=True):
@@ -1009,7 +1033,118 @@ class GaussianGecos:
 
         return rmsd_value
 
+    # =========================================================================
+    def _gnuplot_template(self, fname, nx=3, ny=2):
 
+        nconf = self._cre_dict['Conformers']
+        startconf = -1
+        endconf = nconf + 1
+        ticx_conf = np.floor((nconf + 1)/10)
+        max_nhbonds = max(self._df.NHbonds)
+        min_nhbonds = min(self._df.NHbonds)
+        max_intervdw = max(self._df.NvdwContacts_Intermol)
+        min_intervdw = min(self._df.NvdwContacts_Intermol)
+        max_intravdw = max(self._df.NvdwContacts_Intramol)
+        min_intravdw = min(self._df.NvdwContacts_Intramol)
 
+        linegnuplot = "reset\n"
+        linegnuplot += 'f1="{}"\n'.format(fname)
+        linegnuplot += "\n"
+        linegnuplot += "# ============== COMMON FORMATS ====================\n"
+        linegnuplot += 'set style line 1 lt 1 ps 1.0 lc rgb "black"  pt 6 lw 2.0\n'
+        linegnuplot += 'set style line 2 lt 1 ps 1.0 lc rgb "black"  pt 4 lw 2.0\n'
+        linegnuplot += 'set style line 3 lt 1 ps 1.0 lc rgb "black"  pt 6 lw 2.0\n'
+        linegnuplot += "\n"
+        linegnuplot += "# ============== 2D PLOT =====================\n"
+        linegnuplot += 'set term wxt 1 enhanced dashed size 900,800 font "Arial,12"\n'
+        linegnuplot += "set multiplot layout {},{}\n".format(nx, ny)
+        linegnuplot += "\n"
 
+        linegnuplot += 'set title "Relative energy of conformers"\n'
+        linegnuplot += 'set xlabel "Conformer ID"\n'
+        linegnuplot += 'set ylabel "Rel. Energy (kcal/mol)\n'
+        linegnuplot += "set xtics {}\n".format(ticx_conf)
+        linegnuplot += "set xrange[{}:{}]\n".format(startconf, endconf)
+        linegnuplot += 'set format y "%.1f"\n'
+        linegnuplot += "set grid\n"
+        linegnuplot += "p f1 u 1:4 ls 1 notitle\n"
+        linegnuplot += "unset xrange\n"
+        linegnuplot += "\n"
 
+        linegnuplot += 'set title "Relative energy vs RMSD"\n'
+        linegnuplot += 'set xlabel "Rel. Energy (kcal/mol)\n'
+        linegnuplot += 'set ylabel "RMSD (Angstroms)"\n'
+        linegnuplot += 'set format x "%.1f"\n'
+        linegnuplot += 'set format y "%.1f"\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "p f1 u 4:6 ls 2 notitle\n"
+        linegnuplot += "\n"
+
+        linegnuplot += 'set title "Relative energy vs Number H bonds"\n'
+        linegnuplot += 'set xlabel "Rel. Energy (kcal/mol)"\n'
+        linegnuplot += 'set ylabel "# H-bonds"\n'
+        linegnuplot += 'set format x "%.1f"\n'
+        linegnuplot += 'unset format y\n'
+        linegnuplot += 'set ytics 1\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "set yrange [{}:{}]\n".format(min_nhbonds-1, max_nhbonds+1)
+        linegnuplot += "p f1 u 4:11 ls 3 notitle\n"
+        linegnuplot += "unset yrange\n"
+        linegnuplot += "\n"
+
+        linegnuplot += 'set title "Relative energy vs Intermolecular Contacts"\n'
+        linegnuplot += 'set xlabel "Rel. Energy (kcal/mol)"\n'
+        linegnuplot += 'set ylabel "# Intermolecular Contacts"\n'
+        linegnuplot += 'set format x "%.1f"\n'
+        linegnuplot += 'unset format y\n'
+        linegnuplot += 'set ytics 1\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "set yrange [{}:{}]\n".format(min_intervdw - 1, max_intervdw + 1)
+        linegnuplot += "p f1 u 4:12 ls 3 notitle\n"
+        linegnuplot += "unset yrange\n"
+        linegnuplot += "\n"
+
+        linegnuplot += 'set title "Relative energy vs Intramolecular Contacts"\n'
+        linegnuplot += 'set xlabel "Rel. Energy (kcal/mol)"\n'
+        linegnuplot += 'set ylabel "# Intramolecular Contacts"\n'
+        linegnuplot += 'set format x "%.1f"\n'
+        linegnuplot += 'set format y "%.0f"\n'
+        linegnuplot += 'unset format y\n'
+        linegnuplot += 'set ytics 1\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "set yrange [{}:{}]\n".format(min_intravdw - 1, max_intravdw + 1)
+        linegnuplot += "p f1 u 4:13 ls 3 notitle\n"
+        linegnuplot += "unset yrange\n"
+        linegnuplot += "\n"
+
+        linegnuplot += 'set title "Number H bonds vs RMDS (with energy)"\n'
+        linegnuplot += 'set xlabel "RMSD (Angstroms)"\n'
+        linegnuplot += 'set ylabel "# H-bonds"\n'
+        linegnuplot += 'set format x "%.1f"\n'
+        linegnuplot += 'set format y "%.0f"\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "set yrange [{}:{}]\n".format(min_nhbonds-1, max_nhbonds+1)
+        linegnuplot += "set grid\n"
+        linegnuplot += "set palette rgb 33,13,10\n"
+        linegnuplot += "plot f1 u 6:11:4 palette pt 7 notitle\n"
+        linegnuplot += "unset yrange\n"
+        linegnuplot += "\n"
+
+        linegnuplot += "unset multiplot\n"
+        linegnuplot += "\n"
+        linegnuplot += '# ============== 3D-POINT PLOT ===============\n'
+        linegnuplot += 'set term wxt 2 enhanced dashed size 500,400 font "Arial,12"\n'
+        linegnuplot += 'set multiplot layout 1,1\n'
+        linegnuplot += '\n'
+        linegnuplot += 'unset view\n'
+        linegnuplot += 'set zlabel "Rel. Energy (kcal/mol)\n'
+        linegnuplot += 'set xlabel "RMSD (Angstroms)"\n'
+        linegnuplot += 'set ylabel "# H-bonds"\n'
+        linegnuplot += "set xtics auto\n"
+        linegnuplot += "set ytics auto\n"
+        linegnuplot += "set ztics auto\n"
+        linegnuplot += 'splot f1 u 6:11:4 ls 1 notitle w p\n'
+        linegnuplot += 'unset multiplot\n'
+
+        with open("template_gnuplot_energy_analysis.gnu", "w") as fgnuplot:
+            fgnuplot.writelines(linegnuplot)

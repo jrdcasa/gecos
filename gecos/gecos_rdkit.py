@@ -76,7 +76,7 @@ class GecosRdkit:
                     except AttributeError:
                         pass
         elif filename is not None and os.path.splitext(filename)[-1] == ".sdf":
-            suppl = rdkit.Chem.ForwardSDMolSupplier(filename, removeHs=False)
+            suppl = rdkit.Chem.SDMolSupplier(filename, strictParsing=True) #, removeHs=False)
             for imol in suppl:
                 self.mol_rdkit = imol
         else:
@@ -105,18 +105,19 @@ class GecosRdkit:
             if os.path.splitext(filename)[-1] == ".pdb":
                 m += "\n"
                 m += ""
+            m += "\t\tFormula          = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcMolFormula(self.mol_rdkit))
+            m += "\t\tNumber of atoms  = {}\n".format(self.mol_rdkit.GetNumAtoms())
+            m += "\t\tMolecular weight = {0:.2f} g/mol\n".format(
+                rdkit.Chem.rdMolDescriptors.CalcExactMolWt(self.mol_rdkit))
+            m += "\t\tRotable bonds    = {} (include CH3 groups)\n". \
+                format(rdkit.Chem.rdMolDescriptors.CalcNumRotatableBonds(self.mol_rdkit))
+            m += "\t\tNumber of rings  = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcNumRings(self.mol_rdkit))
         else:
             m += "\t\t\t WARNING!!!! Molecule might not be correctly setup.\n"
             m += "\t\t\t WARNING!!!! RdKit molecule seems to be empty (self.mol_rdkit is None).\n"
             m += "\t\t\t WARNING!!!! conformers cannot be generated.\n"
             m += "\t\t\t WARNING!!!! Revise both input parameters and/or {} inputfile .\n".format(filename)
-        m += "\t\tFormula          = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcMolFormula(self.mol_rdkit))
-        m += "\t\tNumber of atoms  = {}\n".format(self.mol_rdkit.GetNumAtoms())
-        m += "\t\tMolecular weight = {0:.2f} g/mol\n".format(
-            rdkit.Chem.rdMolDescriptors.CalcExactMolWt(self.mol_rdkit))
-        m += "\t\tRotable bonds    = {} (include CH3 groups)\n". \
-            format(rdkit.Chem.rdMolDescriptors.CalcNumRotatableBonds(self.mol_rdkit))
-        m += "\t\tNumber of rings  = {}\n".format(rdkit.Chem.rdMolDescriptors.CalcNumRings(self.mol_rdkit))
+
         m += "\t\t******** CREATION OF THE GECOS RDKIT OBJECT ********\n\n"
         print(m) if self._logger is None else self._logger.info(m)
 
@@ -752,7 +753,7 @@ class GecosRdkit:
             rmsd_threshold (float): Threshold to classify the conformations in clusters in angstroms.
             rmsd_only_heavy (bool):
             energy_threshold (float):
-            rotconst_treshold (float):
+            rotconst_threshold(float):
             window_energy (float):
             write_gaussian (bool): If True, gausssian input files are written.
             g16_key (str): Keywords to be used in gaussian16

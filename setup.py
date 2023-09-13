@@ -613,7 +613,7 @@ if __name__ == '__main__':
     m1 = "\n\t\t Starting installation!!!! at {}\n\n".format(nowm)
     print(m1) if logger is None else logger.info(m1)
 
-    # Wheel can be needed for install
+    # Wheel must be needed for install
     try:
         import wheel
     except ModuleNotFoundError:

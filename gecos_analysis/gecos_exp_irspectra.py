@@ -17,7 +17,7 @@ class GecosExpIRSpectra:
     """
 
     # =========================================================================
-    def __init__(self, filename, delta_x=None, normalize=None,
+    def __init__(self, filename, resample_list=None, normalize=None,
                  baseline=None, baselineparam=None,
                  peaksmoothing=None, peaksmoothingparam=None, logger=None):
 
@@ -44,7 +44,7 @@ class GecosExpIRSpectra:
         self._pattern = os.path.splitext(os.path.split(filename)[-1])[0]
         # Resample the data using this delta_x
         self._normalize_method = normalize
-        self._delta_x = delta_x
+        self._resample_list = resample_list
         # Baseline methods
         self._baseline_method = baseline
         self._baseline_data = None
@@ -57,16 +57,19 @@ class GecosExpIRSpectra:
         self._current_data = self._get_data_from_file()
 
         # Resample spectrum
-        if self._delta_x is not None:
+        if self._resample_list is not None:
             self._current_data = self._resample_data()
-            fname_tmp = "00_tmp_"+self._pattern+"_resampled_{}".format(self._delta_x)+".dat"
-            np.savetxt(fname_tmp, self._current_data, delimiter=" ")
+            a = np.int(self._resample_list[0])
+            b = np.int(self._resample_list[1])
+            c = np.int(self._resample_list[2])
+            fname_tmp = "00_tmp_"+self._pattern+"_resampled_{}_{}_{}".format(a, b, c)+".dat"
+            np.savetxt(fname_tmp, self._current_data, delimiter=" ", fmt='%5.1f %.18f')
 
         # Normalize spectrum
         if self._normalize_method is not None:
             self._current_data = self._normalize_data(self._current_data)
             fname_tmp = "01_tmp_"+self._pattern+"_normalize_{}".format(self._normalize_method)+".dat"
-            np.savetxt(fname_tmp, self._current_data, delimiter=" ")
+            np.savetxt(fname_tmp, self._current_data, delimiter=" ", fmt='%5.1f %.18f')
 
         # Baseline correction
         if self._baseline_method is not None:
@@ -81,7 +84,7 @@ class GecosExpIRSpectra:
                 else:
                     self._current_data[i, 1] = point
             fname_tmp = "04-tmp_baselinecorrected_{}.dat".format(self._baseline_method)
-            np.savetxt(fname_tmp, self._current_data, delimiter=" ")
+            np.savetxt(fname_tmp, self._current_data, delimiter=" ", fmt='%5.1f %.18f')
 
         # Peak Smoothing
         if self._peaksmoothing_method is not None:
@@ -90,10 +93,10 @@ class GecosExpIRSpectra:
             polyorder = int(self._peaksmoothSGparam[1])
             self._current_data[:, 1] = signal.savgol_filter(y, window_width, polyorder)
             fname_tmp = "05-tmp_peaksmoothing_{}.dat".format(self._peaksmoothing_method)
-            np.savetxt(fname_tmp, self._current_data, delimiter=" ")
+            np.savetxt(fname_tmp, self._current_data, delimiter=" ", fmt='%5.1f %.18f')
 
         fname_final = self._pattern + "_corrected.dat"
-        np.savetxt(fname_final, self._current_data, delimiter=" ")
+        np.savetxt(fname_final, self._current_data, delimiter=" ", fmt='%5.1f %.18f')
 
         # Create gnuplot template
         self._gnuplot_template(nx=2, ny=3)
@@ -151,23 +154,34 @@ class GecosExpIRSpectra:
             print(m) if self._logger is None else self._logger.error(m)
             exit()
 
-        x_min = self._original_data.min(axis=0)[0]
-        x_max = self._original_data.max(axis=0)[0]
-        ndata = self._original_data.shape[0]
-        deltax_old = (x_max - x_min) / (ndata - 1)
+        x_min_orig = self._original_data.min(axis=0)[0]
+        x_max_orig = self._original_data.max(axis=0)[0]
+        ndata_orig = self._original_data.shape[0]
+        deltax_orig = (x_max_orig - x_min_orig) / (ndata_orig - 1)
 
-        npoints = int(np.ceil((x_max - x_min)) / self._delta_x) + 1
-        x_data_old = self._original_data[:, 0]
-        y_data_old = self._original_data[:, 1]
-        funcinterp = interp1d(x_data_old, y_data_old, fill_value="extrapolate")
-        x_data_new = np.linspace(x_min, x_max, npoints)
+        x_min_resample = self._resample_list[0]
+        x_max_resample = self._resample_list[1]
+        npoints_resample = self._resample_list[2]
+
+        x_data_orig = self._original_data[:, 0]
+        y_data_orig = self._original_data[:, 1]
+        funcinterp = interp1d(x_data_orig, y_data_orig, fill_value="extrapolate")
+        x_data_tmp = np.linspace(x_min_resample, x_max_resample, int(npoints_resample))
+
+        # ============REAL X VALUES ==================
+        nrows = x_data_tmp.shape[0]
+        range_freq = x_max_resample - x_min_resample
+        x_data_new = np.zeros(nrows, dtype=np.float)
+        for i in range(0, nrows):
+            x_data_new[i] = range_freq * (i + 1) / npoints_resample + x_min_resample
+
         y_data_new = funcinterp(x_data_new)
         deltax_new = (np.max(x_data_new) - np.min(x_data_new)) / (x_data_new.shape[0] - 1)
 
         now = datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         m = "\n\t\t ======== RESAMPLING THE DATA ======== ({})\n".format(now)
         m += "\t\t Original  data --> Number of points: {0:7d} DeltaX: {1:>10.2f}\n"\
-            .format(ndata, deltax_old)
+            .format(ndata_orig, deltax_orig)
         m += "\t\t Resampled data --> Number of points: {0:7d} DeltaX: {1:>10.2f}"\
             .format(x_data_new.shape[0], deltax_new)
         print(m) if self._logger is None else self._logger.info(m)
@@ -323,13 +337,13 @@ class GecosExpIRSpectra:
                "/api/index.html#pybaselines.api.Baseline.optimize_extended_range"
 
         if baseline_method.upper() == "2021MUNICH":
-            method = "2021Munich. ({})".format(ref1)
+            method = "2021Munich. \n\t\t({})".format(ref1)
         elif baseline_method.upper() == "ASLS":
-            method = "ASLS. ({})".format(ref2)
+            method = "ASLS. \n\t\t({})".format(ref2)
         elif baseline_method.upper() == "MIXTURE_MODEL":
-            method = "MIXTURE_MODEL. ({})".format(ref3)
+            method = "MIXTURE_MODEL. \n\t\t({})".format(ref3)
         elif baseline_method.upper() == "OPTIMIZE_EXTENDED_RANGE":
-            method = "OPTIMIZE_EXTENDED_RANGE. ({})".format(ref4)
+            method = "OPTIMIZE_EXTENDED_RANGE. \n\t\t({})".format(ref4)
         else:
             method = None
 

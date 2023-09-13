@@ -1,8 +1,11 @@
+import glob
+import os.path
 import unittest
 import datetime
 import utils
 import gecos
 import rdkit.Chem
+import shutil
 
 
 class GecosRdkitTests(unittest.TestCase):
@@ -10,6 +13,17 @@ class GecosRdkitTests(unittest.TestCase):
     # ##################################################################################################################
     @classmethod
     def setUpClass(cls):
+
+        # Delete files and directories from prevoius tests
+        path_test01 = os.getcwd()
+        shutil.rmtree(os.path.join(path_test01, "IsoP_g16_results"), ignore_errors=True)
+        shutil.rmtree(os.path.join(path_test01, "nitrobenzene_g16_results"), ignore_errors=True)
+        shutil.rmtree(os.path.join(path_test01, "nitrobenzene_sdf_g16_results"), ignore_errors=True)
+        shutil.rmtree(os.path.join(path_test01, "PET_g16_results"), ignore_errors=True)
+        files_to_remove = glob.glob(os.path.join(path_test01, "*.pdb"))
+        files_to_remove += glob.glob(os.path.join(path_test01, "*.sdf"))
+        for ifile in files_to_remove:
+            os.remove(os.path.join(path_test01, ifile))
 
         cls.filelog = "test01_gecos_rdkit_test.log"
         cls.log = utils.init_logger("Output", fileoutput=cls.filelog, append=False, inscreen=False)
@@ -100,7 +114,7 @@ class GecosRdkitTests(unittest.TestCase):
         print(m) if self.log is None else self.log.info(m)
 
     # ##################################################################################################################
-    def test_04_GecosRdKit_bondperception_aromatic(self):
+    def test_03_GecosRdKit_bondperception_aromatic(self):
 
         """
         Bond perception with aromatic of PDB file using indigoX program
@@ -138,7 +152,7 @@ class GecosRdkitTests(unittest.TestCase):
         print(m) if self.log is None else self.log.info(m)
 
     # ##################################################################################################################
-    def test_05_GecosRdKit_conformers(self):
+    def test_04_GecosRdKit_conformers(self):
 
         """
          Conformer generation
@@ -151,8 +165,6 @@ class GecosRdkitTests(unittest.TestCase):
         # These files were exported from MaterialsStudio2019.
         # This molecule contains 28 atoms, 10Cs and 18Hs
         pdbfile = "../../data/IsoP.pdb"
-
-        # Create object
         g1 = gecos.GecosRdkit(filename=pdbfile, bond_perception=True, logger=self.log)
         g1.generate_conformers("./", nconfs=50, minimize_iterations=3000, pattern="IsoP")
 
@@ -171,7 +183,7 @@ class GecosRdkitTests(unittest.TestCase):
         pass
 
     # ##################################################################################################################
-    def test_06_pdbtosdf(self):
+    def test_05_pdbtosdf(self):
 
         """
           PDB to SDF file
@@ -184,6 +196,8 @@ class GecosRdkitTests(unittest.TestCase):
         pdbfile = "../../data/nitrobenzene.pdb"
 
         utils.pdbtosdf(pdbfile)
+
+        self.assertTrue(os.path.isfile("nitrobenzene_frompdb.sdf"))
 
     # ##################################################################################################################
     @classmethod

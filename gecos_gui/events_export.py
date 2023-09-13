@@ -573,7 +573,7 @@ def write_python_script_prop_from_gui(window, filename,
                 lines += "{} = True\n".format(ikey)
             else:
                 lines += "{} = False\n".format(ikey)
-    if dict_properties['p_g16_keywords'].count("freq") == 1:
+    if dict_properties['p_g16_keywords'].count("freq") == 1 and dict_properties['p_g16_keywords'].count("wfn") == 0:
         p_pattern = "FREQ"
     elif dict_properties['p_g16_keywords'].count("wfn") == 1:
         p_pattern = "WFN"
